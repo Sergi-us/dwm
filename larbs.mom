@@ -3,7 +3,7 @@
 .SHIFT_LIST 10p
 ..
 .PARA_SPACE 1m
-.TITLE "\s+(10Eine freundliche Anleitung zu LARBS!\s0"
+.TITLE "\s+(10Eine freundliche Anleitung zu SARBS!\s0"
 .AUTHOR "\s+5Luke Smith\s0"
 .AUTHOR "\s+5übersetzung: Sergius\s0"
 .DOCTYPE    DEFAULT
@@ -60,7 +60,7 @@ Alternativ: eine Compose Taste, die Funktion ist noch in der Testphase, es gibt 
 .LIST OFF
 .PP
 Wenn du eine dieser Tastaturänderungen ändern möchtest, musst du nur das \f(CWremaps\fP-Skript öffnen und ändern.
-Alle benutzerdefinierten Skripte in LARBS befinden sich in \f(CW~/.local/bin/\fP.
+Alle benutzerdefinierten Skripte in SARBS befinden sich in \f(CW~/.local/bin/\fP.
 Eigentlich sollte das ohne zu sagen sein, aber \fIalles\fP hier kann leicht geändert werden.
 Weiter unten in diesem Dokument findest du Informationen darüber, wo Programme/Komponenten geändert werden können.
 .PP
@@ -299,7 +299,7 @@ Du musst das Programm offensichtlich neu starten, um seine Effekte zu sehen.
 .HEADING 1 "Häufig gestellte Fragen (FAQs)"
 .HEADING 2 "Meine Tastatur funktioniert nicht wie erwartet!"
 .PP
-Wie oben erwähnt, nimmt LARBS einige Tastaturänderungen mit dem \f(CWremaps\fP-Skript vor.
+Wie oben erwähnt, nimmt SARBS einige Tastaturänderungen mit dem \f(CWremaps\fP-Skript vor.
 Diese Einstellungen können deine bevorzugten Einstellungen überschreiben, daher solltest du diese Datei öffnen und problematische Zeilen auskommentieren, wenn du Probleme hast.
 .HEADING 2 "Mein Audio funktioniert nicht!"
 .PP
@@ -319,12 +319,12 @@ Das Skript \f(CWsetbg\fP, wenn es auf einem Bild ausgeführt wird, setzt es als 
 Wenn du den Dateimanager verwendest, kannst du einfach über einen Bildnamen schweben und \f(CWb\fP tippen, und dies wird \f(CWsetbg\fP ausführen.
 .HEADING 2 "Wie ändere ich das Farbschema?"
 .PP
-LARBS verwendet standardmäßig keine Xresources mehr, aber überprüfe \f(CW~/.config/x11/xresources\fP für eine Liste von Farbschemata, die du aktivieren oder eigene hinzufügen kannst. Wenn du die Datei speicherst, aktualisiert vim automatisch das Farbschema. Wenn du möchtest, dass diese Farben standardmäßig beim Login aktiviert werden, gibt es eine Zeile in \f(CW~/.config/x11/xprofile\fP, die du auskommentieren kannst, um dies zu ermöglichen.
+SARBS verwendet standardmäßig keine Xresources mehr, aber überprüfe \f(CW~/.config/x11/xresources\fP für eine Liste von Farbschemata, die du aktivieren oder eigene hinzufügen kannst. Wenn du die Datei speicherst, aktualisiert vim automatisch das Farbschema. Wenn du möchtest, dass diese Farben standardmäßig beim Login aktiviert werden, gibt es eine Zeile in \f(CW~/.config/x11/xprofile\fP, die du auskommentieren kannst, um dies zu ermöglichen.
 .PP
 Oder, wenn du \f(CWwal\fP verwenden möchtest, um Farbschemata automatisch aus deinen Wallpapern zu generieren, installiere es einfach und \f(CWsetbg\fP erkennt und führt es beim Start und beim Wallpaper-Wechsel automatisch aus.
 .HEADING 2 "Wie richte ich meine E-Mail ein?"
 .PP
-LARBS wird mit mutt-wizard geliefert, der die Möglichkeit bietet, alle deine E-Mails zu empfangen und zu senden und alles offline im Terminal zu speichern, ohne dass ein Browser erforderlich ist.
+SARBS wird mit mutt-wizard geliefert, der die Möglichkeit bietet, alle deine E-Mails zu empfangen und zu senden und alles offline im Terminal zu speichern, ohne dass ein Browser erforderlich ist.
 Du kannst E-Mail-Konten hinzufügen, indem du \f(CWmw -a deine@email.com\fP ausführst.
 Siehe \f(CWman mw\fP für alle Informationen, die du über den mutt-wizard benötigst.
 .PP
@@ -338,11 +338,11 @@ Standardmäßig geht mpd, der Musik-Daemon, davon aus, dass \f(CW~/Music\fP dein
 Dies kann in \f(CW~/.config/mpd/mpd.conf\fP geändert werden.
 Wenn du Musik zu deinem Musikordner hinzufügst, musst du möglicherweise \f(CWmpc up\fP im Terminal ausführen, um die Datenbank zu aktualisieren.
 mpd wird von ncmpcpp gesteuert, das über \f(CWMod+m\fP zugänglich ist.
-.HEADING 2 "Wie aktualisiere ich LARBS?"
+.HEADING 2 "Wie aktualisiere ich SARBS?"
 .PP
-LARBS wird als Git-Repository in deinem Home-Verzeichnis bereitgestellt.
+SARBS wird als Git-Repository in deinem Home-Verzeichnis bereitgestellt.
 Du kannst es als solches verwenden, um Änderungen vom Remote-Repository abzurufen, zu vergleichen und zu mergen.
-Wenn du das nicht tun möchtest oder nicht weißt, wie man Git verwendet, kannst du das Skript tatsächlich einfach erneut ausführen (als root) und LARBS neu installieren. Es wird automatisch eine bestehende Installation aktualisieren, wenn du denselben Benutzernamen auswählst.
+Wenn du das nicht tun möchtest oder nicht weißt, wie man Git verwendet, kannst du das Skript tatsächlich einfach erneut ausführen (als root) und SARBS neu installieren. Es wird automatisch eine bestehende Installation aktualisieren, wenn du denselben Benutzernamen auswählst.
 Dies überschreibt jedoch die ursprünglichen Konfigurationsdateien, einschließlich der von dir vorgenommenen Änderungen, aber dies ist ein einfacherer brutaler Ansatz, der auch alle neuen Abhängigkeiten installiert.
 .HEADING 1 "Wichtige Links"
 .PP
@@ -356,7 +356,7 @@ Du kannst Links über die Tastatur in diesem PDF-Reader folgen, indem du \f(CWf\
 \(en Zum Stalken!
 .ITEM
 .PDF_WWW_LINK "https://lukesmith.xyz/donate" "https://lukesmith.xyz/donate"
-\(en Um die weitere Entwicklung von LARBS zu fördern!
+\(en Um die weitere Entwicklung von SARBS zu fördern!
 .ITEM
 .PDF_WWW_LINK "https://github.com/LukeSmithxyz" "Meine Github-Seite"
 \(en Für den Code dahinter!
