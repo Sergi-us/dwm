@@ -6,16 +6,16 @@
 #define BROWSER "librewolf"
 
 /* appearance */
-static unsigned int borderpx  = 3;        /* border pixel of windows */
-static unsigned int snap      = 32;       /* snap pixel */
-static unsigned int gappih    = 20;       /* horiz inner gap between windows */
-static unsigned int gappiv    = 10;       /* vert inner gap between windows */
-static unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 30;       /* vert outer gap between windows and screen edge */
-static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
-static int showbar            = 1;        /* 0 means no bar */
-static int topbar             = 1;        /* 0 means bottom bar */
+static unsigned int borderpx  = 4;        /* Randpixel der Fenster */
+static unsigned int snap      = 32;       /* Snap-Pixel */
+static unsigned int gappih    = 20;       /* horizontaler innerer Abstand zwischen Fenstern */
+static unsigned int gappiv    = 10;       /* vertikaler innerer Abstand zwischen Fenstern */
+static unsigned int gappoh    = 10;       /* horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static unsigned int gappov    = 30;       /* vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static int swallowfloating    = 0;        /* 1 bedeutet, dass schwebende Fenster standardmäßig geschluckt werden */
+static int smartgaps          = 0;        /* 1 bedeutet kein äußerer Abstand, wenn nur ein Fenster vorhanden ist */
+static int showbar            = 1;        /* 0 bedeutet keine Leiste */
+static int topbar             = 1;        /* 0 bedeutet untere Leiste */
 static char *fonts[]          = { "monospace:size=10", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true"  };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -48,39 +48,40 @@ static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
+	 *	definiert Regeln für das Verhalten von Fenstern basierend auf deren Eigenschaften
 	*/
-	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
-	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
-	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
-	{ TERMCLASS,      "floatterm", NULL,       	    0,       1,           1,         0,        -1 },
-	{ TERMCLASS,      "bg",        NULL,       	    1 << 7,       0,           1,         0,        -1 },
-	{ TERMCLASS,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
-	{ TERMCLASS,      "spcalc",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
+	/* Klasse	Instanz		Titel		tags mask	ist Swebend	ist Terminal	noswallow	monitor */
+	{ "Gimp",	NULL,		NULL,		1 << 8,		0,		0,		0,		-1 },
+	{ TERMCLASS,	NULL,		NULL,		0,		0,		1,		0,		-1 },
+	{ NULL,		NULL,		"Event Tester",	0,		0,		0,		1,		-1 },
+	{ TERMCLASS,	"floatterm",	NULL,		0,		1,		1,		0,		-1 },
+	{ TERMCLASS,	"bg",		NULL,		1 << 7,		0,		1,		0,		-1 },
+	{ TERMCLASS,	"spterm",	NULL,		SPTAG(0),	1,		1,		0,		-1 },
+	{ TERMCLASS,	"spcalc",	NULL,		SPTAG(1),	1,		1,		0,		-1 },
 };
 
 /* layout(s) */
-static float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static int nmaster     = 1;    /* number of clients in master area */
-static int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
-#define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
+static float mfact     = 0.55; 		/* Faktor der Master-Bereichsgröße [0.05..0.95] */
+static int nmaster     = 1;    		/* Anzahl der Clients im Master-Bereich */
+static int resizehints = 0;    		/* 1 bedeutet, dass Größenhinweise bei Kachelgrößenänderungen beachtet werden */
+static const int lockfullscreen = 1; 	/* 1 erzwingt den Fokus auf das Vollbildfenster */
+#define FORCE_VSPLIT 1  		/* nrowgrid Layout: erzwingt, dass zwei Clients immer vertikal geteilt werden */
 #include "vanitygaps.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
-	{ "TTT",	bstack },		/* Master on top, slaves on bottom */
+	{ "[]=",	tile },				/* Standard: Master links, Slaves rechts */
+	{ "TTT",	bstack },			/* Master oben, Slaves unten */
 
-	{ "[@]",	spiral },		/* Fibonacci spiral */
-	{ "[\\]",	dwindle },		/* Decreasing in size right and leftward */
+	{ "[@]",	spiral },			/* Fibonacci-Spirale */
+	{ "[\\]",	dwindle },			/* Abnehmend in der Größe rechts und links */
 
-	{ "[D]",	deck },			/* Master on left, slaves in monocle-like mode on right */
-	{ "[M]",	monocle },		/* All windows on top of eachother */
+	{ "[D]",	deck },				/* Master links, Slaves im Monocle-ähnlichen Modus rechts */
+	{ "[M]",	monocle },			/* Alle Fenster übereinander gestapelt */
 
-	{ "|M|",	centeredmaster },		/* Master in middle, slaves on sides */
-	{ ">M>",	centeredfloatingmaster },	/* Same but master floats */
+	{ "|M|",	centeredmaster },		/* Master in der Mitte, Slaves an den Seiten */
+	{ ">M>",	centeredfloatingmaster },	/* Gleich wie oben, aber Master schwebt */
 
-	{ "><>",	NULL },			/* no layout function means floating behavior */
+	{ "><>",	NULL },				/* no layout function means floating behavior */
 	{ NULL,		NULL },
 };
 
@@ -203,12 +204,11 @@ static const Key keys[] = {
 	{ MODKEY,			XK_l,		setmfact,      	{.f = +0.05} },
 	{ MODKEY,			XK_semicolon,	shiftview,	{ .i = 1 } },
 	{ MODKEY|ShiftMask,		XK_semicolon,	shifttag,	{ .i = 1 } },
-	{ MODKEY,			XK_apostrophe,	togglescratch,	{.ui = 1} },
+	/*{ MODKEY,			XK_apostrophe,	togglescratch,	{.ui = 1} }, (für Englische Tastatur)*/
 	/* { MODKEY|ShiftMask,		XK_apostrophe,	spawn,		SHCMD("") }, */
 	{ MODKEY|ShiftMask,		XK_apostrophe,	togglesmartgaps,	{0} },
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
-	{ MODKEY|ShiftMask,		XK_Return,	togglescratch,	{.ui = 0} },
-
+	{ MODKEY|ShiftMask,		XK_Return,	togglescratch,	{.ui = 0} },/*floating terminal*/
 	{ MODKEY,			XK_y,		incrgaps,	{.i = +3 } },
 	/* { MODKEY|ShiftMask,		XK_y,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_x,		incrgaps,	{.i = -3 } },
@@ -258,7 +258,8 @@ static const Key keys[] = {
 	{ 0,				XK_Print,	spawn,		SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },
 	{ ShiftMask,			XK_Print,	spawn,		{.v = (const char*[]){ "maimpick", NULL } } },
 	{ MODKEY,			XK_Print,	spawn,		{.v = (const char*[]){ "dmenurecord", NULL } } },
-	{ MODKEY|ShiftMask,		XK_Print,	spawn,		{.v = (const char*[]){ "dmenurecord", "kill", NULL } } },
+	/*{ MODKEY|ShiftMask,		XK_Print,	spawn,		{.v = (const char*[]){ "dmenurecord", "kill", NULL } } },*/
+	{ MODKEY|ShiftMask,		XK_Print,	togglescratch,	{.ui = 1 } },
 	{ MODKEY,			XK_Delete,	spawn,		{.v = (const char*[]){ "dmenurecord", "kill", NULL } } },
 	{ MODKEY,			XK_Home,	spawn,		SHCMD("killall screenkey || screenkey &") },
 
