@@ -1,5 +1,5 @@
 /* See LICENSE file for copyright and license details. */
-/* DWM Konfigurationsdatei vom X230-de (2024-06-18) */
+/* SARBS Prelaunch version 0.1 DE */
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
