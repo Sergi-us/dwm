@@ -156,6 +156,9 @@ Um Großbuchstaben zu schreiben, halte die \f(CWShift\fP-Taste gedrückt \(emdas
 .ITEM
 \f(CWMod+r\fP \(en lf (Dateibrowser/Manager)
 .ITEM
+.ITEM
+\f(CWMod+r\fP \(en lf (Dateibrowser/Manager)
+.ITEM
 \f(CWMod+R\fP \(en htop (Task-Manager, Systemmonitor, den R*dditors verwenden, um cool auszusehen)
 .ITEM
 \f(CWMod+e\fP \(en neomutt (E-Mail) \(en Muss zuerst durch Ausführen von \f(CWmw add\fP konfiguriert werden.
@@ -295,7 +298,6 @@ Dort kannst du ihre \f(CWconfig.h\fP-Dateien oder anderen Quellcode ändern und 
 vim ist so eingestellt, dass es diese Programme automatisch neu kompiliert und installiert, wann immer du Änderungen an einer \f(CWconfig.h\fP-Datei speicherst
 (die Kompilierung wird nahezu sofort erfolgen).
 Du musst das Programm offensichtlich neu starten, um seine Effekte zu sehen.
-.HEADING 1 "Häufig gestellte Fragen (FAQs
 .HEADING 1 "Häufig gestellte Fragen (FAQs)"
 .HEADING 2 "Meine Tastatur funktioniert nicht wie erwartet!"
 .PP
@@ -319,9 +321,7 @@ Das Skript \f(CWsetbg\fP, wenn es auf einem Bild ausgeführt wird, setzt es als 
 Wenn du den Dateimanager verwendest, kannst du einfach über einen Bildnamen schweben und \f(CWb\fP tippen, und dies wird \f(CWsetbg\fP ausführen.
 .HEADING 2 "Wie ändere ich das Farbschema?"
 .PP
-SARBS verwendet standardmäßig keine Xresources mehr, aber überprüfe \f(CW~/.config/x11/xresources\fP für eine Liste von Farbschemata, die du aktivieren oder eigene hinzufügen kannst. Wenn du die Datei speicherst, aktualisiert vim automatisch das Farbschema. Wenn du möchtest, dass diese Farben standardmäßig beim Login aktiviert werden, gibt es eine Zeile in \f(CW~/.config/x11/xprofile\fP, die du auskommentieren kannst, um dies zu ermöglichen.
-.PP
-Oder, wenn du \f(CWwal\fP verwenden möchtest, um Farbschemata automatisch aus deinen Wallpapern zu generieren, installiere es einfach und \f(CWsetbg\fP erkennt und führt es beim Start und beim Wallpaper-Wechsel automatisch aus.
+SARBS verwendet standardmäßig pywal und stellt die Farben automatisch aus dem aktuellen Hintergrundbild ein. Falls du deine Farben manuell einstellen möchtest, überprüfe \f(CW~/.config/x11/xresources\fP für eine Liste von Farbschemata, die du aktivieren oder zu denen du eigene hinzufügen kannst. Wenn du die Datei speicherst, aktualisiert vim automatisch das Farbschema. Wenn du möchtest, dass diese Farben standardmäßig beim Login aktiviert werden, gibt es eine Zeile in \f(CW~/.config/x11/xprofile\fP, die du auskommentieren kannst, um dies zu ermöglichen.
 .HEADING 2 "Wie richte ich meine E-Mail ein?"
 .PP
 SARBS wird mit mutt-wizard geliefert, der die Möglichkeit bietet, alle deine E-Mails zu empfangen und zu senden und alles offline im Terminal zu speichern, ohne dass ein Browser erforderlich ist.
@@ -344,6 +344,32 @@ SARBS wird als Git-Repository in deinem Home-Verzeichnis bereitgestellt.
 Du kannst es als solches verwenden, um Änderungen vom Remote-Repository abzurufen, zu vergleichen und zu mergen.
 Wenn du das nicht tun möchtest oder nicht weißt, wie man Git verwendet, kannst du das Skript tatsächlich einfach erneut ausführen (als root) und SARBS neu installieren. Es wird automatisch eine bestehende Installation aktualisieren, wenn du denselben Benutzernamen auswählst.
 Dies überschreibt jedoch die ursprünglichen Konfigurationsdateien, einschließlich der von dir vorgenommenen Änderungen, aber dies ist ein einfacherer brutaler Ansatz, der auch alle neuen Abhängigkeiten installiert.
+
+.HEADING 1 "Tiefergehende Bedienung"
+.HEADING 2 "ST - der Terminal"
+.PP
+\fBst\fP ist eine einfache Terminalimplementierung für X. von suckless.
+.LI
+.ITEM
+\f(CWMOD+Enter\fP \ öffnet den Terminal und \f(CWMOD+q\fP \ beendet ihn.
+.ITEM
+.ITEM
+\f(CWStrg+e\fP \(en Zeile in nvim bearbeiten.
+.ITEM
+.LIST OFF
+
+.HEADING 2 "zsh - die Zoomer shell"
+.PP
+\fBst\fP Um zsh zu konfigurieren musst du die \f(CW~/.config/zsh/zshrc\fP editieren. Du kannst sie aus dem Terminal über das Alias \f(CWcfz\fP öffnen. Alle möglichkeiten sind in der config beschrieben und sollten untereinander Kompartibel sein.
+.LI
+.ITEM
+\f(CWPS1=\fP reglt das aussehen des eingabe-Promt's. Falls du dein Persönliches Layout bevorzugst, reiche mir ein Pull reguest über GitHub ein.
+.ITEM
+.ITEM
+\f(CWStrg+e\fP \(en Zeile in nvim bearbeiten.
+.ITEM
+.LIST OFF
+
 .HEADING 1 "Wichtige Links"
 .PP
 Du kannst Links über die Tastatur in diesem PDF-Reader folgen, indem du \f(CWf\fP drückst, gefolgt von der Zahl, die auf dem gewünschten Link erscheint.
