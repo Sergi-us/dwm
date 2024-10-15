@@ -12,7 +12,7 @@ Drücke <kbd>Super+F1</kbd>, um es in dwm anzuzeigen (dafür wird zathura benöt
 - [Klickbare Statusleiste](https://dwm.suckless.org/patches/statuscmd/) mit meinem Build von [dwmblocks](https://github.com/Sergi-us/dwmblocks).
 - Liest [xresources](https://dwm.suckless.org/patches/xresources/) Farben/Variablen (d.h. funktioniert mit `pywal`, etc.).
 - Scratchpad: Zugänglich mit <kbd>Mod+Shift+Enter</kbd>.
-- Neue Layouts: bstack, fibonacci, deck, centered master und mehr. Alle gebunden an die Tasten <kbd>Super+(Shift+)t/y/u/i</kbd>.
+- Neue Layouts: bstack, fibonacci, deck, centered master und mehr. Alle gebunden an die Tasten <kbd>Super+(Shift+)t/z/u/i</kbd>.
 - Echter Vollbildmodus (<kbd>Super+f</kbd>) und verhindert Fokuswechsel.
 - Fenster können sticky (fixiert) gemacht werden (<kbd>Super+s</kbd>).
 - [hide vacant tags](https://dwm.suckless.org/patches/hide_vacant_tags/) versteckt Tags ohne Fenster.
@@ -23,8 +23,15 @@ Drücke <kbd>Super+F1</kbd>, um es in dwm anzuzeigen (dafür wird zathura benöt
 
 ## Installation für Neulinge
 
+Git-Repo runderladen
 ```bash
 git clone https://github.com/Sergi-us/dwm.git
+```
+ins verzeichniss wechseln
+```
 cd dwm
+```
+DMW instalieren
+```
 sudo make install
 ```
