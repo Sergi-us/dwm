@@ -1,213 +1,207 @@
 .TH DWM 1 dwm\-VERSION
 .SH NAME
-dwm \- dynamic window manager (Luke Smith <https://lukesmith.xyz>'s build)
+dwm \- dynamischer Fenstermanager (Luke Smith <https://lukesmith.xyz>'s Version)
 .SH SYNOPSIS
 .B dwm
 .RB [ \-v ]
-.SH DESCRIPTION
-dwm is a dynamic window manager for X.
+.SH BESCHREIBUNG
+dwm ist ein dynamischer Fenstermanager für X.
 .P
-dwm "orders" windows based on recency and primacy, while dwm layouts may
-change, the most recent "master" window is shown in the most prominent
-position. There are bindings for cycling through and promoting windows to the
-master position.
+dwm ordnet Fenster nach Aktualität und Priorität. Während die Layouts von dwm
+sich ändern können, wird das aktuellste "Master"-Fenster immer in der
+hervorgehobenen Position angezeigt. Es gibt Tastenkombinationen, um durch
+Fenster zu wechseln und Fenster in die Master-Position zu befördern.
 .P
-Windows are grouped by tags. Each window can be tagged with one or multiple
-tags. Selecting certain tags displays all windows with these tags.
+Fenster werden nach Tags gruppiert. Jedes Fenster kann mit einem oder mehreren
+Tags versehen werden. Wenn bestimmte Tags ausgewählt werden, werden alle Fenster
+mit diesen Tags angezeigt.
 .P
-Each screen contains a small status bar which displays all available tags, the
-layout, the title of the focused window, and the text read from the root window
-name property, if the screen is focused. A floating window is indicated with an
-empty square and a maximised floating window is indicated with a filled square
-before the windows title.  The selected tags are indicated with a different
-color. The tags of the focused window are indicated with a filled square in the
-top left corner.  The tags which are applied to one or more windows are
-indicated with an empty square in the top left corner.
+Jeder Bildschirm enthält eine kleine Statusleiste, die alle verfügbaren Tags, das
+Layout, den Titel des fokussierten Fensters und den Text anzeigt, der aus der
+Root-Fenstereigenschaft ausgelesen wird, wenn der Bildschirm fokussiert ist.
+Ein schwebendes Fenster wird durch ein leeres Quadrat angezeigt, und ein
+maximiertes schwebendes Fenster wird durch ein ausgefülltes Quadrat vor dem
+Fenstertitel angezeigt. Die ausgewählten Tags werden durch eine andere Farbe
+markiert. Die Tags des fokussierten Fensters werden durch ein ausgefülltes
+Quadrat in der oberen linken Ecke markiert. Die Tags, die auf eines oder
+mehrere Fenster angewendet wurden, werden durch ein leeres Quadrat in der
+oberen linken Ecke angezeigt.
 .P
-dwm draws a small border around windows to indicate the focus state.
-.SH OPTIONS
+dwm zeichnet einen kleinen Rahmen um Fenster, um den Fokuszustand anzuzeigen.
+.SH OPTIONEN
 .TP
 .B \-v
-prints version information to stderr, then exits.
-.SH USAGE
-.SS Status bar
+gibt Versionsinformationen auf stderr aus und beendet sich dann.
+.SH NUTZUNG
+.SS Statusleiste
 .TP
-.B X root window name
-is read and displayed in the status text area. It can be set with the
+.B X Root-Fenstername
+wird gelesen und im Statusbereich angezeigt. Er kann mit dem Befehl
 .BR xsetroot (1)
-command.
+gesetzt werden.
 .TP
-.B Left click
-click on a tag label to display all windows with that tag, click on the layout
-label toggles between tiled and floating layout.
+.B Linksklick
+Klicken auf ein Tag-Label, um alle Fenster mit diesem Tag anzuzeigen. Ein Klick auf das
+Layout-Label wechselt zwischen Kachel- und Schwebezustand.
 .TP
-.B Right click
-click on a tag label adds/removes all windows with that tag to/from the view.
+.B Rechtsklick
+Klicken auf ein Tag-Label fügt alle Fenster mit diesem Tag zur Ansicht hinzu oder
+entfernt sie davon.
 .TP
-.B Super\-Left click
-click on a tag label applies that tag to the focused window.
+.B Super\-Linksklick
+Klicken auf ein Tag-Label wendet das Tag auf das fokussierte Fenster an.
 .TP
-.B Super\-Right click
-click on a tag label adds/removes that tag to/from the focused window.
-.SS Keyboard commands
+.B Super\-Rechtsklick
+Klicken auf ein Tag-Label fügt dieses Tag zum fokussierten Fenster hinzu oder
+entfernt es davon.
+.SS Tastenkombinationen
 .TP
 .B Super\-Return
-Start terminal,
+Startet ein Terminal,
 .BR st(1).
 .TP
 .B Super\-d
-Spawn
-.BR dmenu(1)
-for launching other programs.
+Startet
+.BR dmenu(1),
+um andere Programme zu starten.
 .TP
-.B Super\-grave
-Spawn
-.BR dmenuunicode(1)
-for selecting emoji.
+.B Super\-Grave
+Startet
+.BR dmenuunicode(1),
+um Emoji auszuwählen.
 .TP
-.B Super\-minus/plus, Super\-Shift\-minus/plus
-Decrease/increase volume by 5 and 15 respectively.
+.B Super\-Minus/Plus, Super\-Shift\-Minus/Plus
+Verringert/erhöht die Lautstärke um 5 bzw. 15.
 .TP
 .B Super\-b
-Toggles bar on and off.
+Schaltet die Statusleiste ein oder aus.
 .TP
 .B Super\-q
-Close focused window.
+Schließt das fokussierte Fenster.
 .TP
 .B Super\-t/T
-Sets tiled/bstack layouts.
+Setzt das Kachel/Bstack-Layout.
 .TP
 .B Super\-f
-Toggle fullscreen window.
+Wechselt in den Vollbildmodus des Fensters.
 .TP
 .B Super\-F
-Toggle floating layout.
+Wechselt das Layout in den Schwebezustand.
 .TP
 .B Super\-y/Y
-Sets Fibonacci spiral/dwinde layouts.
+Setzt das Fibonacci-Spiral/Dwindle-Layout.
 .TP
 .B Super\-u/U
-Sets centered master layout.
+Setzt das Layout "Zentrierter Master".
 .TP
 .B Super\-i/I
-Sets centered master or floating master layouts.
+Setzt das Layout "Zentrierter Master" oder "Schwebender Master".
 .TP
-.B Super\-space
-Zooms/cycles focused window to/from master area.
+.B Super\-Leertaste
+Zoomt/Wechselt das fokussierte Fenster zum/vom Master-Bereich.
 .TP
 .B Super\-j/k
-Focus next/previous window.
+Fokussiert das nächste/vorherige Fenster.
 .TP
 .B Super\-Shift\-j/k
-Move selected window down/up in stack.
+Verschiebt das ausgewählte Fenster nach unten/oben im Stapel.
 .TP
 .B Super\-o/O
-Increase/decrease number of windows in master area.
+Erhöht/verringert die Anzahl der Fenster im Master-Bereich.
 .TP
 .B Super\-l
-Increase master area size.
+Erhöht die Größe des Master-Bereichs.
 .TP
 .B Super\-h
-Decrease master area size.
+Verringert die Größe des Master-Bereichs.
 .TP
-.B Super\-Shift\-space
-Toggle focused window between tiled and floating state.
+.B Super\-Shift\-Leertaste
+Wechselt das fokussierte Fenster zwischen Kachel- und Schwebezustand.
 .TP
 .B Super\-Tab
-Toggles to the previously selected tags.
+Wechselt zu den zuletzt ausgewählten Tags.
 .TP
 .B Super\-g
-Moves to the previous tag.
+Wechselt zum vorherigen Tag.
 .TP
 .B Super\-Shift\-g
-Moves selected window to the previous tag.
+Verschiebt das ausgewählte Fenster zum vorherigen Tag.
 .TP
 .B Super\-;
-Moves to the next tag.
+Wechselt zum nächsten Tag.
 .TP
 .B Super\-Shift\-;
-Moves selected window to the next tag.
+Verschiebt das ausgewählte Fenster zum nächsten Tag.
 .TP
-.B Super\-PageUp
-Moves to the previous tag.
+.B Super\-BildAuf/BildAb
+Wechselt zum vorherigen/nächsten Tag.
 .TP
-.B Super\-Shift\-PageUp
-Moves selected window to the previous tag.
-.TP
-.B Super\-Pagedown
-Moves to the next tag.
-.TP
-.B Super\-Shift\-PageDown
-Moves selected window to the next tag.
+.B Super\-Shift\-BildAuf/BildAb
+Verschiebt das ausgewählte Fenster zum vorherigen/nächsten Tag.
 .TP
 .B Super\-a
-Toggle gaps.
+Schaltet die Fensterabstände um.
 .TP
 .B Super\-z
-Increase gaps between windows.
+Erhöht die Abstände zwischen den Fenstern.
 .TP
 .B Super\-x
-Decrease gaps between windows.
+Verringert die Abstände zwischen den Fenstern.
 .TP
 .B Super\-Shift\-[1..n]
-Apply nth tag to focused window.
+Wendet das n-te Tag auf das fokussierte Fenster an.
 .TP
 .B Super\-Shift\-0
-Apply all tags to focused window.
+Wendet alle Tags auf das fokussierte Fenster an.
 .TP
 .B Super\-Control\-Shift\-[1..n]
-Add/remove nth tag to/from focused window.
+Fügt das n-te Tag dem fokussierten Fenster hinzu oder entfernt es davon.
 .TP
 .B Super\-[1..n]
-View all windows with nth tag.
+Zeigt alle Fenster mit dem n-ten Tag an.
 .TP
 .B Super\-0
-View all windows with any tag.
+Zeigt alle Fenster mit irgendeinem Tag an.
 .TP
 .B Super\-Control\-[1..n]
-Add/remove all windows with nth tag to/from the view.
+Fügt alle Fenster mit dem n-ten Tag zur Ansicht hinzu oder entfernt sie davon.
 .TP
 .B Super\-Shift\-q
-Quit dwm.
+Beendet dwm.
 .TP
 .B Mod1\-Control\-Shift\-q
-Menu to refresh/quit/reboot/shutdown.
-.SS Mouse commands
+Zeigt ein Menü zum Neustarten/Beenden/Neustarten/Herunterfahren an.
+.SS Mausbefehle
 .TP
-.B Super\-Left click
-Move focused window while dragging. Tiled windows will be toggled to the floating state.
+.B Super\-Linksklick
+Bewegt das fokussierte Fenster beim Ziehen. Kachel-Fenster werden in den Schwebezustand versetzt.
 .TP
-.B Super\-Middle click
-Toggles focused window between floating and tiled state.
+.B Super\-Mittelklick
+Wechselt das fokussierte Fenster zwischen Schweben und Kachel.
 .TP
-.B Super\-Right click
-Resize focused window while dragging. Tiled windows will be toggled to the floating state.
-.SH CUSTOMIZATION
-dwm is customized by creating a custom config.h and (re)compiling the source
-code. This keeps it fast, secure and simple.
+.B Super\-Rechtsklick
+Ändert die Größe des fokussierten Fensters beim Ziehen. Kachel-Fenster werden in den Schwebezustand versetzt.
+.SH ANPASSUNG
+dwm wird angepasst, indem eine benutzerdefinierte config.h erstellt und der Quellcode neu kompiliert wird. Dies hält dwm schnell, sicher und einfach.
 .SH SIGNALS
 .TP
 .B SIGHUP - 1
-Restart the dwm process.
+Startet den dwm-Prozess neu.
 .TP
 .B SIGTERM - 15
-Cleanly terminate the dwm process.
-.SH SEE ALSO
+Beendet den dwm-Prozess sauber.
+.SH SIEHE AUCH
 .BR dmenu (1),
 .BR st (1)
-.SH ISSUES
-Java applications which use the XToolkit/XAWT backend may draw grey windows
-only. The XToolkit/XAWT backend breaks ICCCM-compliance in recent JDK 1.5 and early
-JDK 1.6 versions, because it assumes a reparenting window manager. Possible workarounds
-are using JDK 1.4 (which doesn't contain the XToolkit/XAWT backend) or setting the
-environment variable
+.SH PROBLEME
+Java-Anwendungen, die das XToolkit/XAWT-Backend verwenden, zeigen möglicherweise nur graue Fenster an. Das XToolkit/XAWT-Backend bricht die ICCCM-Konformität in den neueren Versionen von JDK 1.5 und frühen JDK 1.6-Versionen, da es davon ausgeht, dass ein Reparenting-Windows-Manager verwendet wird. Mögliche Workarounds bestehen darin, JDK 1.4 zu verwenden (das nicht das XToolkit/XAWT-Backend enthält) oder die Umgebungsvariable
 .BR AWT_TOOLKIT=MToolkit
-(to use the older Motif backend instead) or running
+zu setzen (um das ältere Motif-Backend zu verwenden) oder
 .B xprop -root -f _NET_WM_NAME 32a -set _NET_WM_NAME LG3D
-or
+oder
 .B wmname LG3D
-(to pretend that a non-reparenting window manager is running that the
-XToolkit/XAWT backend can recognize) or when using OpenJDK setting the environment variable
-.BR _JAVA_AWT_WM_NONREPARENTING=1 .
-.SH BUGS
-Send all bug reports with a patch to hackers@suckless.org.
+auszuführen (um einen nicht-reparentierenden Fenstermanager vorzutäuschen, den das XToolkit/XAWT-Backend erkennen kann) oder bei der Verwendung von OpenJDK die Umgebungsvariable
+.BR _JAVA_AWT_WM_NONREPARENTING=1
+zu setzen.
+.SH FEHLER
+Alle Fehlerberichte mit einem Patch an hackers@suckless.org senden.
