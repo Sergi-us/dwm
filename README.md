@@ -9,7 +9,7 @@ Drücke <kbd>Super+F1</kbd>, um es in dwm anzuzeigen (dafür wird zathura benöt
 
 ## Patches und Funktionen
 
-- [Klickbare Statusleiste](https://dwm.suckless.org/patches/statuscmd/) mit meinem Build von [dwmblocks](https://github.com/Sergi-us/dwmblocks).
+- `statuscmd` [Klickbare Statusleiste](https://dwm.suckless.org/patches/statuscmd/) mit meinem Build von [dwmblocks](https://github.com/Sergi-us/dwmblocks).
 - Liest [xresources](https://dwm.suckless.org/patches/xresources/) Farben/Variablen (d.h. funktioniert mit `pywal`, etc.).
 - Scratchpad: Zugänglich mit <kbd>Mod+Shift+Enter</kbd>.
 - Neue Layouts: bstack, fibonacci, deck, centered master und mehr. Alle gebunden an die Tasten <kbd>Super+(Shift+)t/z/u/i</kbd>.
