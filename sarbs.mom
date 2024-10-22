@@ -37,14 +37,14 @@ und du solltest nicht darüber nachdenken müssen, was du tust.
 .ITEM
 \fBÖkonomie\fP \(en
 Programme sollten einfach und ressourcenschonend sein und hochgradig erweiterbar.
-Aus diesem Grund sind viele Terminal- oder kleine ncurses-Programme, die alle Magie in sich tragen.
+Aus diesem Grund sind viele Terminal- oder kleine ncurses-Programme, die alle Zauber in sich tragen.
 .ITEM
 \fBTastatur-/Vim-Zentralität\fP \(en
 Alle Terminalprogramme (und andere Programme) verwenden, wenn möglich, Vim-Tasten.
 Deine Hände müssen die Grundposition der Tastatur nicht verlassen.
 .ITEM
 \fBDezentralisierung\fP \(en
-Dieses System ist ein Netz aus kleinen, modifizierbaren und ersetzbaren Programmen, die Benutzer leicht anpassen können.
+Dieses System ist ein Netz aus kleinen, modifizierbaren und ersetzbaren Tool's, die Benutzer leicht anpassen können.
 .LIST OFF
 .HEADING 2 "Allgemeine Tastaturänderungen"
 .LI
@@ -55,8 +55,6 @@ Wenn du sie alleine drückst, fungiert sie als Escape, was Vimcraft viel natürl
 aber du kannst es auch gedrückt halten, und es wird als eine weitere Windows/Super/Mod-Taste fungieren.
 .ITEM
 Die Menütaste (normalerweise zwischen der rechten Alt- und Strg-Taste) ist eine alternative Super/Mod-Taste. Dies soll das Einhand-Bedienen auf Laptops erleichtern.
-.ITEM
-Alternativ: eine Compose Taste, die Funktion ist noch in der Testphase, es gibt so viele Tastaturlayots, beim X220 ist da die Menu-Taste, biem X230 wiederum die "Druck" Taste. Ich suche noch den Perfekten Platz für die Compose-Taste, diese Funktion ermöglicht das Schreiben von Umlauten und Sonderzeichen. Hier mal am beispiel "U" Ŭ ŭ Ů ů Ű ű Ų ų Ü ü Ù Ú Û Ü. Aber auch Sonderzeichen, Währungen und Verschiedene Symbole lassen sich so intuitiv eingeben.
 .LIST OFF
 .PP
 Wenn du eine dieser Tastaturänderungen ändern möchtest, musst du nur das \f(CWremaps\fP-Skript öffnen und ändern.
