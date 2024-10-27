@@ -6,7 +6,7 @@
 #define BROWSER "librewolf"
 
 /* Erscheinungsbild */
-static unsigned int borderpx  = 2;        /* border pixel of windows */
+static unsigned int borderpx  = 3;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
 static unsigned int gappih    = 20;       /* horiz inner gap between windows */
 static unsigned int gappiv    = 10;       /* vert inner gap between windows */
@@ -17,12 +17,12 @@ static int smartgaps          = 0;        /* 1 means no outer gap when there is 
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static char *fonts[]          = {
-    "monospace:size=10",
-    "NotoColorEmoji:size=8:antialias=true:autohint=true",
-/*    "Noto Sans:size=12:antialias=true:autohint=true",*/
-/*    "DejaVu Sans:size=12:antialias=true:autohint=true",*/
-/*    "Font Awesome 12 Free Solid:size=10:antialias=true:autohint=true"*/
-    "Symbols Nerd Font:size=8:antialias=true:autohint=true",
+    "monospace:pixelsize=14",
+    "Symbols Nerd Font:pixelsize=14:antialias=true:autohint=true",
+    "NotoColorEmoji:pixelsize=14:antialias=true:autohint=true",
+    "Noto Sans:pixelsize=14:antialias=true:autohint=true",
+    "DejaVu Sans:pixelsize=14:antialias=true:autohint=true",
+    "Font Awesome 12 Free Solid:pixelsize=14:antialias=true:autohint=true"
 };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
