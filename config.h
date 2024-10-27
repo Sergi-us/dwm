@@ -1,5 +1,5 @@
 /* See LICENSE file for copyright and license details. */
-/* SARBS Prelaunch version 0.2 DE */
+/* SARBS 27.10.2024 */
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
