@@ -101,7 +101,7 @@ static const Layout layouts[] = {
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD,	XK_j,	ACTION##stack,	{.i = INC(+1) } }, \
 	{ MOD,	XK_k,	ACTION##stack,	{.i = INC(-1) } }, \
-	{ MOD,  XK_v,   ACTION##stack,  {.i = 0 } }, \
+	/* { MOD,  XK_v,   ACTION##stack,  {.i = 0 } }, \ */
 	/* { MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \ */
 	/* { MOD, XK_a,     ACTION##stack, {.i = 1 } }, \ */
 	/* { MOD, XK_z,     ACTION##stack, {.i = 2 } }, \ */
@@ -157,23 +157,24 @@ static const Key keys[] = {
 	TAGKEYS(			XK_7,		6)
 	TAGKEYS(			XK_8,		7)
 	TAGKEYS(			XK_9,		8)
-	{ MODKEY,			XK_0,		view,		{.ui = ~0 } },
-	{ MODKEY|ShiftMask,		XK_0,		tag,		{.ui = ~0 } },
-	{ MODKEY,			XK_minus,	spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask,		XK_minus,	spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY,			XK_equal,	spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask,		XK_equal,	spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_0,		view,		    {.ui = ~0 } },
+	{ MODKEY|ShiftMask,	XK_0,		tag,		{.ui = ~0 } },
+	{ MODKEY,			XK_minus,	    spawn,		    SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,	XK_minus,	    spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_equal,	    spawn,		    SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,	XK_equal,	    spawn,		SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,			XK_BackSpace,	spawn,		{.v = (const char*[]){ "sysact", NULL } } },
-	{ MODKEY|ShiftMask,		XK_BackSpace,	spawn,		{.v = (const char*[]){ "sysact", NULL } } },
+	{ MODKEY|ShiftMask,	XK_BackSpace,	spawn,	{.v = (const char*[]){ "sysact", NULL } } },
 
-	{ MODKEY,			XK_Tab,		view,		{0} },
+    { MODKEY,           XK_v,           spawn,          SHCMD("vncviewer localhost:5901") },
+	{ MODKEY,			XK_Tab,		    view,		    {0} },
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
-	{ MODKEY,			XK_q,		killclient,	{0} },
+	{ MODKEY,			XK_q,		    killclient,	{0} },
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		{.v = (const char*[]){ "sysact", NULL } } },
-	{ MODKEY,			XK_w,		spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
+	{ MODKEY,			XK_w,		    spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "sudo", "nmtui", NULL } } },
-	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook 2>/dev/null") },
-	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
+	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.abook/addressbook") },
 	{ MODKEY,			XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
 	{ MODKEY|ShiftMask,		XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
 	{ MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
