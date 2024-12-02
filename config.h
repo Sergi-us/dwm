@@ -6,23 +6,21 @@
 #define BROWSER "librewolf"
 
 /* Erscheinungsbild */
-static unsigned int borderpx  = 3;			/* Rahmenbreite der Fenster in Pixeln */
-static unsigned int snap      = 32;			/* Einrastabstand in Pixeln */
-static unsigned int gappih    = 20;			/* Horizontaler innerer Abstand zwischen Fenstern */
-static unsigned int gappiv    = 10;			/* Vertikaler innerer Abstand zwischen Fenstern */
-static unsigned int gappoh    = 10;         /* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static unsigned int gappov    = 30;         /* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static int swallowfloating    = 0;          /* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
-static int smartgaps          = 0;          /* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
-static int showbar            = 1;          /* 0 bedeutet keine Statusleiste */
-static int topbar             = 1;          /* 0 bedeutet Statusleiste unten statt oben */
+static unsigned int borderpx	= 3;			/* Rahmenbreite der Fenster in Pixeln */
+static unsigned int snap		= 32;			/* Einrastabstand in Pixeln */
+static unsigned int gappih		= 20;			/* Horizontaler innerer Abstand zwischen Fenstern */
+static unsigned int gappiv		= 10;			/* Vertikaler innerer Abstand zwischen Fenstern */
+static unsigned int gappoh		= 10;			/* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static unsigned int gappov		= 30;			/* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static int swallowfloating		= 0;			/* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
+static int smartgaps			= 0;			/* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
+static int showbar				= 1;			/* 0 bedeutet keine Statusleiste */
+static int topbar				= 1;			/* 0 bedeutet Statusleiste unten statt oben */
+static int user_bh				= 2;			/* 2 ist die Standart raum um die Schriftart */
 static char *fonts[]          = {
-	"monospace:pixelsize=14",
-	"Symbols Nerd Font:pixelsize=14:antialias=true:autohint=true",
-	"NotoColorEmoji:pixelsize=14:antialias=true:autohint=true",
-	"Noto Sans:pixelsize=14:antialias=true:autohint=true",
-	"DejaVu Sans:pixelsize=14:antialias=true:autohint=true",
-	"Font Awesome 12 Free Solid:pixelsize=14:antialias=true:autohint=true"
+    "JetBrains Mono Nerd Font:style=Thin:pixelsize=14:antialias=true:autohint=true",
+    "Inter:pixelsize=14:antialias=true:autohint=true",
+    "OpenMoji:pixelsize=14:antialias=true:autohint=true",
 };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
