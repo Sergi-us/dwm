@@ -1,5 +1,4 @@
 # Sergi's Build von dwm
-
 ## FAQ
 
 > Was sind die Keybindings (Tastenbindungen)?
