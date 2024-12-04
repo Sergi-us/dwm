@@ -20,7 +20,7 @@ static int user_bh				= 2;			/* 2 ist die Standart raum um die Schriftart */
 static char *fonts[]          = {
     "JetBrains Mono Nerd Font:style=Thin:pixelsize=14:antialias=true:autohint=true",
     "Inter:pixelsize=14:antialias=true:autohint=true",
-    "OpenMoji:pixelsize=14:antialias=true:autohint=true",
+    "OpenMoji:pixelsize=16:antialias=true:autohint=true",
 };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -172,7 +172,7 @@ static const Key keys[] = {
 	{ MODKEY,				XK_e,				spawn,			SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
 	{ MODKEY|ShiftMask,		XK_e,				spawn,			SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.abook/addressbook") },
 	{ MODKEY,				XK_r,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
-	{ MODKEY|ShiftMask,		XK_r,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
+	{ MODKEY|ShiftMask,		XK_r,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
 	{ MODKEY,				XK_t,				setlayout,		{.v = &layouts[0]} }, /* tile */
 	{ MODKEY|ShiftMask,		XK_t,				setlayout,		{.v = &layouts[1]} }, /* bstack */
 	{ MODKEY,				XK_z,				setlayout,		{.v = &layouts[2]} }, /* spiral */
