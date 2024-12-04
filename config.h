@@ -18,9 +18,9 @@ static int showbar				= 1;			/* 0 bedeutet keine Statusleiste */
 static int topbar				= 1;			/* 0 bedeutet Statusleiste unten statt oben */
 static int user_bh				= 2;			/* 2 ist die Standart raum um die Schriftart */
 static char *fonts[]          = {
-    "JetBrains Mono Nerd Font:style=Thin:pixelsize=14:antialias=true:autohint=true",
-    "Inter:pixelsize=14:antialias=true:autohint=true",
-    "OpenMoji:pixelsize=16:antialias=true:autohint=true",
+    "JetBrains Mono Nerd Font:style=Thin:pixelsize=16:antialias=true:autohint=true",
+    "Inter:pixelsize=16:antialias=true:autohint=true",
+    "OpenMoji:pixelsize=18:antialias=true:autohint=true",
 };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -243,6 +243,7 @@ static const Key keys[] = {
 	{ MODKEY,				XK_F2,				spawn,			{.v = (const char*[]){ "tutorialvids", NULL } } },
 	{ MODKEY,				XK_F3,				spawn,			{.v = (const char*[]){ "displayselect", NULL } } },
 	{ MODKEY,				XK_F4,				spawn,			SHCMD(TERMINAL " -e pulsemixer; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,				XK_F5,				xrdb,			{.v = NULL } },
 	{ MODKEY,				XK_F6,				spawn,			{.v = (const char*[]){ "torwrap", NULL } } },
 	{ MODKEY,				XK_F7,				spawn,			{.v = (const char*[]){ "td-toggle", NULL } } },
 	{ MODKEY,				XK_F8,				spawn,			{.v = (const char*[]){ "mailsync", NULL } } },
