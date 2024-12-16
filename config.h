@@ -171,7 +171,7 @@ static const Key keys[] = {
 	{ MODKEY,				XK_e,				spawn,			SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
 	{ MODKEY|ShiftMask,		XK_e,				spawn,			SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.abook/addressbook") },
 	{ MODKEY,				XK_r,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
-	{ MODKEY|ShiftMask,		XK_r,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
+	{ MODKEY|ShiftMask,		XK_r,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
 	{ MODKEY,				XK_t,				setlayout,		{.v = &layouts[0]} }, /* tile */
 	{ MODKEY|ShiftMask,		XK_t,				setlayout,		{.v = &layouts[1]} }, /* bstack */
 	{ MODKEY,				XK_z,				setlayout,		{.v = &layouts[2]} }, /* spiral */
