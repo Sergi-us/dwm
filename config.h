@@ -18,8 +18,8 @@ static int showbar				= 1;			/* 0 bedeutet keine Statusleiste */
 static int topbar				= 1;			/* 0 bedeutet Statusleiste unten statt oben */
 static int user_bh				= 2;			/* 2 ist die Standart raum um die Schriftart */
 static char *fonts[]          = {
-    "JetBrains Mono Nerd Font:style=Thin:pixelsize=20:antialias=true:autohint=true",
-    "OpenMoji:pixelsize=20:antialias=true:autohint=true",
+    "JetBrains Mono Nerd Font:style=Thin:size=15:antialias=true:autohint=true",
+    "OpenMoji:size=15:antialias=true:autohint=true",
 };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
