@@ -17,7 +17,7 @@ static int smartgaps		= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fen
 static int showbar		= 1;	/* 0 bedeutet keine Statusleiste */
 static int topbar		= 1;	/* 0 bedeutet Statusleiste unten statt oben */
 static int user_bh		= 2;	/* 2 ist die Standart raum um die Schriftart */
-static char *fonts[]		= { "VictorMono NF:style=Regular:pixelsize=22:antialias=true:autohint=true", "OpenMoji:size=15:antialias=true:autohint=true" };
+static char *fonts[]		= { "JetBrainsMono NF ExtraLight:style=ExtraLight:pixelsize=22:antialias=true:autohint=true", "OpenMoji:size=15:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -245,9 +245,9 @@ static const Key keys[] = {
 	{ MODKEY,		XK_F8,			spawn,			{.v = (const char*[]){ "mailsync", NULL } } },
 	{ MODKEY,		XK_F9,			spawn,			{.v = (const char*[]){ "mounter", NULL } } },
 	{ MODKEY,		XK_F10,			spawn,			{.v = (const char*[]){ "unmounter", NULL } } },
-	{ MODKEY|ShiftMask,	XK_F10,			spawn,			SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless --mouse=sdk --new-display=2000x2000") },
+	{ MODKEY|ShiftMask,	XK_F10,     spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless --mouse=sdk --new-display=2000x2000") },
 	{ MODKEY,		XK_F11,			spawn,			{.v = (const char*[]){ "cam", NULL } } },
-	{ MODKEY|ShiftMask,	XK_F11,			spawn,			SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless") },
+	{ MODKEY|ShiftMask,	XK_F11,     spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless") },
 	{ MODKEY,		XK_F12,			spawn,			SHCMD("remaps") },
 	{ MODKEY,		XK_space,		zoom,			{0} },
 	{ MODKEY|ShiftMask,	XK_space,		togglefloating,	{0} },
