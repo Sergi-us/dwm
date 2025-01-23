@@ -6,13 +6,13 @@
 #define BROWSER "librewolf"
 
 /* Erscheinungsbild */
-static unsigned int borderpx	= 3;	/* Rahmenbreite der Fenster in Pixeln */
+static unsigned int borderpx	= 4;	/* Rahmenbreite der Fenster in Pixeln */
 static unsigned int snap	= 32;	/* Einrastabstand in Pixeln */
-static unsigned int gappih	= 20;	/* Horizontaler innerer Abstand zwischen Fenstern */
-static unsigned int gappiv	= 10;	/* Vertikaler innerer Abstand zwischen Fenstern */
-static unsigned int gappoh	= 10;	/* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static unsigned int gappov	= 30;	/* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static int swallowfloating	= 0;	/* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
+static unsigned int gappih	= 14;	/* Horizontaler innerer Abstand zwischen Fenstern */
+static unsigned int gappiv	= 7;	/* Vertikaler innerer Abstand zwischen Fenstern */
+static unsigned int gappoh	= 7;	/* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static unsigned int gappov	= 20;	/* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static int swallowfloating	= 1;	/* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
 static int smartgaps		= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
 static int showbar		= 1;	/* 0 bedeutet keine Statusleiste */
 static int topbar		= 1;	/* 0 bedeutet Statusleiste unten statt oben */
@@ -46,18 +46,18 @@ static Sp scratchpads[] = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	*/
-	/* class		instance    title			tags mask   isfloating	isterminal	noswallow  monitor */
-	{ "Gimp",		NULL,		NULL,       	1 << 8,     0,			0,			0,        -1 },
-	{ TERMCLASS,	NULL,       NULL,       	0,          0,			1,			0,        -1 },
-	{ NULL,			NULL,       "Event Tester", 0,          0,			0,			1,        -1 },
-	{ TERMCLASS,	"floatterm",NULL,       	0,			1,			1,			0,        -1 },
-	{ TERMCLASS,	"bg",		NULL,       	1 << 7,     0,			1,			0,        -1 },
-	{ TERMCLASS,	"spterm",   NULL,       	SPTAG(0),   1,			1,			0,        -1 },
-	{ TERMCLASS,	"spcalc",   NULL,       	SPTAG(1),   1,			1,			0,        -1 },
+    /* xprop(1):
+    *	WM_CLASS(STRING) = instance, class
+    *	WM_NAME(STRING) = title
+    */
+    /* class		instance    title			tags mask   isfloating	isterminal	noswallow  monitor */
+    { "Gimp",		NULL,		NULL,       	1 << 8,     0,			0,			0,        -1 },
+    { TERMCLASS,	NULL,       NULL,       	0,          0,			1,			0,        -1 },
+    { NULL,			NULL,       "Event Tester", 0,          0,			0,			1,        -1 },
+    { TERMCLASS,	"floatterm",NULL,       	0,			1,			1,			0,        -1 },
+    { TERMCLASS,	"bg",		NULL,       	1 << 7,     0,			1,			0,        -1 },
+    { TERMCLASS,	"spterm",   NULL,       	SPTAG(0),   1,			1,			0,        -1 },
+    { TERMCLASS,	"spcalc",   NULL,       	SPTAG(1),   1,			1,			0,        -1 },
 };
 
 /* layout(s) */
