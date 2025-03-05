@@ -51,13 +51,14 @@ static const Rule rules[] = {
     *	WM_NAME(STRING) = title
     */
     /* class		instance    title			tags mask   isfloating	isterminal	noswallow  monitor */
-    { "Gimp",		NULL,		NULL,       	1 << 8,     0,			0,			0,        -1 },
-    { TERMCLASS,	NULL,       NULL,       	0,          0,			1,			0,        -1 },
-    { NULL,			NULL,       "Event Tester", 0,          0,			0,			1,        -1 },
-    { TERMCLASS,	"floatterm",NULL,       	0,			1,			1,			0,        -1 },
-    { TERMCLASS,	"bg",		NULL,       	1 << 7,     0,			1,			0,        -1 },
-    { TERMCLASS,	"spterm",   NULL,       	SPTAG(0),   1,			1,			0,        -1 },
-    { TERMCLASS,	"spcalc",   NULL,       	SPTAG(1),   1,			1,			0,        -1 },
+    { "Gimp",		NULL,		NULL,       	1 << 8,     0,			0,          0,          -1 },
+    { "st",         NULL,       NULL,           0,          0,          1,          0,          -1 },
+    { TERMCLASS,	NULL,       NULL,       	0,          0,			1,			0,          -1 },
+    { NULL,			NULL,       "Event Tester", 0,          0,			0,			1,          -1 },
+    { TERMCLASS,	"floatterm",NULL,       	0,			1,			1,			0,          -1 },
+    { TERMCLASS,	"bg",		NULL,       	1 << 7,     0,			1,			0,          -1 },
+    { TERMCLASS,	"spterm",   NULL,       	SPTAG(0),   1,			1,			0,          -1 },
+    { TERMCLASS,	"spcalc",   NULL,       	SPTAG(1),   1,			1,			0,          -1 },
 };
 
 /* layout(s) */
@@ -206,7 +207,8 @@ static const Key keys[] = {
 /*  { MODKEY|ShiftMask, XK_bracketleft,     spawn,			{.v = (const char*[]){ "mpc", "seek", "-60", NULL } } },    */
 /*  { MODKEY,           XK_bracketright,    spawn,			{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },    */
 /*  { MODKEY|ShiftMask, XK_bracketright,    spawn,			{.v = (const char*[]){ "mpc", "seek", "+60", NULL } } },    */
-	{ MODKEY,           XK_backslash,       view,			{0} },
+/*  === Der Backslash / ist unereichbar auf der Deutschen Tastatur ===      */
+/*  { MODKEY,           XK_backslash,       view,			{0} },          */
 /*  { MODKEY|ShiftMask,	XK_backslash,		spawn,			SHCMD("") },    */
 	{ MODKEY,           XK_a,				togglegaps,		{0} },
 	{ MODKEY|ShiftMask, XK_a,				defaultgaps,	{0} },
@@ -239,11 +241,14 @@ static const Key keys[] = {
 	{ MODKEY,           XK_Return,          spawn,			{.v = termcmd } },
 	{ MODKEY|ShiftMask, XK_Return,          togglescratch,	{.ui = 0} },
 	{ MODKEY,           XK_y,               incrgaps,		{.i = +3 } },
-/*  { MODKEY|ShiftMask,	XK_y,               spawn,			SHCMD("") },    */
-	{ MODKEY,           XK_x,               incrgaps,		{.i = -3 } },
+    { MODKEY|ShiftMask,	XK_y,               incrgaps,       {.i = -3 } },
+/*  { MODKEY,           XK_x,               incrgaps,		{.i = -3 } },   */
 /*  { MODKEY|ShiftMask,	XK_x,               spawn,			SHCMD("") },    */
-	{ MODKEY,           XK_c,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "profanity", NULL } } },
+    { MODKEY,           XK_c,               spawn,          {.v = (const char*[]){ "dmenucliphist", "add", NULL } } },
+/*  { MODKEY,           XK_c,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "profanity", NULL } } }, */
 /*  { MODKEY|ShiftMask,	XK_c,               spawn,			SHCMD("") },    */
+    { MODKEY,           XK_v,               spawn,          {.v = (const char*[]){ "dmenucliphist", "sel", NULL } } },
+/*  { MODKEY,           XK_v,               spawn,  für Copieren          */
 /* === V is automatically bound above in STACKKEYS === */
 	{ MODKEY,           XK_b,               togglebar,		{0} },
 /*  { MODKEY|ShiftMask,	XK_b,               spawn,			{.v = (const char*[]){ "bookmarkthis", NULL} } },   */
@@ -299,7 +304,7 @@ static const Key keys[] = {
 	{ 0,    XF86XK_TaskPane,					spawn,			{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
 	{ 0,    XF86XK_Mail,						spawn,			SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
 	{ 0,    XF86XK_MyComputer,					spawn,			{.v = (const char*[]){ TERMINAL, "-e",  "lfub",  "/", NULL } } },
-	/* { 0,		XF86XK_Battery,						spawn,			SHCMD("") }, */
+/*  { 0,    XF86XK_Battery,						spawn,			SHCMD("") }, */
 	{ 0,    XF86XK_Launch1,						spawn,			{.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } },
 	{ 0,    XF86XK_TouchpadToggle,				spawn,			SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
 	{ 0,    XF86XK_TouchpadOff,					spawn,			{.v = (const char*[]){ "synclient", "TouchpadOff=1", NULL } } },
@@ -328,28 +333,28 @@ static const Key keys[] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
-	/* click                event mask      button          function        argument */
+    /* click                event mask      button          function        argument */
 #ifndef __OpenBSD__
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
-	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
-	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
-	{ ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
-	{ ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
-	{ ClkStatusText,        ShiftMask,      Button1,        sigdwmblocks,   {.i = 6} },
+    { ClkWinTitle,          0,              Button2,        zoom,           {0} },
+    { ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
+    { ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
+    { ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
+    { ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
+    { ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
+    { ClkStatusText,        ShiftMask,      Button1,        sigdwmblocks,   {.i = 6} },
 #endif
-	{ ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD(TERMINAL " -e nvim ~/.local/src/dwmblocks/config.h") },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        defaultgaps,	{0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkClientWin,		MODKEY,		Button4,	incrgaps,	{.i = +1} },
-	{ ClkClientWin,		MODKEY,		Button5,	incrgaps,	{.i = -1} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-	{ ClkTagBar,		0,		Button4,	shiftview,	{.i = -1} },
-	{ ClkTagBar,		0,		Button5,	shiftview,	{.i = 1} },
-	{ ClkRootWin,		0,		Button2,	togglebar,	{0} },
+    { ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD(TERMINAL " -e nvim ~/.local/src/dwmblocks/config.h") },
+    { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+    { ClkClientWin,         MODKEY,         Button2,        defaultgaps,    {0} },
+    { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+    { ClkClientWin,         MODKEY,         Button4,        incrgaps,       {.i = +1} },
+    { ClkClientWin,         MODKEY,         Button5,        incrgaps,       {.i = -1} },
+    { ClkTagBar,            0,              Button1,        view,           {0} },
+    { ClkTagBar,            0,              Button3,        toggleview,     {0} },
+    { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+    { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    { ClkTagBar,            0,              Button4,        shiftview,      {.i = -1} },
+    { ClkTagBar,            0,              Button5,        shiftview,      {.i = 1} },
+    { ClkRootWin,           0,              Button2,        togglebar,      {0} },
 };
 
