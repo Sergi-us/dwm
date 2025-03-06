@@ -1,7 +1,6 @@
 .gitignore
 *.orig
 *.rej
-patches
 util.o
 dwm
 dwm.o
