@@ -15,7 +15,7 @@ Drücke <kbd>Super+F1</kbd>, um es in dwm anzuzeigen (dafür wird zathura benöt
 - `xresources` https://dwm.suckless.org/patches/xresources/
 	- Liest Farben/Variablen (d.h. funktioniert mit `pywal`, etc.).
 - `scratchpad` https://dwm.suckless.org/patches/scratchpads/
-	- Ermöglicht das Erstellen von versteckten Terminals (Scratchpads), die bei Bedarf ein- und ausgeblendet werden können. Zugänglich mit <kbd>Mod+Shift+Enter</kbd>.
+	- Ermöglicht das Erstellen von versteckten Terminals (Scratchpads), die bei Bedarf ein- und ausgeblendet werden können. Zugänglich mit <kbd>Mod+Shift+Enter</kbd> <kbd>Mod+Shift+Druck</kbd>.
 - Neue Layouts: bstack, fibonacci, deck, centered master und mehr. Alle gebunden an die Tasten <kbd>Super+(Shift+)t/z/u/i</kbd>.
 - `swallow` https://dwm.suckless.org/patches/swallow/
 	- fügt "Window Swallowing" hinzu. Wenn ein aus einem Terminal gestartetes Programm es unbenutzbar machen würde, nimmt es vorübergehend dessen Platz ein, um Platz zu sparen.
