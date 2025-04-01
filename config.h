@@ -17,7 +17,7 @@ static int smartgaps		= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fen
 static int showbar		= 1;	/* 0 bedeutet keine Statusleiste */
 static int topbar		= 1;	/* 0 bedeutet Statusleiste unten statt oben */
 static int user_bh		= 2;	/* 2 ist die Standart raum um die Schriftart */
-static char *fonts[]		= { "JetBrainsMono NF ExtraLight:style=ExtraLight:size=10:antialias=true:autohint=true", "OpenMoji:size=10:antialias=true:autohint=true" };
+static char *fonts[]		= { "JetBrainsMono NF ExtraLight:style=ExtraLight:size=12:antialias=true:autohint=true", "OpenMoji:size=12:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -34,7 +34,7 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x33", NULL };
+const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x35", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -250,7 +250,7 @@ static const Key keys[] = {
 /*  { MODKEY,           XK_v,               spawn,  für Copieren          */
 /* === V is automatically bound above in STACKKEYS === */
 	{ MODKEY,           XK_b,               togglebar,		{0} },
-/*  { MODKEY|ShiftMask,	XK_b,               spawn,			{.v = (const char*[]){ "bookmarkthis", NULL} } },   */
+/*  { MODKEY|ShiftMask,	XK_b,               spawn,			{.v = (const char*[]){ TERMINAL, "setbg" "~/Bilder/Hintergrundbilder", NULL} } }, */
 	{ MODKEY,           XK_n,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "nvim", "-c", "VimwikiIndex", NULL } } },
 	{ MODKEY|ShiftMask, XK_n,               spawn,			SHCMD(TERMINAL " -e newsboat ; pkill -RTMIN+6 dwmblocks") },
 	{ MODKEY,           XK_m,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
