@@ -1,5 +1,5 @@
 /* See LICENSE file for copyright and license details. */
-/* SARBS 27.10.2024 */
+/* SARBS 19.06.2025 */
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
