@@ -17,7 +17,7 @@ static int smartgaps		= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fen
 static int showbar		= 1;	/* 0 bedeutet keine Statusleiste */
 static int topbar		= 1;	/* 0 bedeutet Statusleiste unten statt oben */
 static int user_bh		= 2;	/* 2 ist die Standart raum um die Schriftart */
-static char *fonts[]		= { "JetBrainsMono NF ExtraLight:style=ExtraLight:size=12:antialias=true:autohint=true", "OpenMoji:size=12:antialias=true:autohint=true" };
+static char *fonts[]		= { "JetBrainsMono NF:style=ExtraLight:pixelsize=20:antialias=true:autohint=true", "OpenMoji:pixelsize=20:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -183,7 +183,7 @@ static const Key keys[] = {
 	{ MODKEY,           XK_q,               killclient,		{0} },
 	{ MODKEY|ShiftMask, XK_q,               spawn,			{.v = (const char*[]){ "sysact", NULL } } },
 	{ MODKEY,           XK_w,               spawn,			{.v = (const char*[]){ BROWSER, NULL } } },
-	{ MODKEY|ShiftMask, XK_w,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "sudo", "nmtui", NULL } } },
+	{ MODKEY|ShiftMask, XK_w,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "nmtui", NULL } } },
 	{ MODKEY,           XK_e,               spawn,			SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
 	{ MODKEY|ShiftMask, XK_e,               spawn,			SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.abook/addressbook") },
 	{ MODKEY,           XK_r,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
@@ -252,7 +252,7 @@ static const Key keys[] = {
 	{ MODKEY,           XK_b,               togglebar,		{0} },
 /*  { MODKEY|ShiftMask,	XK_b,               spawn,			{.v = (const char*[]){ TERMINAL, "setbg" "~/Bilder/Hintergrundbilder", NULL} } }, */
 	{ MODKEY,           XK_n,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "nvim", "-c", "VimwikiIndex", NULL } } },
-	{ MODKEY|ShiftMask, XK_n,               spawn,			SHCMD(TERMINAL " -e newsboat ; pkill -RTMIN+6 dwmblocks") },
+	{ MODKEY|ShiftMask, XK_n,               spawn,			SHCMD(TERMINAL " -e newsraft ; pkill -RTMIN+6 dwmblocks") },
 	{ MODKEY,           XK_m,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
     { MODKEY|ShiftMask,	XK_m,               spawn,			SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,           XK_comma,           spawn,			{.v = (const char*[]){ "mpc", "prev", NULL } } },
