@@ -3,7 +3,7 @@
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
-#define BROWSER "librewolf"
+#define BROWSER "qutebrowser"
 
 /* Erscheinungsbild */
 static unsigned int borderpx	= 2;	/* Rahmenbreite der Fenster in Pixeln */
@@ -17,7 +17,7 @@ static int smartgaps		= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fen
 static int showbar		= 1;	/* 0 bedeutet keine Statusleiste */
 static int topbar		= 1;	/* 0 bedeutet Statusleiste unten statt oben */
 static int user_bh		= 2;	/* 2 ist die Standart raum um die Schriftart */
-static char *fonts[]		= { "JetBrainsMono NF:style=ExtraLight:pixelsize=20:antialias=true:autohint=true", "OpenMoji:pixelsize=20:antialias=true:autohint=true" };
+static char *fonts[]		= { "JetBrainsMono NF:style=ExtraLight:size=14:antialias=true:autohint=true", "OpenMoji:size=14:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
