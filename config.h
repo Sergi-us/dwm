@@ -1,5 +1,5 @@
 /* See LICENSE file for copyright and license details. */
-/* SARBS 19.06.2025 */
+/* SERGI 19.06.2025 */
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
@@ -245,12 +245,12 @@ static const Key keys[] = {
 /*  { MODKEY|ShiftMask,	XK_x,               spawn,			SHCMD("") },    */
     { MODKEY,           XK_c,               spawn,          {.v = (const char*[]){ "cliphist", "add", NULL } } },
 /*  { MODKEY,           XK_c,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "profanity", NULL } } }, */
-/*  { MODKEY|ShiftMask,	XK_c,               spawn,			SHCMD("") },    */
+    { MODKEY|ShiftMask, XK_c,               spawn,          SHCMD("st -e calcurse") },
     { MODKEY,           XK_v,               spawn,          {.v = (const char*[]){ "cliphist", "sel", NULL } } },
 /*  { MODKEY,           XK_v,               spawn,  für Copieren          */
 /* === V is automatically bound above in STACKKEYS === */
 	{ MODKEY,           XK_b,               togglebar,		{0} },
-/*  { MODKEY|ShiftMask,	XK_b,               spawn,			{.v = (const char*[]){ TERMINAL, "setbg" "~/Bilder/Hintergrundbilder", NULL} } }, */
+    { MODKEY|ShiftMask,	XK_b,               spawn,			{.v = (const char*[]){ TERMINAL, "setbg" "~/Bilder/Hintergrundbilder", NULL} } },
 	{ MODKEY,           XK_n,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "nvim", "-c", "VimwikiIndex", NULL } } },
 	{ MODKEY|ShiftMask, XK_n,               spawn,			SHCMD(TERMINAL " -e newsraft ; pkill -RTMIN+6 dwmblocks") },
 	{ MODKEY,           XK_m,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
