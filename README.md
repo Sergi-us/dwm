@@ -8,7 +8,7 @@ Drücke <kbd>Super+F1</kbd>, um es in dwm anzuzeigen (dafür wird zathura benöt
 
 ## Patches und Funktionen
 
-- bar height https://dwm.suckless.org/patches/bar_height/
+- `bar height` https://dwm.suckless.org/patches/bar_height/
 	- erlaubt die höhe der Statusbar in Pixeln anzugeben
 - `statuscmd` https://dwm.suckless.org/patches/statuscmd/
 	- mit meinem Build von [dwmblocks](https://github.com/Sergi-us/dwmblocks).
