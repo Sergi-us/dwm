@@ -17,7 +17,7 @@ static int smartgaps		= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fen
 static int showbar		= 1;	/* 0 bedeutet keine Statusleiste */
 static int topbar		= 1;	/* 0 bedeutet Statusleiste unten statt oben */
 static int user_bh		= 2;	/* 2 ist die Standart raum um die Schriftart */
-static char *fonts[]		= { "JetBrainsMono NF:style=ExtraLight:size=12:antialias=true:autohint=true", "OpenMoji:size=12:antialias=true:autohint=true" };
+static char *fonts[]		= { "JetBrainsMono NF:style=ExtraLight:size=7:antialias=true:autohint=true", "OpenMoji:size=8:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -35,7 +35,7 @@ typedef struct {
 	const void *cmd;
 } Sp;
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x35", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
+const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=10", "-g", "50x20", "-e", "bc", "-lq", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
@@ -269,7 +269,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask, XK_Page_Up,         shifttag,		{ .i = -1 } },
 	{ MODKEY,           XK_Page_Down,       shiftview,		{ .i = +1 } },
 	{ MODKEY|ShiftMask, XK_Page_Down,       shifttag,		{ .i = +1 } },
-	{ MODKEY,           XK_Insert,          spawn,          SHCMD("xdotool type $(grep -v '^#' ~/.local/share/sarbs/snippets | dmenu -i -b -l 25 -fn 'JetBrainsMono NF ExtraLight-15' -p 'Link:' | cut -d' ' -f1)") },
+	{ MODKEY,           XK_Insert,          spawn,          SHCMD("xdotool type $(grep -v '^#' ~/.local/share/sarbs/snippets | dmenu -i -b -l 25 -p 'Link:' | cut -d' ' -f1)") },
 	{ MODKEY|ShiftMask, XK_Insert,          spawn,          {.v = (const char*[]){ "bookmarkthis", NULL} } },
 	{ MODKEY,           XK_space,           zoom,			{0} },
 	{ MODKEY|ShiftMask, XK_space,           togglefloating,	{0} },
