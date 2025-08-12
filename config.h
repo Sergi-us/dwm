@@ -6,18 +6,21 @@
 #define BROWSER "qutebrowser"
 
 /* Erscheinungsbild */
-static unsigned int borderpx	= 2;	/* Rahmenbreite der Fenster in Pixeln */
-static unsigned int snap	= 32;	/* Einrastabstand in Pixeln */
-static unsigned int gappih	= 14;	/* Horizontaler innerer Abstand zwischen Fenstern */
-static unsigned int gappiv	= 7;	/* Vertikaler innerer Abstand zwischen Fenstern */
-static unsigned int gappoh	= 7;	/* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static unsigned int gappov	= 20;	/* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static int swallowfloating	= 1;	/* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
-static int smartgaps		= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
-static int showbar		= 1;	/* 0 bedeutet keine Statusleiste */
-static int topbar		= 1;	/* 0 bedeutet Statusleiste unten statt oben */
-static int user_bh		= 2;	/* 2 ist die Standart raum um die Schriftart */
-static char *fonts[]		= { "JetBrainsMono NF:style=ExtraLight:size=7:antialias=true:autohint=true", "OpenMoji:size=8:antialias=true:autohint=true" };
+static unsigned int borderpx    = 2;    /* Rahmenbreite der Fenster in Pixeln */
+static unsigned int snap        = 32;   /* Einrastabstand in Pixeln */
+static unsigned int gappih      = 14;   /* Horizontaler innerer Abstand zwischen Fenstern */
+static unsigned int gappiv      = 7;    /* Vertikaler innerer Abstand zwischen Fenstern */
+static unsigned int gappoh      = 7;    /* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static unsigned int gappov      = 20;   /* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static int swallowfloating      = 1;    /* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
+static int smartgaps            = 0;    /* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
+static int showbar              = 1;    /* 0 bedeutet keine Statusleiste */
+static int topbar               = 1;    /* 0 bedeutet Statusleiste unten statt oben */
+static int user_bh              = 2;    /* 2 ist die Standart raum um die Schriftart */
+static char *fonts[]            = {
+    "JetBrainsMono NF:style=ExtraLight:size=8:antialias=true:autohint=true",
+    "OpenMoji:size=8:antialias=true:autohint=true"
+};
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
