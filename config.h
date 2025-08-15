@@ -19,7 +19,7 @@ static int topbar               = 1;    /* 0 bedeutet Statusleiste unten statt o
 static int user_bh              = 2;    /* 2 ist die Standart raum um die Schriftart */
 static char *fonts[]            = {
     "JetBrainsMono NF:style=ExtraLight:size=8:antialias=true:autohint=true",
-    "OpenMoji:size=8:antialias=true:autohint=true"
+    "OpenMoji:size=9:antialias=true:autohint=true"
 };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
