@@ -217,7 +217,7 @@ static const Key keys[] = {
 	{ MODKEY,           XK_s,				togglesticky,	{0} },
 /*  { MODKEY|ShiftMask,	XK_s,				spawn,			SHCMD("") },    */
 	{ MODKEY,           XK_d,				spawn,			{.v = (const char*[]){ "dmenu_run", NULL } } },
-	{ MODKEY|ShiftMask, XK_d,				spawn,			{.v = (const char*[]){ "passmenu", NULL } } },
+	{ MODKEY|ShiftMask, XK_d,				spawn,			{.v = (const char*[]){ "rofi-pass", NULL } } },
 	{ MODKEY,           XK_f,				togglefullscr,	{0} },
 	{ MODKEY|ShiftMask, XK_f,				setlayout,		{.v = &layouts[8]} },
 	{ MODKEY,           XK_g,				shiftview,		{ .i = -1 } },
@@ -225,6 +225,8 @@ static const Key keys[] = {
 	{ MODKEY,           XK_h,				setmfact,		{.f = -0.05} },
 /*  { MODKEY|ShiftMask, XK_h, */
 /*  === J and K are automatically bound above in STACKEYS === */
+/*  { MODKEY|ShiftMask, XK_k,               spawn,          SHCMD("$TERMINAL -e calcurse") }, */
+    { MODKEY|ShiftMask, XK_k,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "calcurse", NULL } } },
 	{ MODKEY,           XK_l,               setmfact,		{.f = +0.05} },
 /*  { MODKEY|ShiftMask, XK_l, */
 /*  { MODKEY,           XK_ö, */
@@ -247,8 +249,7 @@ static const Key keys[] = {
 /*  { MODKEY,           XK_x,               incrgaps,		{.i = -3 } },   */
 /*  { MODKEY|ShiftMask,	XK_x,               spawn,			SHCMD("") },    */
     { MODKEY,           XK_c,               spawn,          {.v = (const char*[]){ "cliphist", "add", NULL } } },
-/*  { MODKEY,           XK_c,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "profanity", NULL } } }, */
-    { MODKEY|ShiftMask, XK_c,               spawn,          SHCMD("st -e calcurse") },
+    { MODKEY|ShiftMask, XK_c,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "profanity", NULL } } },
     { MODKEY,           XK_v,               spawn,          {.v = (const char*[]){ "cliphist", "sel", NULL } } },
 /*  { MODKEY,           XK_v,               spawn,  für Copieren          */
 /* === V is automatically bound above in STACKKEYS === */
