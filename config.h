@@ -172,7 +172,8 @@ static const Key keys[] = {
 /*  { MODKEY|ShiftMask, XK_F6, */
 	{ MODKEY,           XK_F7,              spawn,			{.v = (const char*[]){ "td-toggle", NULL } } },
 /*  { MODKEY|ShiftMask, XK_F7, */
-	{ MODKEY,           XK_F8,              spawn,			{.v = (const char*[]){ "mailsync", NULL } } },
+/*	{ MODKEY,           XK_F8,              spawn,			{.v = (const char*[]){ "mailsync", NULL } } },  */
+    { MODKEY,           XK_F8,              spawn,          SHCMD("BLOCK_BUTTON=1 sb-mailbox") },
 /*  { MODKEY|ShiftMask, XK_F8, */
 	{ MODKEY,           XK_F9,              spawn,			{.v = (const char*[]){ "mounter", NULL } } },
 /*  { MODKEY|ShiftMask, XK_F9, */
@@ -215,9 +216,10 @@ static const Key keys[] = {
 	{ MODKEY,           XK_a,				togglegaps,		{0} },
 	{ MODKEY|ShiftMask, XK_a,				defaultgaps,	{0} },
 	{ MODKEY,           XK_s,				togglesticky,	{0} },
-/*  { MODKEY|ShiftMask,	XK_s,				spawn,			SHCMD("") },    */
-	{ MODKEY,           XK_d,				spawn,			{.v = (const char*[]){ "dmenu_run", NULL } } },
-	{ MODKEY|ShiftMask, XK_d,				spawn,			{.v = (const char*[]){ "rofi-pass", NULL } } },
+/*	{ MODKEY,ShiftMask  XK_s,				spawn,          SHCMD("") },    */
+    { MODKEY,           XK_d,               spawn,          SHCMD("rofi -show drun") },
+    { MODKEY|ShiftMask, XK_d,               spawn,          SHCMD("rofi-pass") },
+/*	{ MODKEY|ShiftMask, XK_d,				spawn,			{.v = (const char*[]){ "rofi-pass", NULL } } }, */
 	{ MODKEY,           XK_f,				togglefullscr,	{0} },
 	{ MODKEY|ShiftMask, XK_f,				setlayout,		{.v = &layouts[8]} },
 	{ MODKEY,           XK_g,				shiftview,		{ .i = -1 } },
