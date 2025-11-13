@@ -155,8 +155,8 @@ static const Key keys[] = {
 	{ MODKEY,           XK_0,               view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask, XK_0,               tag,            {.ui = ~0 } },
 /* equal ist auf der Deutschen Tastatur nicht ohne Umschaltebene erreichbar TODO neue Taste finden */
-	{ MODKEY,           XK_equal,           spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask, XK_equal,           spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY,           XK_equal,           spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask, XK_equal,           spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
 	{ MODKEY,           XK_BackSpace,       spawn,			{.v = (const char*[]){ "sysact", NULL } } },
 	{ MODKEY|ShiftMask, XK_BackSpace,       spawn,			{.v = (const char*[]){ "sysact", NULL } } },
 /*  { MODKEY|ShiftMask, XK_Escape,          spawn,          SHCMD("") }, (für auswerfen von Tomb vorgemerkt*/
@@ -166,7 +166,7 @@ static const Key keys[] = {
 /*  { MODKEY|ShiftMask, XK_F2, */
 	{ MODKEY,           XK_F3,              spawn,          {.v = (const char*[]){ "displayselect", NULL } } },
 /*  { MODKEY|ShiftMask, XK_F3, */
-	{ MODKEY,           XK_F4,              spawn,          SHCMD(TERMINAL " -e pulsemixer; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY,           XK_F4,              spawn,          SHCMD(TERMINAL " -e pulsemixer; .local/bin/statusbar/sb-volume 55") },
 /*  { MODKEY|ShiftMask, XK_F4, */
 	{ MODKEY,           XK_F5,              xrdb,           {.v = NULL } },
 /*  { MODKEY|ShiftMask, XK_F5, */
@@ -262,15 +262,15 @@ static const Key keys[] = {
 	{ MODKEY,           XK_n,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "nvim", "-c", "VimwikiIndex", NULL } } },
 	{ MODKEY|ShiftMask, XK_n,               spawn,			SHCMD(TERMINAL " -e newsraft ; pkill -RTMIN+6 dwmblocks") },
 	{ MODKEY,           XK_m,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "rmpc", NULL } } },
-    { MODKEY|ShiftMask,	XK_m,               spawn,			SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -55 $(pidof dwmblocks)") },
+    { MODKEY|ShiftMask,	XK_m,               spawn,			SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; .local/bin/statusbar/sb-volume 55") },
 	{ MODKEY,           XK_comma,           spawn,			{.v = (const char*[]){ "mpc", "prev", NULL } } },
 	{ MODKEY|ShiftMask, XK_comma,           spawn,			{.v = (const char*[]){ "mpc", "seek", "0%", NULL } } },
 	{ MODKEY,           XK_period,          spawn,			{.v = (const char*[]){ "mpc", "next", NULL } } },
 	{ MODKEY|ShiftMask, XK_period,          spawn,			{.v = (const char*[]){ "mpc", "repeat", NULL } } },
-	{ MODKEY,           XK_minus,           spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask, XK_minus,           spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY,           XK_plus,            spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask, XK_plus,            spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY,           XK_minus,           spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask, XK_minus,           spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY,           XK_plus,            spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask, XK_plus,            spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
 	{ MODKEY,           XK_Left,            focusmon,		{.i = -1 } },
 	{ MODKEY|ShiftMask, XK_Left,            tagmon,			{.i = -1 } },
 	{ MODKEY,           XK_Right,           focusmon,		{.i = +1 } },
@@ -293,8 +293,8 @@ static const Key keys[] = {
 	{ MODKEY,           XK_Home,		spawn,			SHCMD("killall screenkey || screenkey &") },
 
 	{ 0,    XF86XK_AudioMute,					spawn,			SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -55 $(pidof dwmblocks)") },
-	{ 0,    XF86XK_AudioRaiseVolume,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%- && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -55 $(pidof dwmblocks)") },
-	{ 0,    XF86XK_AudioLowerVolume,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%+ && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -55 $(pidof dwmblocks)") },
+	{ 0,    XF86XK_AudioRaiseVolume,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%- && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ 0,    XF86XK_AudioLowerVolume,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%+ && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
 	{ 0,    XF86XK_AudioPrev,					spawn,			{.v = (const char*[]){ "mpc", "prev", NULL } } },
 	{ 0,    XF86XK_AudioNext,					spawn,			{.v = (const char*[]){ "mpc", "next", NULL } } },
 	{ 0,    XF86XK_AudioPause,					spawn,			{.v = (const char*[]){ "mpc", "pause", NULL } } },
