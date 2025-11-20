@@ -17,17 +17,20 @@ static int smartgaps            = 0;    /* 1 bedeutet kein äußerer Abstand wen
 static int showbar              = 1;    /* 0 bedeutet keine Statusleiste */
 static int topbar               = 1;    /* 0 bedeutet Statusleiste unten statt oben */
 static int user_bh              = 2;    /* 2 ist die Standart raum um die Schriftart */
-static char *fonts[]            = {
+static const char *fonts[]      = {
     "JetBrainsMono NF:style=ExtraLight:size=8:antialias=true:autohint=true",
     "OpenMoji:size=9:antialias=true:autohint=true"
 };
+/* Installierte Schriftarten
+
+*/
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#770000";
 static char selbgcolor[]            = "#005577";
-static char *colors[][3] = {
+static const char *colors[][3] = {
 	/*               fg           bg           border   */
 	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
 	[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
