@@ -250,6 +250,7 @@ static void sigdwmblocks(const Arg *arg);
 #endif
 static void sighup(int unused);
 static void sigterm(int unused);
+static void sigusr1(int unused);
 static void spawn(const Arg *arg);
 static int stackpos(const Arg *arg);
 static void tag(const Arg *arg);
@@ -323,6 +324,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 static Atom wmatom[WMLast], netatom[NetLast];
 static int restart = 0;
 static int running = 1;
+static volatile sig_atomic_t reload_xrdb = 0;
 static Cur *cursor[CurLast];
 static Clr **scheme;
 static Display *dpy;
@@ -1616,9 +1618,14 @@ run(void)
 	XEvent ev;
 	/* main event loop */
 	XSync(dpy, False);
-	while (running && !XNextEvent(dpy, &ev))
+	while (running && !XNextEvent(dpy, &ev)) {
+		if (reload_xrdb) {
+			reload_xrdb = 0;
+			xrdb(NULL);
+		}
 		if (handler[ev.type])
 			handler[ev.type](&ev); /* call handler */
+	}
 }
 
 void
@@ -1815,6 +1822,7 @@ setup(void)
 
 	signal(SIGHUP, sighup);
 	signal(SIGTERM, sigterm);
+	signal(SIGUSR1, sigusr1);
 
 	/* init screen */
 	screen = DefaultScreen(dpy);
@@ -1925,6 +1933,13 @@ sigterm(int unused)
 {
 	Arg a = {.i = 0};
 	quit(&a);
+}
+
+void
+sigusr1(int unused)
+{
+	/* Setzt Flag für Xresources-Reload in der Event-Loop */
+	reload_xrdb = 1;
 }
 
 #ifndef __OpenBSD__

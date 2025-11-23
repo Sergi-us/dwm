@@ -1,5 +1,5 @@
 # dwm version
-VERSION = 6.6 SARBS
+VERSION = 6.6-SARBS
 
 # Customize below to fit your system
 
