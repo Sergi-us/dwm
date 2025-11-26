@@ -198,6 +198,7 @@ static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
 static void drawbar(Monitor *m);
 static void drawbars(void);
+static int drawstatusbar(Monitor *m, int bh, char *text);
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static void focus(Client *c);
@@ -546,6 +547,21 @@ unswallow(Client *c)
 	arrange(c->mon);
 }
 
+/* UTF-8 Hilfsfunktion für buttonpress() - gibt Anzahl Bytes für nächstes Zeichen zurück */
+static int
+utf8bytelen(const char *s)
+{
+	static const unsigned char lens[] = {
+		/* 0XXXX */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		/* 10XXX */ 1, 1, 1, 1, 1, 1, 1, 1,  /* Fortsetzungsbyte - behandle als 1 */
+		/* 110XX */ 2, 2, 2, 2,
+		/* 1110X */ 3, 3,
+		/* 11110 */ 4,
+		/* 11111 */ 1,  /* ungültig - behandle als 1 */
+	};
+	return lens[(unsigned char)*s >> 3];
+}
+
 void
 buttonpress(XEvent *e)
 {
@@ -580,21 +596,46 @@ buttonpress(XEvent *e)
 		else if (ev->x > (x = selmon->ww - (int)TEXTW(stext) + lrpad)) {
 			click = ClkStatusText;
 
-			char *text = rawstext;
-			int i = -1;
-			char ch;
+			char *text, *s, ch;
 			dwmblockssig = 0;
-			while (text[++i]) {
-				if ((unsigned char)text[i] < ' ') {
-					ch = text[i];
-					text[i] = '\0';
+			/* Signal-Byte ist VOR dem Block (wie original dwmblocks) */
+			for (text = s = rawstext; *s && x <= ev->x; s += utf8bytelen(s)) {
+				if ((unsigned char)(*s) < ' ') {
+					/* Signal-Byte gefunden - berechne erst Breite des vorherigen Blocks */
+					if (text < s) {
+						ch = *s;
+						*s = '\0';
+						x += TEXTW(text) - lrpad;
+						*s = ch;
+						if (x >= ev->x) {
+							/* Klick war im vorherigen Block */
+							break;
+						}
+					}
+					/* Merke Signal für den NÄCHSTEN Block */
+					dwmblockssig = *s;
+					text = s + 1;  /* Nächster Block startet nach Signal */
+				} else if (*s == '^') {
+					/* status2d Tag: Überspringe ^...^ für korrekte Positions-Berechnung */
+					ch = *s;
+					*s = '\0';
 					x += TEXTW(text) - lrpad;
-					text[i] = ch;
-					text += i+1;
-					i = -1;
-					if (x >= ev->x) break;
-					dwmblockssig = ch;
+					*s = ch;
+					if (x >= ev->x)
+						break;
+					if (*(++s) == 'f')
+						x += atoi(++s);
+					while (*(s++) != '^');
+					text = s;
+					s--;  /* Korrektur für s += utf8bytelen(s) im Loop-Header */
 				}
+			}
+			/* Finaler Check: Berechne Breite des letzten Blocks */
+			if (*s == '\0' && text < s) {
+				ch = *s;
+				*s = '\0';
+				x += TEXTW(text) - lrpad;
+				*s = ch;
 			}
 		} else
 			click = ClkWinTitle;
@@ -787,10 +828,20 @@ void
 copyvalidchars(char *text, char *rawtext)
 {
 	int i = -1, j = 0;
+	short isCode = 0;
 
 	while(rawtext[++i]) {
 		if ((unsigned char)rawtext[i] >= ' ') {
-			text[j++] = rawtext[i];
+			/* Filtere status2d Farbcodes ^...^ heraus */
+			if (rawtext[i] == '^') {
+				if (!isCode) {
+					isCode = 1;
+				} else {
+					isCode = 0;
+				}
+			} else if (!isCode) {
+				text[j++] = rawtext[i];
+			}
 		}
 	}
 	text[j] = '\0';
@@ -868,6 +919,94 @@ dirtomon(int dir)
 	return m;
 }
 
+/* status2d - Zeichnet Statusbar mit Farbcodes */
+int
+drawstatusbar(Monitor *m, int bh, char *rawtext)
+{
+	int ret, i, j, w, x, len;
+	short isCode = 0;
+	char *text;
+	char *p;
+
+	len = strlen(rawtext) + 1;
+	if (!(text = (char*) malloc(sizeof(char) * len)))
+		die("malloc");
+	p = text;
+	
+	/* Berechne Gesamtbreite basierend auf stext (ohne Farbcodes) */
+	w = TEXTW(stext) - lrpad + 2; /* 2px rechts padding */
+	ret = w;
+	x = m->ww - w;
+
+	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
+	drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
+	drw_rect(drw, x, 0, w, bh, 1, 1);
+	
+	/* Zeichne Text mit Farbcodes */
+	p = text;
+	isCode = 0;
+	i = -1;
+	j = 0;
+	while (rawtext[++i]) {
+		/* Überspringe Signal-Bytes (< 0x20) - statuscmd Kompatibilität */
+		if ((unsigned char)rawtext[i] < ' ' && rawtext[i] != '\0') {
+			continue;
+		}
+		
+		if (rawtext[i] == '^' && !isCode) {
+			isCode = 1;
+			/* Zeichne vorherigen Text */
+			text[j] = '\0';
+			w = TEXTW(p) - lrpad;
+			drw_text(drw, x, 0, w, bh, 0, p, 0);
+			x += w;
+			p = text;
+			j = 0;
+		} else if (rawtext[i] == '^' && isCode) {
+			isCode = 0;
+			/* Verarbeite Farbcode */
+			text[j] = '\0';
+			if (text[0] == 'C') {
+				/* Vordergrundfarbe setzen */
+				int c = atoi(text + 1);
+				if (c >= 0 && c < 16)
+					drw_clr_create(drw, &drw->scheme[ColFg], termcolor[c]);
+			} else if (text[0] == 'B') {
+				/* Hintergrundfarbe setzen */
+				int c = atoi(text + 1);
+				if (c >= 0 && c < 16)
+					drw_clr_create(drw, &drw->scheme[ColBg], termcolor[c]);
+			} else if (text[0] == 'd') {
+				/* Standardfarben zurücksetzen */
+				drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
+				drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
+			} else if (text[0] == 'r') {
+				/* Rechteck zeichnen */
+				int rx = atoi(text + 1);
+				int ry = 0, rw = 0, rh = 0;
+				char *ep = NULL;
+				ep = strchr(text + 1, ',');
+				if (ep) { ry = atoi(ep + 1); ep = strchr(ep + 1, ','); }
+				if (ep) { rw = atoi(ep + 1); ep = strchr(ep + 1, ','); }
+				if (ep) { rh = atoi(ep + 1); }
+				drw_rect(drw, x + rx, ry, rw, rh, 1, 0);
+			}
+			p = text;
+			j = 0;
+		} else {
+			text[j++] = rawtext[i];
+		}
+	}
+	/* Zeichne verbleibenden Text */
+	text[j] = '\0';
+	w = TEXTW(p) - lrpad;
+	drw_text(drw, x, 0, w, bh, 0, p, 0);
+	
+	free(text);
+	return ret;
+}
+
 void
 drawbar(Monitor *m)
 {
@@ -883,8 +1022,7 @@ drawbar(Monitor *m)
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon) { /* status is only drawn on selected monitor */
 		drw_setscheme(drw, scheme[SchemeNorm]);
-		tw = TEXTW(stext) - lrpad + 2; /* 2px right padding */
-		drw_text(drw, m->ww - tw, 0, tw, bh, 0, stext, 0);
+		tw = drawstatusbar(m, bh, rawstext);
 	}
 
 	for (c = m->clients; c; c = c->next) {
@@ -2364,8 +2502,15 @@ updatestatus(void)
 {
 	if (!gettextprop(root, XA_WM_NAME, rawstext, sizeof(rawstext)))
 		strcpy(stext, "dwm-"VERSION);
-	else
+	else {
+		/* DEBUG: Zeige erste 20 Bytes von rawstext */
+		fprintf(stderr, "DEBUG rawstext bytes: ");
+		for (int i = 0; i < 20 && rawstext[i]; i++) {
+			fprintf(stderr, "%02x ", (unsigned char)rawstext[i]);
+		}
+		fprintf(stderr, "\n");
 		copyvalidchars(stext, rawstext);
+	}
 	drawbar(selmon);
 }
 
