@@ -1,17 +1,19 @@
-# Sergi's Build von dwm
+# dwm - dynamic window manager
+
 ## FAQ
 
-> Was sind die Keybindings (Tastenbindungen)?
-Das ist suckless, der Quellcode ist die Dokumentation! Schau dir [config.h](config.h) an.
-Ok, ok, eigentlich halte ich eine Readme in `sarbs.mom` für das ganzes System, einschließlich der Keybindings.
-Drücke <kbd>Super+F1</kbd>, um es in dwm anzuzeigen (dafür wird zathura benötigt).
+> Was sind die Keybindings?
+
+Das ist Suckless, der Quellcode ist die Dokumentation! Schau dir [config.h](config.h) an.
+Für das komplette System halte ich eine Dokumentation in `sarbs.mom` bereit.
+Drücke <kbd>Super+F1</kbd> in dwm, um sie anzuzeigen (benötigt zathura).
 
 ## Patches und Funktionen
 
 - `bar height` https://dwm.suckless.org/patches/bar_height/
 	- erlaubt die höhe der Statusbar in Pixeln anzugeben
 - `statuscmd` https://dwm.suckless.org/patches/statuscmd/
-	- mit meinem Build von [dwmblocks](https://github.com/Sergi-us/dwmblocks).
+	- für Mausinteraktion mit der Statusbar (zusammen mit dwmblocks).
 - `xresources` https://dwm.suckless.org/patches/xresources/
 	- Liest Farben/Variablen (d.h. funktioniert mit `pywal`, etc.).
 - `scratchpad` https://dwm.suckless.org/patches/scratchpads/
@@ -32,9 +34,11 @@ Drücke <kbd>Super+F1</kbd>, um es in dwm anzuzeigen (dafür wird zathura benöt
 - `vanitygaps` https://dwm.suckless.org/patches/vanitygaps/
 	- Lücken in allen Layouts erlaubt.
 
-## Was kommt als nächstes
+## Geplante Patches
 
-Das wichtigste zuerst. Es steht ein Update auf die Version 6.5 an. Danach sollen die Paches Aktualisiert werden (oder ich mache das in einem Durchgang)
+Update auf Version 6.6 ist vollzogen, danach folgen neue Patches:
+(Ich überlege noch welche Patches folgen, ist lediglich eine Sammlung an Patches die mir gefallen und noch nicht
+Implementiert sind)
 
 - `movestack` https://dwm.suckless.org/patches/movestack/
 	- Alternative zu `stacker`
@@ -49,6 +53,7 @@ Das wichtigste zuerst. Es steht ein Update auf die Version 6.5 an. Danach sollen
 - `unfloatvisible` https://dwm.suckless.org/patches/unfloatvisible/
 	- Floating Fenster lässt sich zurück in den Stapel legen. (Die Funktionalität besteht bereits, aber es gilt zu prüfen ob es den Versionssprung überlebt)
 - `status2d` https://dwm.suckless.org/patches/status2d/
+	- An diesem Patch arbeite ich aktuell...
 	- Erweiterte darstellung von Farben und Symbolen im DMENU
 - `setborderpx` https://dwm.suckless.org/patches/setborderpx/
 	- Fenstergrenzen lassen sich per Keybind die Pixelbreite definieren.
@@ -56,20 +61,13 @@ Das wichtigste zuerst. Es steht ein Update auf die Version 6.5 an. Danach sollen
 	- alle fliegeneden Fenster werden Zentriert.
 -
 
-## Installation für Neulinge
+## Installation
+Teil von [SARBS](https://codeberg.org/Sergius/SARBS.git) - wird dort automatisch eingerichtet.
 
-Git-Repo runderladen
+### Manuelle Installation
+
 ```bash
-git clone https://github.com/Sergi-us/dwm.git
-```
-ins verzeichniss wechseln
-```
+git clone https://codeberg.org/Sergius/dwm.git
 cd dwm
-```
-DMW instalieren
-```
 sudo make install
 ```
-
-## Ist in SARBS bereits integriert
-schau dir https://github.com/Sergi-us/SARBS an
