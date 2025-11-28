@@ -1,73 +1,122 @@
-# dwm - dynamic window manager
+# 🪟 dwm - Dynamic Window Manager
 
-## FAQ
+**Sergi's Build mit Patches für SARBS**
 
-> Was sind die Keybindings?
+> **🔄 Umzug zu Codeberg**: Die aktive Entwicklung und Kollaboration findet jetzt auf [Codeberg](https://codeberg.org/Sergius/dwm) statt. GitHub dient nur als Mirror.
+> 
+> **📦 Hauptprojekt**: [SARBS](https://codeberg.org/Sergius/SARBS) - [Homepage](https://sarbs.xyz/sarbs/)
 
-Das ist Suckless, der Quellcode ist die Dokumentation! Schau dir [config.h](config.h) an.
-Für das komplette System halte ich eine Dokumentation in `sarbs.mom` bereit.
-Drücke <kbd>Super+F1</kbd> in dwm, um sie anzuzeigen (benötigt zathura).
+Minimalistischer, schneller Tiling Window Manager - das Herzstück von SARBS.
 
-## Patches und Funktionen
+## ❓ FAQ
 
-- `bar height` https://dwm.suckless.org/patches/bar_height/
-	- erlaubt die höhe der Statusbar in Pixeln anzugeben
-- `statuscmd` https://dwm.suckless.org/patches/statuscmd/
-	- für Mausinteraktion mit der Statusbar (zusammen mit dwmblocks).
-- `xresources` https://dwm.suckless.org/patches/xresources/
-	- Liest Farben/Variablen (d.h. funktioniert mit `pywal`, etc.).
-- `scratchpad` https://dwm.suckless.org/patches/scratchpads/
-	- Ermöglicht das Erstellen von versteckten Terminals (Scratchpads), die bei Bedarf ein- und ausgeblendet werden können. Zugänglich mit <kbd>Mod+Shift+Enter</kbd> <kbd>Mod+Shift+Druck</kbd>.
-- Neue Layouts: bstack, fibonacci, deck, centered master und mehr. Alle gebunden an die Tasten <kbd>Super+(Shift+)t/z/u/i</kbd>.
-- `swallow` https://dwm.suckless.org/patches/swallow/
-	- fügt "Window Swallowing" hinzu. Wenn ein aus einem Terminal gestartetes Programm es unbenutzbar machen würde, nimmt es vorübergehend dessen Platz ein, um Platz zu sparen.
-- `actualfullscreen` https://dwm.suckless.org/patches/actualfullscreen/
-	- Echter Vollbildmodus (<kbd>Super+f</kbd>) und verhindert Fokuswechsel.
-- `sticky` https://dwm.suckless.org/patches/sticky/
-	- Fenster können sticky (fixiert) gemacht werden (<kbd>Super+s</kbd>).
-- `hide vacant tags` https://dwm.suckless.org/patches/hide_vacant_tags/
-	- versteckt Tags ohne Fenster.
-- `stacker` https://dwm.suckless.org/patches/stacker/
-	- Fenster manuell im Stack nach oben/unten bewegen (<kbd>Super-K/J</kbd>).
-- `shiftview` https://dwm.suckless.org/patches/nextprev/
-	- Durch Tags zyklisch wechseln (<kbd>Super+g/;</kbd>).
-- `vanitygaps` https://dwm.suckless.org/patches/vanitygaps/
-	- Lücken in allen Layouts erlaubt.
+> **Was sind die Keybindings?**
 
-## Geplante Patches
+Das ist Suckless - der Quellcode ist die Dokumentation! Schau dir [config.h](config.h) an.
 
-Update auf Version 6.6 ist vollzogen, danach folgen neue Patches:
-(Ich überlege noch welche Patches folgen, ist lediglich eine Sammlung an Patches die mir gefallen und noch nicht
-Implementiert sind)
+Für das komplette System gibt's eine Dokumentation in `sarbs.mom`. Drücke <kbd>Super+F1</kbd> in dwm, um sie mit zathura anzuzeigen.
 
-- `movestack` https://dwm.suckless.org/patches/movestack/
-	- Alternative zu `stacker`
-- `resizehere` https://dwm.suckless.org/patches/resizehere/
-	- Kleines Pacht damit die Maus nicht ins Eck springt bei der Größenänderung von Floating Windows.
-- `statusallmons` https://dwm.suckless.org/patches/statusallmons/
-	- Updatet die Statusbar auf allen Monitoren.
-- `pertag` https://dwm.suckless.org/patches/pertag/
-	- Erlaubt unterschiedliche Layouts auf allen Stags/Tabs.
-- `tiledmove` https://dwm.suckless.org/patches/tiledmove/
-	- Lässt die Fenster per Mouse im Tiling ändern.
-- `unfloatvisible` https://dwm.suckless.org/patches/unfloatvisible/
-	- Floating Fenster lässt sich zurück in den Stapel legen. (Die Funktionalität besteht bereits, aber es gilt zu prüfen ob es den Versionssprung überlebt)
-- `status2d` https://dwm.suckless.org/patches/status2d/
-	- An diesem Patch arbeite ich aktuell...
-	- Erweiterte darstellung von Farben und Symbolen im DMENU
-- `setborderpx` https://dwm.suckless.org/patches/setborderpx/
-	- Fenstergrenzen lassen sich per Keybind die Pixelbreite definieren.
-- `alwayscenter` https://dwm.suckless.org/patches/alwayscenter/
-	- alle fliegeneden Fenster werden Zentriert.
--
+## ✨ Patches & Features
 
-## Installation
-Teil von [SARBS](https://codeberg.org/Sergius/SARBS.git) - wird dort automatisch eingerichtet.
+### Statusbar & Darstellung
+- **`bar height`** - Statusbar-Höhe in Pixeln anpassbar  
+  https://dwm.suckless.org/patches/bar_height/
+- **`statuscmd`** - Mausinteraktion mit Statusbar (mit dwmblocks)  
+  https://dwm.suckless.org/patches/statuscmd/
+- **`xresources`** - Liest Farben aus Xresources (pywal-kompatibel)  
+  https://dwm.suckless.org/patches/xresources/
+- **`hide vacant tags`** - Versteckt Tags ohne Fenster  
+  https://dwm.suckless.org/patches/hide_vacant_tags/
 
-### Manuelle Installation
+### Fenster-Management
+- **`scratchpad`** - Versteckte Terminals (<kbd>Mod+Shift+Enter</kbd>, <kbd>Mod+Shift+Druck</kbd>)  
+  https://dwm.suckless.org/patches/scratchpads/
+- **`swallow`** - Window Swallowing - Programme nehmen Terminal-Platz ein  
+  https://dwm.suckless.org/patches/swallow/
+- **`actualfullscreen`** - Echter Fullscreen (<kbd>Super+f</kbd>)  
+  https://dwm.suckless.org/patches/actualfullscreen/
+- **`sticky`** - Fenster fixieren (<kbd>Super+s</kbd>)  
+  https://dwm.suckless.org/patches/sticky/
+- **`stacker`** - Fenster manuell im Stack bewegen (<kbd>Super+K/J</kbd>)  
+  https://dwm.suckless.org/patches/stacker/
 
+### Layouts
+- **Neue Layouts**: bstack, fibonacci, deck, centered master und mehr
+- **Keybindings**: <kbd>Super+(Shift+)t/z/u/i</kbd>
+- **`vanitygaps`** - Lücken in allen Layouts  
+  https://dwm.suckless.org/patches/vanitygaps/
+
+### Navigation
+- **`shiftview`** - Durch Tags zyklisch wechseln (<kbd>Super+g/;</kbd>)  
+  https://dwm.suckless.org/patches/nextprev/
+
+## 🚀 Geplante Patches
+
+**Update auf Version 6.6 ist vollzogen**, danach folgen:
+
+> Ich überlege noch welche Patches folgen - das hier ist lediglich eine Sammlung an Patches die mir gefallen und noch nicht implementiert sind.
+
+- **`movestack`** - Alternative zu stacker  
+  https://dwm.suckless.org/patches/movestack/
+- **`resizehere`** - Maus springt nicht ins Eck bei Floating-Resize  
+  https://dwm.suckless.org/patches/resizehere/
+- **`statusallmons`** - Statusbar auf allen Monitoren  
+  https://dwm.suckless.org/patches/statusallmons/
+- **`pertag`** - Unterschiedliche Layouts pro Tag  
+  https://dwm.suckless.org/patches/pertag/
+- **`tiledmove`** - Fenster per Maus im Tiling verschieben  
+  https://dwm.suckless.org/patches/tiledmove/
+- **`unfloatvisible`** - Floating zurück in den Stack  
+  https://dwm.suckless.org/patches/unfloatvisible/
+- **`status2d`** - **Aktuell in Arbeit!** - Erweiterte Farben/Symbole in dwmblocks  
+  https://dwm.suckless.org/patches/status2d/
+- **`setborderpx`** - Fenstergrenzen per Keybind anpassen  
+  https://dwm.suckless.org/patches/setborderpx/
+- **`alwayscenter`** - Floating-Fenster zentrieren  
+  https://dwm.suckless.org/patches/alwayscenter/
+
+## ⚡ Installation
+
+### Automatisch mit SARBS (empfohlen)
+Wird durch das [SARBS-Installationsskript](https://codeberg.org/Sergius/SARBS) automatisch eingerichtet.
+
+### Manuell
 ```bash
 git clone https://codeberg.org/Sergius/dwm.git
 cd dwm
 sudo make install
 ```
+
+## 🛠️ Konfiguration
+
+Anpassungen in `config.h` vornehmen, dann:
+
+```bash
+sudo make clean install
+```
+
+## 📚 Weitere SARBS-Komponenten
+
+- **[SARBS Hauptprojekt](https://codeberg.org/Sergius/SARBS)** - Auto-Rice Bootstrapping
+- **[dotfiles](https://codeberg.org/Sergius/dotfiles)** - Konfigurationsdateien
+- **[st](https://codeberg.org/Sergius/st)** - Terminal Emulator
+- **[dmenu](https://codeberg.org/Sergius/dmenu)** - Application Launcher
+- **[dwmblocks-async](https://codeberg.org/Sergius/dwmblocks-async)** - Statusbar
+- **[surf](https://codeberg.org/Sergius/surf)** - Web Browser
+- **[tabbed](https://codeberg.org/Sergius/tabbed)** - Tab Interface
+
+## 🤝 Credits
+
+- **[suckless.org](https://suckless.org/)** - Original dwm
+- **[Luke Smith](https://github.com/LukeSmithxyz/dwm)** - Patch-Inspiration
+
+## 📄 Lizenz
+
+Siehe [LICENSE](LICENSE) Datei.
+
+---
+
+**📧 Kontakt**:
+- [Codeberg Issues](https://codeberg.org/Sergius/dwm/issues)
+- [GitHub Issues](https://github.com/Sergi-us/dwm/issues) (Mirror)
+- [SARBS Homepage](https://sarbs.xyz/kontakt/)
