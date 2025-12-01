@@ -1,24 +1,27 @@
-/* See LICENSE file for copyright and license details. */
-/* SERGI 19.06.2025 */
+/*
+ * See LICENSE file for copyright and license details.
+ * ## 2025-11-30	SARBS
+*/
+
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
 #define BROWSER "qutebrowser"
 
 /* Erscheinungsbild */
-static unsigned int borderpx    = 2;    /* Rahmenbreite der Fenster in Pixeln */
-static unsigned int snap        = 32;   /* Einrastabstand in Pixeln */
-static unsigned int gappih      = 14;   /* Horizontaler innerer Abstand zwischen Fenstern */
-static unsigned int gappiv      = 7;    /* Vertikaler innerer Abstand zwischen Fenstern */
-static unsigned int gappoh      = 7;    /* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static unsigned int gappov      = 20;   /* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static int swallowfloating      = 1;    /* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
-static int smartgaps            = 0;    /* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
-static int showbar              = 1;    /* 0 bedeutet keine Statusleiste */
-static int topbar               = 1;    /* 0 bedeutet Statusleiste unten statt oben */
-static int user_bh              = 2;    /* 2 ist die Standart raum um die Schriftart */
+static unsigned int borderpx    = 2;		/* Rahmenbreite der Fenster in Pixeln */
+static unsigned int snap        = 22;		/* Einrastabstand in Pixeln */
+static unsigned int gappih      = 14;		/* Horizontaler innerer Abstand zwischen Fenstern */
+static unsigned int gappiv      = 7;		/* Vertikaler innerer Abstand zwischen Fenstern */
+static unsigned int gappoh      = 7;		/* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static unsigned int gappov      = 20;		/* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static int swallowfloating      = 1;		/* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
+static int smartgaps            = 0;		/* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
+static int showbar              = 1;		/* 0 bedeutet keine Statusleiste */
+static int topbar               = 1;		/* 0 bedeutet Statusleiste unten statt oben */
+static int user_bh              = 0;		/* Raum um die Schriftart in Pixeln */
 static const char *fonts[]      = {
-    "JetBrainsMono NF:style=ExtraLight:size=8:antialias=true:autohint=true",
+    "JetBrainsMono NF:style=ExtraLight:size=9:antialias=true:autohint=true",
     "OpenMoji:size=9:antialias=true:autohint=true"
 };
 static char normbgcolor[]           = "#222222";
@@ -45,15 +48,15 @@ static char termcol13[] = "#cc00ff"; /* magenta+  */
 static char termcol14[] = "#00ffff"; /* cyan+     */
 static char termcol15[] = "#ffffff"; /* weiß+     */
 static char *termcolor[] = {
-	termcol0,  termcol1,  termcol2,  termcol3,
-	termcol4,  termcol5,  termcol6,  termcol7,
-	termcol8,  termcol9,  termcol10, termcol11,
-	termcol12, termcol13, termcol14, termcol15,
+	termcol0,	termcol1,	termcol2,	termcol3,
+	termcol4,	termcol5,	termcol6,	termcol7,
+	termcol8,	termcol9,	termcol10,	termcol11,
+	termcol12,	termcol13,	termcol14,	termcol15,
 };
 static const char *colors[][3] = {
-	/*               fg           bg           border   */
-	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-	[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+/*						fg				bg				border					*/
+	[SchemeNorm] = {	normfgcolor,	normbgcolor,	normbordercolor },
+	[SchemeSel]  = {	selfgcolor,		selbgcolor,		selbordercolor  },
 };
 
 typedef struct {
@@ -61,70 +64,70 @@ typedef struct {
 	const void *cmd;
 } Sp;
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x35", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=10", "-g", "80x28", "-e", "qalc", "-i", NULL };
+const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "70x28", "-e", "qalc", "-i", NULL };
 /*const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=10", "-g", "50x20", "-e", "bc", "-lq", NULL };*/
 static Sp scratchpads[] = {
-	/* name          cmd  */
-	{"spterm",      spcmd1},
-	{"spcalc",      spcmd2},
+	/* name			cmd						*/
+	{"spterm",		spcmd1},
+	{"spcalc",		spcmd2},
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-    /* xprop(1):
-    *	WM_CLASS(STRING) = instance, class
-    *	WM_NAME(STRING) = title
-    */
-    /* class		instance    title			tags mask   isfloating	isterminal	noswallow  monitor */
-    { "Gimp",       NULL,       NULL,           1 << 8,     0,          0,          0,          -1 },
-    { TERMCLASS,	NULL,       NULL,           0,          0,          1,          0,          -1 },
-    { NULL,			NULL,       "Event Tester", 0,          0,          0,          1,          -1 },
-    { TERMCLASS,	"floatterm",NULL,           0,          1,          1,          0,          -1 },
-    { TERMCLASS,	"bg",		NULL,           1 << 7,     0,          1,          0,          -1 },
-    { TERMCLASS,	"spterm",   NULL,           SPTAG(0),   1,          1,          0,          -1 },
-    { TERMCLASS,	"spcalc",   NULL,           SPTAG(1),   1,          1,          0,          -1 },
+/* xprop(1):
+ *	WM_CLASS(STRING) = instance, class
+ *	WM_NAME(STRING) = title
+ */
+/*	class			instance		title			tags mask	isfloating	isterminal	noswallow	monitor */
+    { "Gimp",       NULL,			NULL,			1 << 8,		0,			0,			0,			-1 },
+    { TERMCLASS,	NULL,			NULL,			0,			0,			1,			0,			-1 },
+    { NULL,			NULL,			"Event Tester",	0,			0,			0,			1,			-1 },
+    { TERMCLASS,	"floatterm",	NULL,			0,			1,			1,			0,			-1 },
+    { TERMCLASS,	"bg",			NULL,			1 << 7,		0,			1,			0,			-1 },
+    { TERMCLASS,	"spterm",		NULL,			SPTAG(0),	1,			1,			0,			-1 },
+    { TERMCLASS,	"spcalc",		NULL,			SPTAG(1),	1,			1,			0,			-1 },
 };
 
 /* layout(s) */
-static float mfact     = 0.55;			/* Größenfaktor des Master-Bereichs [0.05..0.95] */
-static int nmaster     = 1;				/* Anzahl der Clients im Master-Bereich */
-static int resizehints = 0;				/* 1 bedeutet Größenhinweise bei gekachelter Anordnung beachten */
-static const int lockfullscreen = 1;	/* 1 erzwingt den Fokus auf das Vollbild-Fenster */
-#define FORCE_VSPLIT 1					/* nrowgrid Layout: erzwingt vertikale Teilung bei zwei Clients */
+static float mfact     = 0.55;				/* Größenfaktor des Master-Bereichs [0.05..0.95] */
+static int nmaster     = 1;					/* Anzahl der Clients im Master-Bereich */
+static int resizehints = 0;					/* 1 bedeutet Größenhinweise bei gekachelter Anordnung beachten */
+static const int lockfullscreen = 1;		/* 1 erzwingt den Fokus auf das Vollbild-Fenster */
+#define FORCE_VSPLIT 1						/* nrowgrid Layout: erzwingt vertikale Teilung bei zwei Clients */
 #include "vanitygaps.c"
 
 /* Die verschiedenen Layouts */
 static const Layout layouts[] = {
 	/* Symbol   Anordnungsfunktion */
-	{ "[]=",    tile },                 /* Standard: Master links, Clients rechts */
-	{ "TTT",    bstack },               /* Master oben, Clients unten */
-	{ "[@]",    spiral },               /* Fibonacci-Spirale */
-	{ "[\\]",   dwindle },              /* Nach rechts und links abnehmende Größe */
-	{ "[D]",    deck },                 /* Master links, Clients rechts im Monocle-Modus */
-	{ "[M]",    monocle },              /* Alle Fenster übereinander */
-	{ "|M|",    centeredmaster },       /* Master in der Mitte, Clients an den Seiten */
-	{ ">M>",    centeredfloatingmaster }, /* Wie oben, aber Master schwebt */
-	{ "><>",    NULL },                 /* Keine Layout-Funktion bedeutet schwebendes Verhalten */
-	{ NULL,     NULL },                 /* alle fenster ins Bild holen */
+	{ "[]=",    tile },						/* Standard: Master links, Clients rechts */
+	{ "TTT",    bstack },					/* Master oben, Clients unten */
+	{ "[@]",    spiral },					/* Fibonacci-Spirale */
+	{ "[\\]",   dwindle },					/* Nach rechts und links abnehmende Größe */
+	{ "[D]",    deck },						/* Master links, Clients rechts im Monocle-Modus */
+	{ "[M]",    monocle },					/* Alle Fenster übereinander */
+	{ "|M|",    centeredmaster },			/* Master in der Mitte, Clients an den Seiten */
+	{ ">M>",    centeredfloatingmaster },	/* Wie oben, aber Master schwebt */
+	{ "><>",    NULL },						/* Keine Layout-Funktion bedeutet schwebendes Verhalten */
+	{ NULL,     NULL },						/* alle fenster ins Bild holen */
 };
 
 /* key definitions */
-#define MODKEY Mod4Mask			/* setzt Windows Taste als Haupt-Modifyer */
+#define MODKEY Mod4Mask						/* setzt Windows Taste als Haupt-Modifyer */
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ MODKEY,						KEY,	view,			{.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,			KEY,	toggleview,		{.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,				KEY,	tag,			{.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask|ShiftMask,	KEY,	toggletag,		{.ui = 1 << TAG} },
 #define STACKKEYS(MOD,ACTION) \
-	{ MOD,		XK_j,		ACTION##stack,	{.i = INC(+1) } }, \
-	{ MOD,		XK_k,		ACTION##stack,	{.i = INC(-1) } }, \
-	/* { MOD,	XK_v,		ACTION##stack,  {.i = 0 } }, \ */
-	/* { MOD,	XK_grave,	ACTION##stack,	{.i = PREVSEL } }, \ */
-	/* { MOD,	XK_a,		ACTION##stack,	{.i = 1 } }, \ */
-	/* { MOD,	XK_z,		ACTION##stack,	{.i = 2 } }, \ */
-	/* { MOD,	XK_x,		ACTION##stack,	{.i = -1 } }, */
+	{ MOD,	XK_j,		ACTION##stack,	{.i = INC(+1) } }, \
+	{ MOD,	XK_k,		ACTION##stack,	{.i = INC(-1) } },
+/*	{ MOD,	XK_v,		ACTION##stack,  {.i = 0 } }, \				*/
+/*	{ MOD,	XK_grave,	ACTION##stack,	{.i = PREVSEL } }, \		*/
+/*	{ MOD,	XK_a,		ACTION##stack,	{.i = 1 } }, \				*/
+/*	{ MOD,	XK_z,		ACTION##stack,	{.i = 2 } }, \				*/
+/*	{ MOD,	XK_x,		ACTION##stack,	{.i = -1 } },				*/
 
 /* definiert ein Makro "SHCMD" das Shell-Befehle in DWM ausführt. */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -179,92 +182,93 @@ ResourcePref resources[] = {
 #include "shiftview.c"
 
 static const Key keys[] = {
-/*  modifier            key                 function        argument   */
+/*  modifier			key					function		argument					*/
 	STACKKEYS(MODKEY,                       focus)
 	STACKKEYS(MODKEY|ShiftMask,             push)
-	{ MODKEY,           XK_dead_circumflex, spawn,          {.v = (const char*[]){ "dmenuunicode", NULL } } },
-/*  { MODKEY|ShiftMask, XK_grave,           togglescratch,  SHCMD("") },    */
-	TAGKEYS(            XK_1,               0)
-	TAGKEYS(            XK_2,               1)
-	TAGKEYS(            XK_3,               2)
-	TAGKEYS(            XK_4,               3)
-	TAGKEYS(            XK_5,               4)
-	TAGKEYS(            XK_6,               5)
-	TAGKEYS(            XK_7,               6)
-	TAGKEYS(            XK_8,               7)
-	TAGKEYS(            XK_9,               8)
-	{ MODKEY,           XK_0,               view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask, XK_0,               tag,            {.ui = ~0 } },
+	{ MODKEY,			XK_dead_circumflex, spawn,          {.v = (const char*[]){ "dmenuunicode", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_grave,           togglescratch,  SHCMD("") },    */
+	TAGKEYS(			XK_1,               0)
+	TAGKEYS(			XK_2,               1)
+	TAGKEYS(			XK_3,               2)
+	TAGKEYS(			XK_4,               3)
+	TAGKEYS(			XK_5,               4)
+	TAGKEYS(			XK_6,               5)
+	TAGKEYS(			XK_7,               6)
+	TAGKEYS(			XK_8,               7)
+	TAGKEYS(			XK_9,               8)
+	{ MODKEY,			XK_0,               view,           {.ui = ~0 } },
+	{ MODKEY|ShiftMask,	XK_0,               tag,            {.ui = ~0 } },
 /* equal ist auf der Deutschen Tastatur nicht ohne Umschaltebene erreichbar TODO neue Taste finden */
-	{ MODKEY,           XK_equal,           spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask, XK_equal,           spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY,           XK_BackSpace,       spawn,			{.v = (const char*[]){ "sysact", NULL } } },
-	{ MODKEY|ShiftMask, XK_BackSpace,       spawn,			{.v = (const char*[]){ "sysact", NULL } } },
-/*  { MODKEY|ShiftMask, XK_Escape,          spawn,          SHCMD("") }, (für auswerfen von Tomb vorgemerkt*/
-	{ MODKEY,           XK_F1,              spawn,          SHCMD("preconv -e utf8 /usr/local/share/dwm/sarbs.mom | groff -mom -Tpdf | zathura -") },
-	{ MODKEY|ShiftMask, XK_F1,              togglescratch,  {.ui = 2} },
-	{ MODKEY,           XK_F2,              spawn,          {.v = (const char*[]){ "tutorialvids", NULL } } },
-/*  { MODKEY|ShiftMask, XK_F2, */
-	{ MODKEY,           XK_F3,              spawn,          {.v = (const char*[]){ "displayselect", NULL } } },
-/*  { MODKEY|ShiftMask, XK_F3, */
-	{ MODKEY,           XK_F4,              spawn,          SHCMD(TERMINAL " -e pulsemixer; .local/bin/statusbar/sb-volume 55") },
-/*  { MODKEY|ShiftMask, XK_F4, */
-	{ MODKEY,           XK_F5,              xrdb,           {.v = NULL } },
-/*  { MODKEY|ShiftMask, XK_F5, */
-	{ MODKEY,           XK_F6,              spawn,			{.v = (const char*[]){ "torwrap", NULL } } },
-/*  { MODKEY|ShiftMask, XK_F6, */
-	{ MODKEY,           XK_F7,              spawn,			{.v = (const char*[]){ "td-toggle", NULL } } },
-/*  { MODKEY|ShiftMask, XK_F7, */
-/*	{ MODKEY,           XK_F8,              spawn,			{.v = (const char*[]){ "mailsync", NULL } } },  */
-    { MODKEY,           XK_F8,              spawn,          SHCMD("BLOCK_BUTTON=1 sb-mailbox") },
-/*  { MODKEY|ShiftMask, XK_F8, */
-	{ MODKEY,           XK_F9,              spawn,			{.v = (const char*[]){ "mounter", NULL } } },
-/*  { MODKEY|ShiftMask, XK_F9, */
-	{ MODKEY,           XK_F10,             spawn,			{.v = (const char*[]){ "unmounter", NULL } } },
-	{ MODKEY,           XK_F11,             spawn,          {.v = (const char*[]){ "cam", NULL } } },
-	{ MODKEY|ShiftMask, XK_F11,             spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless") },
-	{ MODKEY,           XK_F12,             spawn,          SHCMD("remaps") },
-	{ MODKEY|ShiftMask, XK_F12,             spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless --mouse=sdk --new-display=2000x2000") },
-	{ MODKEY,           XK_Tab,             view,			{0} },
+	{ MODKEY,			XK_equal,           spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,	XK_equal,           spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_BackSpace,       spawn,			{.v = (const char*[]){ "sysact", NULL } } },
+	{ MODKEY|ShiftMask,	XK_BackSpace,       spawn,			{.v = (const char*[]){ "sysact", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_Escape,          spawn,          SHCMD("") }, (für auswerfen von Tomb vorgemerkt*/
+	{ MODKEY,			XK_F1,              spawn,          SHCMD("preconv -e utf8 /usr/local/share/dwm/sarbs.mom | groff -mom -Tpdf | zathura -") },
+	{ MODKEY|ShiftMask,	XK_F1,              togglescratch,  {.ui = 2} },
+	{ MODKEY,			XK_F2,              spawn,          {.v = (const char*[]){ "tutorialvids", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_F2, */
+	{ MODKEY,			XK_F3,              spawn,          {.v = (const char*[]){ "displayselect", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_F3, */
+	{ MODKEY,			XK_F4,              spawn,          SHCMD(TERMINAL " -e pulsemixer; .local/bin/statusbar/sb-volume 55") },
+/*  { MODKEY|ShiftMask,	XK_F4, */
+	{ MODKEY,			XK_F5,              xrdb,           {.v = NULL } },
+/*  { MODKEY|ShiftMask,	XK_F5, */
+	{ MODKEY,			XK_F6,              spawn,			{.v = (const char*[]){ "torwrap", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_F6, */
+	{ MODKEY,			XK_F7,              spawn,			{.v = (const char*[]){ "td-toggle", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_F7, */
+/*	{ MODKEY,			XK_F8,              spawn,			{.v = (const char*[]){ "mailsync", NULL } } },  */
+    { MODKEY,			XK_F8,              spawn,          SHCMD("BLOCK_BUTTON=1 sb-mailbox") },
+/*  { MODKEY|ShiftMask,	XK_F8, */
+	{ MODKEY,			XK_F9,              spawn,			{.v = (const char*[]){ "mounter", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_F9, */
+	{ MODKEY,			XK_F10,             spawn,			{.v = (const char*[]){ "unmounter", NULL } } },
+	{ MODKEY,			XK_F11,             spawn,          {.v = (const char*[]){ "cam", NULL } } },
+	{ MODKEY|ShiftMask,	XK_F11,             spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless") },
+	{ MODKEY,			XK_F12,             spawn,          SHCMD("remaps") },
+	{ MODKEY|ShiftMask,	XK_F12,             spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless --mouse=sdk --new-display=2000x2000") },
+	{ MODKEY,			XK_Tab,             view,			{0} },
 /*  { MODKEY|ShiftMask,	XK_Tab,				spawn,			SHCMD("") },    */
-	{ MODKEY,           XK_q,               killclient,		{0} },
-	{ MODKEY|ShiftMask, XK_q,               spawn,			{.v = (const char*[]){ "sysact", NULL } } },
-	{ MODKEY,           XK_w,               spawn,			{.v = (const char*[]){ BROWSER, NULL } } },
-	{ MODKEY|ShiftMask, XK_w,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "nmtui", NULL } } },
-	{ MODKEY,           XK_e,               spawn,			SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
-	{ MODKEY|ShiftMask, XK_e,               spawn,			SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.abook/addressbook") },
-	{ MODKEY,           XK_r,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
-	{ MODKEY|ShiftMask, XK_r,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
-	{ MODKEY,           XK_t,               setlayout,		{.v = &layouts[0]} }, /* tile */
-	{ MODKEY|ShiftMask, XK_t,               setlayout,		{.v = &layouts[1]} }, /* bstack */
-	{ MODKEY,           XK_z,               setlayout,		{.v = &layouts[2]} }, /* spiral */
-	{ MODKEY|ShiftMask, XK_z,               setlayout,		{.v = &layouts[3]} }, /* dwindle */
-	{ MODKEY,           XK_u,               setlayout,		{.v = &layouts[4]} }, /* deck */
-	{ MODKEY|ShiftMask, XK_u,               setlayout,		{.v = &layouts[5]} }, /* monocle */
-	{ MODKEY,           XK_i,               setlayout,		{.v = &layouts[6]} }, /* centeredmaster */
-	{ MODKEY|ShiftMask, XK_i,               setlayout,		{.v = &layouts[7]} }, /* centeredfloatingmaster */
-	{ MODKEY,           XK_o,               incnmaster,		{.i = +1 } },
-	{ MODKEY|ShiftMask, XK_o,               incnmaster,		{.i = -1 } },
-	{ MODKEY,           XK_p,               spawn,			{.v = (const char*[]){ "mpc", "toggle", NULL } } },
-	{ MODKEY|ShiftMask, XK_p,               spawn,			SHCMD("mpc pause; pauseallmpv") },
-	{ MODKEY,           XK_udiaeresis,      spawn,          SHCMD("dmenu-translate") },
-	{ MODKEY|ShiftMask, XK_udiaeresis,      spawn,          SHCMD("dmenu-translate -p 'Quick:'") },
-/*  { MODKEY,           XK_ü, */
-/*  { MODKEY|ShiftMask, XK_ü, */
-/*  { MODKEY,           XK_bracketleft,     spawn,			{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },    */
-/*  { MODKEY|ShiftMask, XK_bracketleft,     spawn,			{.v = (const char*[]){ "mpc", "seek", "-60", NULL } } },    */
-/*  { MODKEY,           XK_bracketright,    spawn,			{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },    */
-/*  { MODKEY|ShiftMask, XK_bracketright,    spawn,			{.v = (const char*[]){ "mpc", "seek", "+60", NULL } } },    */
-/*  === Der Backslash / ist unereichbar auf der Deutschen Tastatur ===      */
-/*  { MODKEY,           XK_backslash,       view,			{0} },          */
-/*  { MODKEY|ShiftMask,	XK_backslash,		spawn,			SHCMD("") },    */
+	{ MODKEY,			XK_q,               killclient,		{0} },
+	{ MODKEY|ShiftMask,	XK_q,               spawn,			{.v = (const char*[]){ "sysact", NULL } } },
+	{ MODKEY,			XK_w,               spawn,			{.v = (const char*[]){ BROWSER, NULL } } },
+	{ MODKEY|ShiftMask,	XK_w,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "nmtui", NULL } } },
+	{ MODKEY,			XK_e,               spawn,			SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+	{ MODKEY|ShiftMask,	XK_e,               spawn,			SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.abook/addressbook") },
+	{ MODKEY,			XK_r,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
+	{ MODKEY|ShiftMask,	XK_r,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
+	{ MODKEY,			XK_t,               setlayout,		{.v = &layouts[0]} }, /* tile */
+	{ MODKEY|ShiftMask,	XK_t,               setlayout,		{.v = &layouts[1]} }, /* bstack */
+	{ MODKEY,			XK_z,               setlayout,		{.v = &layouts[2]} }, /* spiral */
+	{ MODKEY|ShiftMask,	XK_z,               setlayout,		{.v = &layouts[3]} }, /* dwindle */
+	{ MODKEY,			XK_u,               setlayout,		{.v = &layouts[4]} }, /* deck */
+	{ MODKEY|ShiftMask,	XK_u,               setlayout,		{.v = &layouts[5]} }, /* monocle */
+	{ MODKEY,			XK_i,               setlayout,		{.v = &layouts[6]} }, /* centeredmaster */
+	{ MODKEY|ShiftMask,	XK_i,               setlayout,		{.v = &layouts[7]} }, /* centeredfloatingmaster */
+	{ MODKEY,			XK_o,               incnmaster,		{.i = +1 } },
+	{ MODKEY|ShiftMask,	XK_o,               incnmaster,		{.i = -1 } },
+	{ MODKEY,			XK_p,               spawn,			{.v = (const char*[]){ "mpc", "toggle", NULL } } },
+	{ MODKEY|ShiftMask,	XK_p,               spawn,			SHCMD("mpc pause; pauseallmpv") },
+	{ MODKEY,			XK_udiaeresis,      spawn,          SHCMD("dmenu-translate") },
+	{ MODKEY|ShiftMask,	XK_udiaeresis,      spawn,          SHCMD("dmenu-translate -p 'Quick:'") },
+/*	{ MODKEY,			XK_ü,												*/
+/*	{ MODKEY|ShiftMask,	XK_ü,												*/
+/*	{ MODKEY,			XK_bracketleft,		spawn,			{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },    */
+/*	{ MODKEY|ShiftMask,	XK_bracketleft,		spawn,			{.v = (const char*[]){ "mpc", "seek", "-60", NULL } } },    */
+/*	{ MODKEY,			XK_bracketright,	spawn,			{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },    */
+/*	{ MODKEY|ShiftMask,	XK_bracketright,	spawn,			{.v = (const char*[]){ "mpc", "seek", "+60", NULL } } },    */
+/*		=== Der Backslash / ist unereichbar auf der Deutschen Tastatur ===		*/
+/*	{ MODKEY,			XK_backslash,		view,			{0} },			*/
+/*	{ MODKEY|ShiftMask,	XK_backslash,		spawn,			SHCMD("") },	*/
 	{ MODKEY,           XK_a,				togglegaps,		{0} },
 	{ MODKEY|ShiftMask, XK_a,				defaultgaps,	{0} },
 	{ MODKEY,           XK_s,				togglesticky,	{0} },
-/*	{ MODKEY,ShiftMask  XK_s,				spawn,          SHCMD("") },    */
-    { MODKEY,           XK_d,               spawn,          SHCMD("rofi -show drun") },
-    { MODKEY|ShiftMask, XK_d,               spawn,          SHCMD("rofi-pass") },
-/*	{ MODKEY|ShiftMask, XK_d,				spawn,			{.v = (const char*[]){ "rofi-pass", NULL } } }, */
+/*		=== Super+Shift+S vorgemerkt für SARBS Taste ===					*/
+/*	{ MODKEY,ShiftMask  XK_s,				spawn,			SHCMD("") },    */
+	{ MODKEY,			XK_d,				spawn,			SHCMD("rofi -show drun") },
+	{ MODKEY|ShiftMask,	XK_d,				spawn,			SHCMD("rofi-pass") },
+/*	{ MODKEY|ShiftMask,	XK_d,				spawn,			{.v = (const char*[]){ "rofi-pass", NULL } } }, */
 	{ MODKEY,           XK_f,				togglefullscr,	{0} },
 	{ MODKEY|ShiftMask, XK_f,				setlayout,		{.v = &layouts[8]} },
 	{ MODKEY,           XK_g,				shiftview,		{ .i = -1 } },
