@@ -1,6 +1,6 @@
 /*
+ * ## 2026-02-09	SERGI
  * See LICENSE file for copyright and license details.
- * ## 2025-11-30	SARBS
 */
 
 /* Constants */
@@ -9,19 +9,20 @@
 #define BROWSER "qutebrowser"
 
 /* Erscheinungsbild */
-static unsigned int borderpx	= 2;		/* Rahmenbreite der Fenster in Pixeln */
-static unsigned int snap		= 22;		/* Einrastabstand in Pixeln */
-static unsigned int gappih		= 14;		/* Horizontaler innerer Abstand zwischen Fenstern */
-static unsigned int gappiv		= 7;		/* Vertikaler innerer Abstand zwischen Fenstern */
-static unsigned int gappoh		= 7;		/* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static unsigned int gappov		= 20;		/* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static int swallowfloating		= 1;		/* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
-static int smartgaps			= 0;		/* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
-static int showbar				= 1;		/* 0 bedeutet keine Statusleiste */
-static int topbar				= 1;		/* 0 bedeutet Statusleiste unten statt oben */
-static int barpadh				= 10;		/* Horizontaler Abstand links/rechts fu00fcr schwebende Statusleiste */
-static int barpadv				= 5;		/* Vertikaler Abstand oben/unten fu00fcr schwebende Statusleiste */
-static int user_bh				= 0;		/* Raum um die Schriftart in Pixeln */
+static unsigned int borderpx	= 2;	/* Rahmenbreite der Fenster in Pixeln */
+static unsigned int snap		= 22;	/* Einrastabstand in Pixeln */
+static unsigned int gappih		= 14;	/* Horizontaler innerer Abstand zwischen Fenstern */
+static unsigned int gappiv		= 7;	/* Vertikaler innerer Abstand zwischen Fenstern */
+static unsigned int gappoh		= 7;	/* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static unsigned int gappov		= 20;	/* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static int swallowfloating		= 1;	/* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
+static int smartgaps			= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
+static int showbar				= 1;	/* 0 bedeutet keine Statusleiste */
+static int topbar				= 1;	/* 0 bedeutet Statusleiste unten statt oben */
+static int barpadh				= 10;	/* Horizontaler Abstand links/rechts fu00fcr schwebende Statusleiste */
+static int barpadv				= 5;	/* Vertikaler Abstand oben/unten fu00fcr schwebende Statusleiste */
+static int tagpadh				= -4;	/* Horizontaler Zusatzabstand der Tag-Nummern (auch negativ moeglich) */
+static int user_bh				= 0;	/* Raum um die Schriftart in Pixeln */
 static const char *fonts[]		= {
     "JetBrainsMono NF:style=ExtraLight:size=9:antialias=true:autohint=true",
     "OpenMoji:size=9:antialias=true:autohint=true"
@@ -33,22 +34,22 @@ static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#770000";
 static char selbgcolor[]            = "#005577";
 /* Terminal-Farben für status2d (werden aus Xresources geladen) */
-static char termcol0[]  = "#000000"; /* schwarz   */
-static char termcol1[]  = "#ff0000"; /* rot       */
-static char termcol2[]  = "#33ff00"; /* grün      */
-static char termcol3[]  = "#ff0099"; /* gelb      */
-static char termcol4[]  = "#0066ff"; /* blau      */
-static char termcol5[]  = "#cc00ff"; /* magenta   */
-static char termcol6[]  = "#00ffff"; /* cyan      */
-static char termcol7[]  = "#d0d0d0"; /* weiß      */
-static char termcol8[]  = "#808080"; /* schwarz+  */
-static char termcol9[]  = "#ff0000"; /* rot+      */
-static char termcol10[] = "#33ff00"; /* grün+     */
-static char termcol11[] = "#ff0099"; /* gelb+     */
-static char termcol12[] = "#0066ff"; /* blau+     */
-static char termcol13[] = "#cc00ff"; /* magenta+  */
-static char termcol14[] = "#00ffff"; /* cyan+     */
-static char termcol15[] = "#ffffff"; /* weiß+     */
+static char termcol0[]  = "#000000";	/* schwarz   */
+static char termcol1[]  = "#ff0000";	/* rot       */
+static char termcol2[]  = "#33ff00";	/* grün      */
+static char termcol3[]  = "#ff0099";	/* gelb      */
+static char termcol4[]  = "#0066ff";	/* blau      */
+static char termcol5[]  = "#cc00ff";	/* magenta   */
+static char termcol6[]  = "#00ffff";	/* cyan      */
+static char termcol7[]  = "#d0d0d0";	/* weiß      */
+static char termcol8[]  = "#808080";	/* schwarz+  */
+static char termcol9[]  = "#ff0000";	/* rot+      */
+static char termcol10[] = "#33ff00";	/* grün+     */
+static char termcol11[] = "#ff0099";	/* gelb+     */
+static char termcol12[] = "#0066ff";	/* blau+     */
+static char termcol13[] = "#cc00ff";	/* magenta+  */
+static char termcol14[] = "#00ffff";	/* cyan+     */
+static char termcol15[] = "#ffffff";	/* weiß+     */
 static char *termcolor[] = {
 	termcol0,	termcol1,	termcol2,	termcol3,
 	termcol4,	termcol5,	termcol6,	termcol7,
@@ -56,7 +57,7 @@ static char *termcolor[] = {
 	termcol12,	termcol13,	termcol14,	termcol15,
 };
 static const char *colors[][3] = {
-/*						fg				bg				border					*/
+/*						fg				bg				border				*/
 	[SchemeNorm] = {	normfgcolor,	normbgcolor,	normbordercolor },
 	[SchemeSel]  = {	selfgcolor,		selbgcolor,		selbordercolor  },
 };
@@ -65,13 +66,16 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x35", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "70x28", "-e", "qalc", "-i", NULL };
-/*const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=10", "-g", "50x20", "-e", "bc", "-lq", NULL };*/
+const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x30", NULL };
+const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "70x30", "-e", "qalc", "-i", NULL };
+const char *spcmd3[] = {TERMINAL, "-n", "gomuks", "-g", "130x30", "-e", "gomuks", NULL };
+const char *spcmd4[] = {TERMINAL, "-n", "matui", "-g", "90x30", "-e", "matui", NULL };
 static Sp scratchpads[] = {
-	/* name			cmd						*/
+	/* name			cmd	*/
 	{"spterm",		spcmd1},
 	{"spcalc",		spcmd2},
+	{"gomuks",		spcmd3},
+	{"matui",		spcmd4},
 };
 
 /* tagging */
@@ -90,6 +94,8 @@ static const Rule rules[] = {
     { TERMCLASS,	"bg",			NULL,			1 << 7,		0,			1,			0,			-1 },
     { TERMCLASS,	"spterm",		NULL,			SPTAG(0),	1,			1,			0,			-1 },
     { TERMCLASS,	"spcalc",		NULL,			SPTAG(1),	1,			1,			0,			-1 },
+    { TERMCLASS,	"gomuks",		NULL,			SPTAG(2),	1,			1,			0,			-1 },
+    { TERMCLASS,	"matui",		NULL,			SPTAG(3),	1,			1,			0,			-1 },
 };
 
 /* layout(s) */
@@ -102,21 +108,21 @@ static const int lockfullscreen = 1;		/* 1 erzwingt den Fokus auf das Vollbild-F
 
 /* Die verschiedenen Layouts */
 static const Layout layouts[] = {
-	/* Symbol   Anordnungsfunktion */
+	/* Symbol   Anordnungsfunktion											*/
 	{ "[]=",    tile },						/* Standard: Master links, Clients rechts */
-	{ "TTT",    bstack },					/* Master oben, Clients unten */
-	{ "[@]",    spiral },					/* Fibonacci-Spirale */
+	{ "TTT",    bstack },					/* Master oben, Clients unten	*/
+	{ "[@]",    spiral },					/* Fibonacci-Spirale			*/
 	{ "[\\]",   dwindle },					/* Nach rechts und links abnehmende Größe */
 	{ "[D]",    deck },						/* Master links, Clients rechts im Monocle-Modus */
-	{ "[M]",    monocle },					/* Alle Fenster übereinander */
+	{ "[M]",    monocle },					/* Alle Fenster übereinander	*/
 	{ "|M|",    centeredmaster },			/* Master in der Mitte, Clients an den Seiten */
 	{ ">M>",    centeredfloatingmaster },	/* Wie oben, aber Master schwebt */
 	{ "><>",    NULL },						/* Keine Layout-Funktion bedeutet schwebendes Verhalten */
-	{ NULL,     NULL },						/* alle fenster ins Bild holen */
+	{ NULL,     NULL },						/* alle fenster ins Bild holen	*/
 };
 
 /* key definitions */
-#define MODKEY Mod4Mask						/* setzt Windows Taste als Haupt-Modifyer */
+#define MODKEY Mod4Mask			/* setzt Windows Taste als Haupt-Modifyer	*/
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,						KEY,	view,			{.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,			KEY,	toggleview,		{.ui = 1 << TAG} }, \
@@ -125,13 +131,13 @@ static const Layout layouts[] = {
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD,	XK_j,		ACTION##stack,	{.i = INC(+1) } }, \
 	{ MOD,	XK_k,		ACTION##stack,	{.i = INC(-1) } },
-/*	{ MOD,	XK_v,		ACTION##stack,  {.i = 0 } }, \				*/
-/*	{ MOD,	XK_grave,	ACTION##stack,	{.i = PREVSEL } }, \		*/
-/*	{ MOD,	XK_a,		ACTION##stack,	{.i = 1 } }, \				*/
-/*	{ MOD,	XK_z,		ACTION##stack,	{.i = 2 } }, \				*/
-/*	{ MOD,	XK_x,		ACTION##stack,	{.i = -1 } },				*/
+/*	{ MOD,	XK_v,		ACTION##stack,  {.i = 0 } }, \						*/
+/*	{ MOD,	XK_grave,	ACTION##stack,	{.i = PREVSEL } }, \				*/
+/*	{ MOD,	XK_a,		ACTION##stack,	{.i = 1 } }, \						*/
+/*	{ MOD,	XK_z,		ACTION##stack,	{.i = 2 } }, \						*/
+/*	{ MOD,	XK_x,		ACTION##stack,	{.i = -1 } },						*/
 
-/* definiert ein Makro "SHCMD" das Shell-Befehle in DWM ausführt. */
+/* definiert ein Makro "SHCMD" das Shell-Befehle in DWM ausführt.			*/
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
@@ -147,7 +153,7 @@ ResourcePref resources[] = {
 		{ "color4",			STRING,		&normfgcolor },
 		{ "color0",			STRING,		&selfgcolor },
 		{ "color4",			STRING,		&selbgcolor },
-		/* Terminal-Farben für status2d */
+/*		Terminal-Farben für status2d										*/
 		{ "color0",			STRING,		&termcol0 },
 		{ "color1",			STRING,		&termcol1 },
 		{ "color2",			STRING,		&termcol2 },
@@ -184,42 +190,42 @@ ResourcePref resources[] = {
 #include "shiftview.c"
 
 static const Key keys[] = {
-/*  modifier			key					function		argument					*/
+/*  modifier			key					function		argument		*/
 	STACKKEYS(MODKEY,                       focus)
 	STACKKEYS(MODKEY|ShiftMask,             push)
 	{ MODKEY,			XK_dead_circumflex, spawn,          {.v = (const char*[]){ "dmenuunicode", NULL } } },
 /*  { MODKEY|ShiftMask,	XK_grave,           togglescratch,  SHCMD("") },    */
-	TAGKEYS(			XK_1,               0)
-	TAGKEYS(			XK_2,               1)
-	TAGKEYS(			XK_3,               2)
-	TAGKEYS(			XK_4,               3)
-	TAGKEYS(			XK_5,               4)
-	TAGKEYS(			XK_6,               5)
-	TAGKEYS(			XK_7,               6)
-	TAGKEYS(			XK_8,               7)
-	TAGKEYS(			XK_9,               8)
-	{ MODKEY,			XK_0,               view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,	XK_0,               tag,            {.ui = ~0 } },
+	TAGKEYS(			XK_1,				0)
+	TAGKEYS(			XK_2,				1)
+	TAGKEYS(			XK_3,				2)
+	TAGKEYS(			XK_4,				3)
+	TAGKEYS(			XK_5,				4)
+	TAGKEYS(			XK_6,				5)
+	TAGKEYS(			XK_7,				6)
+	TAGKEYS(			XK_8,				7)
+	TAGKEYS(			XK_9,				8)
+	{ MODKEY,			XK_0,				view,           {.ui = ~0 } },
+	{ MODKEY|ShiftMask,	XK_0,				tag,            {.ui = ~0 } },
 /* equal ist auf der Deutschen Tastatur nicht ohne Umschaltebene erreichbar TODO neue Taste finden */
-	{ MODKEY,			XK_equal,           spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask,	XK_equal,           spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY,			XK_BackSpace,       spawn,			{.v = (const char*[]){ "sysact", NULL } } },
-	{ MODKEY|ShiftMask,	XK_BackSpace,       spawn,			{.v = (const char*[]){ "sysact", NULL } } },
-/*  { MODKEY|ShiftMask,	XK_Escape,          spawn,          SHCMD("") }, (für auswerfen von Tomb vorgemerkt*/
-	{ MODKEY,			XK_F1,              spawn,          SHCMD("preconv -e utf8 /usr/local/share/dwm/sarbs.mom | groff -mom -Tpdf | zathura -") },
-	{ MODKEY|ShiftMask,	XK_F1,              togglescratch,  {.ui = 2} },
-	{ MODKEY,			XK_F2,              spawn,          {.v = (const char*[]){ "tutorialvids", NULL } } },
-/*  { MODKEY|ShiftMask,	XK_F2, */
+	{ MODKEY,			XK_equal,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,	XK_equal,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_BackSpace,		spawn,			{.v = (const char*[]){ "sysact", NULL } } },
+	{ MODKEY|ShiftMask,	XK_BackSpace,		spawn,			{.v = (const char*[]){ "sysact", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_Escape,			spawn,			SHCMD("") }, (für auswerfen von Tomb vorgemerkt*/
+	{ MODKEY,			XK_F1,				spawn,			SHCMD("preconv -e utf8 /usr/local/share/dwm/sarbs.mom | groff -mom -Tpdf | zathura -") },
+/*	{ MODKEY|ShiftMask,	XK_F1,				togglescratch,	{.ui = 2} },	*/
+	{ MODKEY,			XK_F2,				spawn,			{.v = (const char*[]){ "tutorialvids", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_F2,												*/
 	{ MODKEY,			XK_F3,              spawn,          {.v = (const char*[]){ "displayselect", NULL } } },
-/*  { MODKEY|ShiftMask,	XK_F3, */
+/*  { MODKEY|ShiftMask,	XK_F3,												*/
 	{ MODKEY,			XK_F4,              spawn,          SHCMD(TERMINAL " -e pulsemixer; .local/bin/statusbar/sb-volume 55") },
-/*  { MODKEY|ShiftMask,	XK_F4, */
+/*  { MODKEY|ShiftMask,	XK_F4,												*/
 	{ MODKEY,			XK_F5,              xrdb,           {.v = NULL } },
-/*  { MODKEY|ShiftMask,	XK_F5, */
+/*  { MODKEY|ShiftMask,	XK_F5,												*/
 	{ MODKEY,			XK_F6,              spawn,			{.v = (const char*[]){ "torwrap", NULL } } },
-/*  { MODKEY|ShiftMask,	XK_F6, */
+/*  { MODKEY|ShiftMask,	XK_F6,												*/
 	{ MODKEY,			XK_F7,              spawn,			{.v = (const char*[]){ "td-toggle", NULL } } },
-/*  { MODKEY|ShiftMask,	XK_F7, */
+/*  { MODKEY|ShiftMask,	XK_F7,												*/
 /*	{ MODKEY,			XK_F8,              spawn,			{.v = (const char*[]){ "mailsync", NULL } } },  */
     { MODKEY,			XK_F8,              spawn,          SHCMD("BLOCK_BUTTON=1 sb-mailbox") },
 /*  { MODKEY|ShiftMask,	XK_F8, */
@@ -231,7 +237,7 @@ static const Key keys[] = {
 	{ MODKEY,			XK_F12,             spawn,          SHCMD("remaps") },
 	{ MODKEY|ShiftMask,	XK_F12,             spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless --mouse=sdk --new-display=2000x2000") },
 	{ MODKEY,			XK_Tab,             view,			{0} },
-/*  { MODKEY|ShiftMask,	XK_Tab,				spawn,			SHCMD("") },    */
+/*  { MODKEY|ShiftMask,	XK_Tab,				spawn,			SHCMD("") },	*/
 	{ MODKEY,			XK_q,               killclient,		{0} },
 	{ MODKEY|ShiftMask,	XK_q,               spawn,			{.v = (const char*[]){ "sysact", NULL } } },
 	{ MODKEY,			XK_w,               spawn,			{.v = (const char*[]){ BROWSER, NULL } } },
@@ -254,23 +260,20 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_p,               spawn,			SHCMD("mpc pause; pauseallmpv") },
 	{ MODKEY,			XK_udiaeresis,      spawn,          SHCMD("dmenu-translate") },
 	{ MODKEY|ShiftMask,	XK_udiaeresis,      spawn,          SHCMD("dmenu-translate -p 'Quick:'") },
-/*	{ MODKEY,			XK_ü,												*/
-/*	{ MODKEY|ShiftMask,	XK_ü,												*/
 /*	{ MODKEY,			XK_bracketleft,		spawn,			{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },    */
 /*	{ MODKEY|ShiftMask,	XK_bracketleft,		spawn,			{.v = (const char*[]){ "mpc", "seek", "-60", NULL } } },    */
 /*	{ MODKEY,			XK_bracketright,	spawn,			{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },    */
 /*	{ MODKEY|ShiftMask,	XK_bracketright,	spawn,			{.v = (const char*[]){ "mpc", "seek", "+60", NULL } } },    */
-/*		=== Der Backslash / ist unereichbar auf der Deutschen Tastatur ===		*/
+/*		=== Der Backslash / ist unereichbar auf der Deutschen Tastatur ===	*/
 /*	{ MODKEY,			XK_backslash,		view,			{0} },			*/
 /*	{ MODKEY|ShiftMask,	XK_backslash,		spawn,			SHCMD("") },	*/
 	{ MODKEY,           XK_a,				togglegaps,		{0} },
 	{ MODKEY|ShiftMask, XK_a,				defaultgaps,	{0} },
 	{ MODKEY,           XK_s,				togglesticky,	{0} },
 /*		=== Super+Shift+S vorgemerkt für SARBS Taste ===					*/
-/*	{ MODKEY,ShiftMask  XK_s,				spawn,			SHCMD("") },    */
+/*	{ MODKEY,ShiftMask  XK_s,				spawn,			SHCMD("") },	*/
 	{ MODKEY,			XK_d,				spawn,			SHCMD("rofi -show drun") },
 	{ MODKEY|ShiftMask,	XK_d,				spawn,			SHCMD("rofi-pass") },
-/*	{ MODKEY|ShiftMask,	XK_d,				spawn,			{.v = (const char*[]){ "rofi-pass", NULL } } }, */
 	{ MODKEY,           XK_f,				togglefullscr,	{0} },
 	{ MODKEY|ShiftMask, XK_f,				setlayout,		{.v = &layouts[8]} },
 	{ MODKEY,           XK_g,				shiftview,		{ .i = -1 } },
@@ -278,14 +281,14 @@ static const Key keys[] = {
 	{ MODKEY,           XK_h,				setmfact,		{.f = -0.05} },
 /*  { MODKEY|ShiftMask, XK_h, */
 /*  === J and K are automatically bound above in STACKEYS === */
-/*  { MODKEY|ShiftMask, XK_k,               spawn,          SHCMD("$TERMINAL -e calcurse") }, */
-    { MODKEY|ShiftMask, XK_k,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "calcurse", NULL } } },
-	{ MODKEY,           XK_l,               setmfact,		{.f = +0.05} },
+/*  { MODKEY|ShiftMask,	XK_k,				spawn,			SHCMD("$TERMINAL -e calcurse") }, */
+	{ MODKEY|ShiftMask,	XK_k,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "calcurse", NULL } } },
+	{ MODKEY,			XK_l,				setmfact,		{.f = +0.05} },
 /*  { MODKEY|ShiftMask, XK_l, */
-/*  { MODKEY,           XK_ö, */
-/*  { MODKEY|ShiftMask, XK_ö, */
-/*  { MODKEY,           XK_ä, */
-/*  { MODKEY|ShiftMask, XK_ä, */
+/*  { MODKEY,           XK_odiaeresis,		*/
+	{ MODKEY|ShiftMask, XK_odiaeresis,		togglescratch,	{.ui = 3} },
+	{ MODKEY|ShiftMask,	XK_adiaeresis,		togglescratch,	{.ui = 2} },
+/*  { MODKEY|ShiftMask, XK_adiaeresis,		*/
 /* === numbersign für Deutsches Tastaturlayout === */
 	{ MODKEY,           XK_numbersign,      shiftview,		{ .i = 1 } },
 	{ MODKEY|ShiftMask, XK_numbersign,      shifttag,		{ .i = 1 } },
