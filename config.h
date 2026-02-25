@@ -23,6 +23,11 @@ static int barpadh				= 10;	/* Horizontaler Abstand links/rechts fu00fcr schwebe
 static int barpadv				= 5;	/* Vertikaler Abstand oben/unten fu00fcr schwebende Statusleiste */
 static int tagpadh				= -4;	/* Horizontaler Zusatzabstand der Tag-Nummern (auch negativ moeglich) */
 static int user_bh				= 0;	/* Raum um die Schriftart in Pixeln */
+/* Anzeigemodi der Tab-Leiste: nie, immer, nur im Monocle-Modus bei mehreren Fenstern */
+/* Modi nach showtab_nmodes sind deaktiviert */
+enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always };
+static const int showtab		= showtab_auto;	/* Standard Tab-Leisten Modus */
+static const int toptab			= 0;		/* 0 bedeutet Tab-Leiste unten */
 static const char *fonts[]		= {
     "JetBrainsMono NF:style=ExtraLight:size=9:antialias=true:autohint=true",
     "OpenMoji:size=9:antialias=true:autohint=true"
@@ -416,6 +421,7 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
     { ClkTagBar,            0,              Button4,        shiftview,      {.i = -1} },
     { ClkTagBar,            0,              Button5,        shiftview,      {.i = 1} },
+    { ClkTabBar,            0,              Button1,        focuswin,       {0} },
     { ClkRootWin,           0,              Button2,        togglebar,      {0} },
 };
 
