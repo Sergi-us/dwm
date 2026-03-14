@@ -621,7 +621,7 @@ buttonpress(XEvent *e)
 			arg.ui = 1 << i;
 		} else if (ev->x < x + TEXTW(selmon->ltsymbol))
 			click = ClkLtSymbol;
-		else if (ev->x > (x = selmon->ww - (int)TEXTW(stext) + lrpad)) {
+		else if (ev->x > (x = selmon->ww - 2 * barpadh - (int)TEXTW(stext) + lrpad)) {
 			click = ClkStatusText;
 
 			char *text, *s, ch;
@@ -1282,8 +1282,13 @@ focusstack(const Arg *arg)
 
 	for(p = NULL, c = selmon->clients; c && (i || !ISVISIBLE(c));
 	    i -= ISVISIBLE(c) ? 1 : 0, p = c, c = c->next);
-	focus(c ? c : p);
+	c = c ? c : p;
+	focus(c);
 	restack(selmon);
+
+	/* Mauszeiger ins Zentrum des fokussierten Fensters warpen */
+	if (cursorwarp && c)
+		XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w / 2, c->h / 2);
 }
 
 void

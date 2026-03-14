@@ -305,15 +305,18 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask, XK_Return,          togglescratch,	{.ui = 0} },
 	{ MODKEY,           XK_y,               incrgaps,		{.i = +3 } },
     { MODKEY|ShiftMask,	XK_y,               incrgaps,       {.i = -3 } },
-/*  { MODKEY,           XK_x,               incrgaps,		{.i = -3 } },   */
-/*  { MODKEY|ShiftMask,	XK_x,               spawn,			SHCMD("") },    */
-    { MODKEY,           XK_c,               spawn,          {.v = (const char*[]){ "cliphist", "add", NULL } } },
-    { MODKEY|ShiftMask, XK_c,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "profanity", NULL } } },
-    { MODKEY,           XK_v,               spawn,          {.v = (const char*[]){ "cliphist", "sel", NULL } } },
-/*  { MODKEY,           XK_v,               spawn,  für Copieren          */
+/*  Zwischenablage-Steuerung via clipctl                                    */
+	{ MODKEY,			XK_x,				spawn,			{.v = (const char*[]){ "clipctl", "manage", NULL } } },
+/*	{ MODKEY|ShiftMask,	XK_x,				spawn,			{.v = (const char*[]){ "clipctl", "manage", NULL } } },	*/
+	{ MODKEY,			XK_c,				spawn,			{.v = (const char*[]){ "clipctl", "copy", NULL } } },
+/*	{ MODKEY|ShiftMask,	XK_c,				spawn,			{.v = (const char*[]){ "clipctl", "copy", NULL } } },	*/
+	{ MODKEY,			XK_v,				spawn,			{.v = (const char*[]){ "clipctl", "paste", NULL } } },
+/*	{ MODKEY|ShiftMask,	XK_v,				spawn,			{.v = (const char*[]){ "clipctl", "paste", NULL } } },	*/
+/* Profanity umbelegen oder entfernen TODO */
+/*	{ MODKEY|ShiftMask,	XK_c,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "profanity", NULL } } }, */
 /* === V is automatically bound above in STACKKEYS === */
 	{ MODKEY,           XK_b,               togglebar,		{0} },
-    { MODKEY|ShiftMask, XK_b,               spawn,          SHCMD("setbg ~/Bilder/Hintergrundbilder/") },
+	{ MODKEY|ShiftMask,	XK_b,               tabmode,		{-1} },			/* Tab-Leiste umschalten: nie/auto/immer */
 	{ MODKEY,           XK_n,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "nvim", "-c", "VimwikiIndex", NULL } } },
 	{ MODKEY|ShiftMask, XK_n,               spawn,			SHCMD(TERMINAL " -e newsraft ; pkill -RTMIN+6 dwmblocks") },
 	{ MODKEY,           XK_m,               spawn,			{.v = (const char*[]){ TERMINAL, "-e", "rmpc", NULL } } },
@@ -334,7 +337,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask, XK_Page_Up,         shifttag,		{ .i = -1 } },
 	{ MODKEY,           XK_Page_Down,       shiftview,		{ .i = +1 } },
 	{ MODKEY|ShiftMask, XK_Page_Down,       shifttag,		{ .i = +1 } },
-	{ MODKEY,           XK_Insert,          spawn,          SHCMD("xdotool type $(grep -v '^#' ~/.local/share/sarbs/snippets | dmenu -i -b -l 25 -p 'Link:' | cut -d' ' -f1)") },
+	{ MODKEY,			XK_Insert,			spawn,			SHCMD("xdotool type $(grep -v '^#' ~/.local/share/sarbs/snippets | rofi -dmenu -i -p 'Link:' -l 25 -theme-str 'window { width: 80%; }' | cut -d' ' -f1)") },
 	{ MODKEY|ShiftMask, XK_Insert,          spawn,          {.v = (const char*[]){ "bookmarkthis", NULL} } },
 	{ MODKEY,           XK_space,           zoom,			{0} },
 	{ MODKEY|ShiftMask, XK_space,           togglefloating,	{0} },

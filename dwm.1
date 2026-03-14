@@ -1,33 +1,41 @@
 .TH DWM 1 dwm\-VERSION
 .SH NAME
-dwm \- dynamischer Fenstermanager (Luke Smith <https://lukesmith.xyz>'s Version)
+dwm \- dynamischer Fenstermanager (SARBS-Version)
 .SH SYNOPSIS
 .B dwm
 .RB [ \-v ]
 .SH BESCHREIBUNG
-dwm ist ein dynamischer Fenstermanager für X.
+dwm ist ein dynamischer Fenstermanager fuer X.
 .P
-dwm ordnet Fenster nach Aktualität und Priorität. Während die Layouts von dwm
-sich ändern können, wird das aktuellste "Master"-Fenster immer in der
+dwm ordnet Fenster nach Aktualitaet und Prioritaet. Waehrend die Layouts von dwm
+sich aendern koennen, wird das aktuellste "Master"-Fenster immer in der
 hervorgehobenen Position angezeigt. Es gibt Tastenkombinationen, um durch
-Fenster zu wechseln und Fenster in die Master-Position zu befördern.
+Fenster zu wechseln und Fenster in die Master-Position zu befoerdern.
 .P
 Fenster werden nach Tags gruppiert. Jedes Fenster kann mit einem oder mehreren
-Tags versehen werden. Wenn bestimmte Tags ausgewählt werden, werden alle Fenster
-mit diesen Tags angezeigt.
+Tags versehen werden. Wenn bestimmte Tags ausgewaehlt werden, werden alle Fenster
+mit diesen Tags angezeigt. Dank des pertag-Patches behaelt jeder Tag sein
+eigenes Layout, Master-Breite (mfact) und Anzahl der Master-Fenster (nmaster).
 .P
-Jeder Bildschirm enthält eine kleine Statusleiste, die alle verfügbaren Tags, das
-Layout, den Titel des fokussierten Fensters und den Text anzeigt, der aus der
-Root-Fenstereigenschaft ausgelesen wird, wenn der Bildschirm fokussiert ist.
-Ein schwebendes Fenster wird durch ein leeres Quadrat angezeigt, und ein
-maximiertes schwebendes Fenster wird durch ein ausgefülltes Quadrat vor dem
-Fenstertitel angezeigt. Die ausgewählten Tags werden durch eine andere Farbe
-markiert. Die Tags des fokussierten Fensters werden durch ein ausgefülltes
-Quadrat in der oberen linken Ecke markiert. Die Tags, die auf eines oder
-mehrere Fenster angewendet wurden, werden durch ein leeres Quadrat in der
-oberen linken Ecke angezeigt.
+Jeder Bildschirm enthaelt zwei Leisten:
+.P
+Die
+.B Statusleiste
+zeigt alle verfuegbaren Tags, das Layout, den Titel des fokussierten Fensters
+und den Statustext an. Die Statusleiste schwebt mit konfigurierbarem Abstand
+(barpadh/barpadv). Statusleisten-Bloecke sind klickbar und senden Signale
+an dwmblocks (status2d/statuscmd-Patch). Farben koennen pro Block ueber
+Escape-Codes gesetzt werden.
+.P
+Die
+.B Tab-Leiste
+zeigt im Monocle-Layout bei mehreren Fenstern einen Tab fuer jedes Fenster an.
+Die Tabs erstrecken sich ueber die gesamte Bildschirmbreite (i3-Style).
+Ein Klick auf einen Tab fokussiert das entsprechende Fenster. Der Anzeigemodus
+kann zwischen "nie" und "auto" umgeschaltet werden.
 .P
 dwm zeichnet einen kleinen Rahmen um Fenster, um den Fokuszustand anzuzeigen.
+Terminal-Fenster verschlucken GUI-Programme die sie starten (swallow-Patch).
 .SH OPTIONEN
 .TP
 .B \-v
@@ -42,166 +50,414 @@ gesetzt werden.
 .TP
 .B Linksklick
 Klicken auf ein Tag-Label, um alle Fenster mit diesem Tag anzuzeigen. Ein Klick auf das
-Layout-Label wechselt zwischen Kachel- und Schwebezustand.
+Layout-Label wechselt zwischen Kachel- und Schwebezustand. Klick auf einen
+Fensternamen in der Tab-Leiste fokussiert das Fenster.
 .TP
 .B Rechtsklick
-Klicken auf ein Tag-Label fügt alle Fenster mit diesem Tag zur Ansicht hinzu oder
+Klicken auf ein Tag-Label fuegt alle Fenster mit diesem Tag zur Ansicht hinzu oder
 entfernt sie davon.
 .TP
 .B Super\-Linksklick
 Klicken auf ein Tag-Label wendet das Tag auf das fokussierte Fenster an.
 .TP
 .B Super\-Rechtsklick
-Klicken auf ein Tag-Label fügt dieses Tag zum fokussierten Fenster hinzu oder
+Klicken auf ein Tag-Label fuegt dieses Tag zum fokussierten Fenster hinzu oder
 entfernt es davon.
+.TP
+.B Scrollrad auf Tags
+Wechselt zyklisch zum vorherigen/naechsten Tag.
+.SS Klickbare Statusleiste (statuscmd)
+Mausklicks auf Statusleisten-Bloecke senden Signale an dwmblocks:
+.TP
+.B Linksklick / Mittelklick / Rechtsklick
+Sendet Signal 1/2/3 an den entsprechenden dwmblocks-Block.
+.TP
+.B Scrollrad hoch/runter
+Sendet Signal 4/5 an den entsprechenden dwmblocks-Block.
+.TP
+.B Shift\-Linksklick
+Sendet Signal 6 an den entsprechenden dwmblocks-Block.
 .SS Tastenkombinationen
 .TP
 .B Super\-Return
 Startet ein Terminal,
 .BR st(1).
 .TP
+.B Super\-Shift\-Return
+Oeffnet/schliesst das Scratchpad-Terminal (spterm).
+.TP
 .B Super\-d
 Startet
-.BR dmenu(1),
-um andere Programme zu starten.
+.BR rofi (1)
+als Programmstarter (rofi \-show drun).
 .TP
-.B Super\-Grave
+.B Super\-Shift\-d
 Startet
-.BR dmenuunicode(1),
-um Emoji auszuwählen.
+.BR rofi\-pass (1)
+zur Passwortauswahl.
 .TP
-.B Super\-Minus/Plus, Super\-Shift\-Minus/Plus
-Verringert/erhöht die Lautstärke um 5 bzw. 15.
-.TP
-.B Super\-b
-Schaltet die Statusleiste ein oder aus.
+.B Super\-^ (Zirkumflex)
+Startet
+.BR dmenuunicode (1),
+um Emoji auszuwaehlen.
 .TP
 .B Super\-q
-Schließt das fokussierte Fenster.
+Schliesst das fokussierte Fenster.
 .TP
-.B Super\-t/T
-Setzt das Kachel/Bstack-Layout.
+.B Super\-Shift\-q
+Oeffnet das System-Aktionsmenue (sysact).
+.SS Layouts
 .TP
-.B Super\-f
-Wechselt in den Vollbildmodus des Fensters.
+.B Super\-t
+Setzt das Kachel-Layout (tile): Master links, Clients rechts.
 .TP
-.B Super\-F
-Wechselt das Layout in den Schwebezustand.
+.B Super\-Shift\-t
+Setzt das Bstack-Layout: Master oben, Clients unten.
 .TP
-.B Super\-y/Y
-Setzt das Fibonacci-Spiral/Dwindle-Layout.
+.B Super\-z
+Setzt das Fibonacci-Spiral-Layout.
 .TP
-.B Super\-u/U
+.B Super\-Shift\-z
+Setzt das Dwindle-Layout.
+.TP
+.B Super\-u
+Setzt das Deck-Layout: Master links, Clients im Monocle-Modus.
+.TP
+.B Super\-Shift\-u
+Setzt das Monocle-Layout: Alle Fenster uebereinander. Bei mehreren Fenstern
+erscheint die Tab-Leiste.
+.TP
+.B Super\-i
 Setzt das Layout "Zentrierter Master".
 .TP
-.B Super\-i/I
-Setzt das Layout "Zentrierter Master" oder "Schwebender Master".
+.B Super\-Shift\-i
+Setzt das Layout "Schwebender zentrierter Master".
 .TP
-.B Super\-Leertaste
-Zoomt/Wechselt das fokussierte Fenster zum/vom Master-Bereich.
+.B Super\-Shift\-f
+Setzt das Schwebezustands-Layout (alle Fenster frei positionierbar).
+.TP
+.B Super\-f
+Wechselt das fokussierte Fenster in den Vollbildmodus.
+.SS Fenster-Navigation und -Verwaltung
 .TP
 .B Super\-j/k
-Fokussiert das nächste/vorherige Fenster.
+Fokussiert das naechste/vorherige Fenster im Stack.
 .TP
 .B Super\-Shift\-j/k
-Verschiebt das ausgewählte Fenster nach unten/oben im Stapel.
+Verschiebt das fokussierte Fenster nach unten/oben im Stack (pushstack).
 .TP
-.B Super\-o/O
-Erhöht/verringert die Anzahl der Fenster im Master-Bereich.
-.TP
-.B Super\-l
-Erhöht die Größe des Master-Bereichs.
-.TP
-.B Super\-h
-Verringert die Größe des Master-Bereichs.
+.B Super\-Leertaste
+Befördert das fokussierte Fenster zum Master-Bereich (oder tauscht).
 .TP
 .B Super\-Shift\-Leertaste
 Wechselt das fokussierte Fenster zwischen Kachel- und Schwebezustand.
 .TP
-.B Super\-Tab
-Wechselt zu den zuletzt ausgewählten Tags.
+.B Super\-o/O
+Erhoeht/verringert die Anzahl der Fenster im Master-Bereich.
 .TP
-.B Super\-g
-Wechselt zum vorherigen Tag.
+.B Super\-h
+Verkleinert den Master-Bereich.
 .TP
-.B Super\-Shift\-g
-Verschiebt das ausgewählte Fenster zum vorherigen Tag.
+.B Super\-l
+Vergroessert den Master-Bereich.
 .TP
-.B Super\-;
-Wechselt zum nächsten Tag.
+.B Super\-s
+Macht das Fenster "sticky" (auf allen Tags sichtbar).
 .TP
-.B Super\-Shift\-;
-Verschiebt das ausgewählte Fenster zum nächsten Tag.
+.B Super\-b
+Schaltet die Statusleiste ein oder aus.
+.SS Tab-Leiste
 .TP
-.B Super\-BildAuf/BildAb
-Wechselt zum vorherigen/nächsten Tag.
+.B Super\-Shift\-x
+Wechselt den Anzeigemodus der Tab-Leiste zyklisch: nie angezeigt, automatisch
+(nur im Monocle-Layout bei mehreren Fenstern).
 .TP
-.B Super\-Shift\-BildAuf/BildAb
-Verschiebt das ausgewählte Fenster zum vorherigen/nächsten Tag.
+.B Linksklick auf Tab
+Fokussiert das entsprechende Fenster.
+.SS Tag-Navigation
 .TP
-.B Super\-a
-Schaltet die Fensterabstände um.
-.TP
-.B Super\-z
-Erhöht die Abstände zwischen den Fenstern.
-.TP
-.B Super\-x
-Verringert die Abstände zwischen den Fenstern.
-.TP
-.B Super\-Shift\-[1..n]
-Wendet das n-te Tag auf das fokussierte Fenster an.
-.TP
-.B Super\-Shift\-0
-Wendet alle Tags auf das fokussierte Fenster an.
-.TP
-.B Super\-Control\-Shift\-[1..n]
-Fügt das n-te Tag dem fokussierten Fenster hinzu oder entfernt es davon.
-.TP
-.B Super\-[1..n]
+.B Super\-[1..9]
 Zeigt alle Fenster mit dem n-ten Tag an.
 .TP
 .B Super\-0
 Zeigt alle Fenster mit irgendeinem Tag an.
 .TP
-.B Super\-Control\-[1..n]
-Fügt alle Fenster mit dem n-ten Tag zur Ansicht hinzu oder entfernt sie davon.
+.B Super\-Shift\-[1..9]
+Wendet das n-te Tag auf das fokussierte Fenster an.
 .TP
-.B Super\-Shift\-q
-Beendet dwm.
+.B Super\-Shift\-0
+Wendet alle Tags auf das fokussierte Fenster an.
 .TP
-.B Mod1\-Control\-Shift\-q
-Zeigt ein Menü zum Neustarten/Beenden/Neustarten/Herunterfahren an.
+.B Super\-Control\-[1..9]
+Fuegt alle Fenster mit dem n-ten Tag zur Ansicht hinzu oder entfernt sie davon.
+.TP
+.B Super\-Tab
+Wechselt zu den zuletzt ausgewaehlten Tags.
+.TP
+.B Super\-g / Super\-#
+Wechselt zum vorherigen/naechsten Tag (zyklisch). Auf der deutschen Tastatur
+wird '#' (Raute) fuer den naechsten Tag verwendet.
+.TP
+.B Super\-Shift\-g / Super\-Shift\-#
+Verschiebt das fokussierte Fenster zum vorherigen/naechsten Tag.
+.TP
+.B Super\-BildAuf/BildAb
+Wechselt zum vorherigen/naechsten Tag.
+.TP
+.B Super\-Shift\-BildAuf/BildAb
+Verschiebt das fokussierte Fenster zum vorherigen/naechsten Tag.
+.SS Fensterabstaende (Vanitygaps)
+.TP
+.B Super\-a
+Schaltet die Fensterabstaende ein oder aus.
+.TP
+.B Super\-Shift\-a
+Setzt die Fensterabstaende auf die Standardwerte zurueck.
+.TP
+.B Super\-y
+Vergroessert die Abstaende um 3 Pixel.
+.TP
+.B Super\-Shift\-y
+Verkleinert die Abstaende um 3 Pixel.
+.TP
+.B Super\-Shift\-Apostroph
+Schaltet Smart-Gaps um (keine Luecken bei nur einem Fenster).
+.TP
+.B Super\-Scrollrad (auf Fenster)
+Vergroessert/verkleinert die Abstaende um 1 Pixel.
+.TP
+.B Super\-Mittelklick (auf Fenster)
+Setzt die Abstaende auf Standardwerte zurueck.
+.SS Monitor-Steuerung
+.TP
+.B Super\-Links/Rechts (Pfeiltasten)
+Fokussiert den vorherigen/naechsten Monitor.
+.TP
+.B Super\-Shift\-Links/Rechts
+Verschiebt das fokussierte Fenster zum vorherigen/naechsten Monitor.
+.SS Scratchpads
+Scratchpads sind schwebende Fenster, die per Tastenkombination ein- und
+ausgeblendet werden koennen.
+.TP
+.B Super\-Shift\-Return
+Oeffnet/schliesst ein schwebendes Terminal (spterm).
+.TP
+.B Super\-Apostroph
+Oeffnet/schliesst den Rechner (qalc via spcalc).
+.TP
+.B Super\-Shift\-ae
+Oeffnet/schliesst gomuks (Matrix-Client).
+.SS Programm-Starter
+.TP
+.B Super\-w
+Startet den Browser (qutebrowser).
+.TP
+.B Super\-Shift\-w
+Startet nmtui im Terminal (Netzwerk-Manager).
+.TP
+.B Super\-e
+Startet neomutt im Terminal (E-Mail).
+.TP
+.B Super\-Shift\-e
+Startet abook im Terminal (Adressbuch).
+.TP
+.B Super\-r
+Startet lfub im Terminal (Dateimanager).
+.TP
+.B Super\-Shift\-r
+Startet btop im Terminal (Systemmonitor).
+.TP
+.B Super\-n
+Startet nvim mit VimwikiIndex.
+.TP
+.B Super\-Shift\-n
+Startet newsraft im Terminal (RSS-Reader).
+.TP
+.B Super\-m
+Startet rmpc im Terminal (MPD-Client).
+.TP
+.B Super\-Shift\-k
+Startet calcurse im Terminal (Kalender).
+.TP
+.B Super\-Shift\-c
+Startet profanity im Terminal (XMPP-Client).
+.SS Zwischenablage und Uebersetzer
+.TP
+.B Super\-c
+Speichert die aktuelle Zwischenablage in cliphist.
+.TP
+.B Super\-v
+Zeigt die Zwischenablage-Historie zur Auswahl an (cliphist).
+.TP
+.B Super\-ue (u-Umlaut)
+Startet dmenu-translate.
+.TP
+.B Super\-Shift\-ue
+Startet dmenu-translate im Quick-Modus.
+.SS Audio und Medien
+.TP
+.B Super\-Minus/Plus
+Verringert/erhoeht die Lautstaerke um 5%.
+.TP
+.B Super\-Shift\-Minus/Plus
+Verringert/erhoeht die Lautstaerke um 15%.
+.TP
+.B Super\-Shift\-m
+Schaltet die Stummschaltung um.
+.TP
+.B Super\-p
+Musik abspielen/pausieren (mpc toggle).
+.TP
+.B Super\-Shift\-p
+Alle Medien pausieren (mpc pause + pauseallmpv).
+.TP
+.B Super\-Komma / Super\-Punkt
+Vorheriger/naechster Titel (mpc prev/next).
+.TP
+.B Super\-Shift\-Komma
+Titel zum Anfang zurueckspulen (mpc seek 0%).
+.TP
+.B Super\-Shift\-Punkt
+Wiederholung umschalten (mpc repeat).
+.TP
+.B XF86Audio-Tasten
+Die Multimedia-Tasten der Tastatur steuern ebenfalls die Lautstaerke und
+Medienwiedergabe.
+.SS Screenshots und Aufnahme
+.TP
+.B Druck
+Erstellt einen Vollbild-Screenshot (maim).
+.TP
+.B Shift\-Druck
+Interaktiver Screenshot mit Auswahlbereich (maimpick).
+.TP
+.B Super\-Druck
+Startet dmenurecord (Bildschirmaufnahme).
+.TP
+.B Super\-Entf
+Stoppt eine laufende Bildschirmaufnahme (dmenurecord kill).
+.SS Funktionstasten
+.TP
+.B Super\-F1
+Zeigt die SARBS-Dokumentation als PDF in zathura an.
+.TP
+.B Super\-F2
+Startet tutorialvids.
+.TP
+.B Super\-F3
+Startet displayselect (Monitor-Konfiguration).
+.TP
+.B Super\-F4
+Startet pulsemixer im Terminal (Audio-Mixer).
+.TP
+.B Super\-F5
+Laedt Xresources dynamisch neu (xrdb).
+.TP
+.B Super\-F6
+Startet torwrap (Tor).
+.TP
+.B Super\-F7
+Startet td-toggle.
+.TP
+.B Super\-F8
+Fuehrt sb-mailbox aus (Mailbox-Status).
+.TP
+.B Super\-F9
+Startet mounter (Laufwerke einhaengen).
+.TP
+.B Super\-F10
+Startet unmounter (Laufwerke aushaengen).
+.TP
+.B Super\-F11
+Startet cam (Webcam-Vorschau).
+.TP
+.B Super\-Shift\-F11
+Startet scrcpy (Android-Bildschirmspiegelung).
+.TP
+.B Super\-F12
+Fuehrt remaps aus (Tastatur-Remapping neu laden).
+.TP
+.B Super\-Shift\-F12
+Startet scrcpy mit virtuellem Display (2000x2000).
+.SS System
+.TP
+.B Super\-BackSpace / Super\-Shift\-BackSpace
+Oeffnet das System-Aktionsmenue (sysact): Abmelden, Neustarten, Herunterfahren.
+.TP
+.B Super\-Shift\-b
+Setzt ein neues Hintergrundbild (setbg).
+.TP
+.B Super\-Insert
+Tippt ein Snippet aus einer dmenu-Auswahl ein (xdotool).
+.TP
+.B Super\-Shift\-Insert
+Startet bookmarkthis.
+.TP
+.B Super\-Home
+Schaltet screenkey ein/aus.
 .SS Mausbefehle
 .TP
 .B Super\-Linksklick
 Bewegt das fokussierte Fenster beim Ziehen. Kachel-Fenster werden in den Schwebezustand versetzt.
 .TP
-.B Super\-Mittelklick
-Wechselt das fokussierte Fenster zwischen Schweben und Kachel.
-.TP
 .B Super\-Rechtsklick
-Ändert die Größe des fokussierten Fensters beim Ziehen. Kachel-Fenster werden in den Schwebezustand versetzt.
-.SH ANPASSUNG
-dwm wird angepasst, indem eine benutzerdefinierte config.h erstellt und der Quellcode neu kompiliert wird. Dies hält dwm schnell, sicher und einfach.
-.SH SIGNALS
+Aendert die Groesse des fokussierten Fensters beim Ziehen. Kachel-Fenster werden in den Schwebezustand versetzt.
 .TP
-.B SIGHUP - 1
+.B Mittelklick auf Fenstertitel
+Befördert das Fenster zum Master-Bereich (zoom).
+.TP
+.B Mittelklick auf Desktop (Root-Window)
+Schaltet die Statusleiste ein/aus.
+.SH PATCHES
+Diese Version von dwm enthaelt folgende Patches:
+.TP
+.B pertag (mit Fensterauswahl)
+Speichert Layout, mfact und nmaster pro Tag. Die Bar-Position bleibt global.
+Zusaetzlich wird die Fensterauswahl (welches Fenster fokussiert war) pro Tag gespeichert.
+.TP
+.B tab (i3-like)
+Zeigt im Monocle-Layout eine Tab-Leiste ueber die gesamte Bildschirmbreite an.
+Maximal 50 Tabs werden unterstuetzt (MAXTABS).
+.TP
+.B vanitygaps
+Konfigurierbare Luecken zwischen Fenstern (innere/aeussere, horizontal/vertikal).
+Enthaelt die Layouts: tile, bstack, spiral, dwindle, deck, monocle, centeredmaster,
+centeredfloatingmaster.
+.TP
+.B status2d + statuscmd
+Farbige und klickbare Statusleisten-Bloecke. Signale werden an dwmblocks gesendet.
+.TP
+.B swallow
+Terminal-Fenster verschlucken GUI-Programme die sie starten.
+.TP
+.B scratchpads
+Schwebende Fenster die per Taste ein-/ausgeblendet werden (spterm, spcalc, gomuks).
+.TP
+.B barpadding (schwebende Statusleiste)
+Statusleiste schwebt mit konfigurierbarem Abstand (barpadh, barpadv).
+.TP
+.B xresources
+Farben und Einstellungen koennen dynamisch ueber Xresources geladen werden.
+Neuladen mit Super-F5 oder per SIGUSR1-Signal.
+.TP
+.B shiftview
+Zyklisches Durchblaettern der Tags.
+.SH ANPASSUNG
+dwm wird angepasst, indem eine benutzerdefinierte config.h erstellt und der
+Quellcode neu kompiliert wird. Dies haelt dwm schnell, sicher und einfach.
+.SH SIGNALE
+.TP
+.B SIGHUP \- 1
 Startet den dwm-Prozess neu.
 .TP
-.B SIGTERM - 15
+.B SIGUSR1 \- 10
+Laedt Xresources dynamisch neu (Farben, Einstellungen).
+.TP
+.B SIGTERM \- 15
 Beendet den dwm-Prozess sauber.
 .SH SIEHE AUCH
-.BR dmenu (1),
-.BR st (1)
-.SH PROBLEME
-Java-Anwendungen, die das XToolkit/XAWT-Backend verwenden, zeigen möglicherweise nur graue Fenster an. Das XToolkit/XAWT-Backend bricht die ICCCM-Konformität in den neueren Versionen von JDK 1.5 und frühen JDK 1.6-Versionen, da es davon ausgeht, dass ein Reparenting-Windows-Manager verwendet wird. Mögliche Workarounds bestehen darin, JDK 1.4 zu verwenden (das nicht das XToolkit/XAWT-Backend enthält) oder die Umgebungsvariable
-.BR AWT_TOOLKIT=MToolkit
-zu setzen (um das ältere Motif-Backend zu verwenden) oder
-.B xprop -root -f _NET_WM_NAME 32a -set _NET_WM_NAME LG3D
-oder
-.B wmname LG3D
-auszuführen (um einen nicht-reparentierenden Fenstermanager vorzutäuschen, den das XToolkit/XAWT-Backend erkennen kann) oder bei der Verwendung von OpenJDK die Umgebungsvariable
-.BR _JAVA_AWT_WM_NONREPARENTING=1
-zu setzen.
+.BR rofi (1),
+.BR st (1),
+.BR dwmblocks (1)
 .SH FEHLER
 Alle Fehlerberichte mit einem Patch an hackers@suckless.org senden.
