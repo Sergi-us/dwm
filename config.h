@@ -1,5 +1,5 @@
 /*
- * ## 2026-02-09	SERGI
+ * ## 2026-03-14	SARBS
  * See LICENSE file for copyright and license details.
 */
 
@@ -16,18 +16,19 @@ static unsigned int gappiv		= 7;	/* Vertikaler innerer Abstand zwischen Fenstern
 static unsigned int gappoh		= 7;	/* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
 static unsigned int gappov		= 20;	/* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
 static int swallowfloating		= 1;	/* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
+static int cursorwarp			= 1;	/* 1 bedeutet Mauszeiger wird beim Fokuswechsel ins Fenster zentriert */
 static int smartgaps			= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
 static int showbar				= 1;	/* 0 bedeutet keine Statusleiste */
 static int topbar				= 1;	/* 0 bedeutet Statusleiste unten statt oben */
-static int barpadh				= 10;	/* Horizontaler Abstand links/rechts fu00fcr schwebende Statusleiste */
-static int barpadv				= 5;	/* Vertikaler Abstand oben/unten fu00fcr schwebende Statusleiste */
-static int tagpadh				= -4;	/* Horizontaler Zusatzabstand der Tag-Nummern (auch negativ moeglich) */
+static int barpadh				= 25;	/* Horizontaler Abstand links/rechts für schwebende Statusleiste */
+static int barpadv				= 5;	/* Vertikaler Abstand oben/unten für schwebende Statusleiste */
 static int user_bh				= 0;	/* Raum um die Schriftart in Pixeln */
+static int tagpadh				= -4;	/* Horizontaler Zusatzabstand der Tag-Nummern (auch negativ moeglich) */
 /* Anzeigemodi der Tab-Leiste: nie, immer, nur im Monocle-Modus bei mehreren Fenstern */
 /* Modi nach showtab_nmodes sind deaktiviert */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always };
 static const int showtab		= showtab_auto;	/* Standard Tab-Leisten Modus */
-static const int toptab			= 0;		/* 0 bedeutet Tab-Leiste unten */
+static const int toptab			= 1;		/* 0 bedeutet Tab-Leiste unten */
 static const char *fonts[]		= {
     "JetBrainsMono NF:style=ExtraLight:size=9:antialias=true:autohint=true",
     "OpenMoji:size=9:antialias=true:autohint=true"
@@ -74,13 +75,11 @@ typedef struct {
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x30", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "70x30", "-e", "qalc", "-i", NULL };
 const char *spcmd3[] = {TERMINAL, "-n", "gomuks", "-g", "130x30", "-e", "gomuks", NULL };
-const char *spcmd4[] = {TERMINAL, "-n", "matui", "-g", "90x30", "-e", "matui", NULL };
 static Sp scratchpads[] = {
 	/* name			cmd	*/
 	{"spterm",		spcmd1},
 	{"spcalc",		spcmd2},
 	{"gomuks",		spcmd3},
-	{"matui",		spcmd4},
 };
 
 /* tagging */
@@ -100,7 +99,6 @@ static const Rule rules[] = {
     { TERMCLASS,	"spterm",		NULL,			SPTAG(0),	1,			1,			0,			-1 },
     { TERMCLASS,	"spcalc",		NULL,			SPTAG(1),	1,			1,			0,			-1 },
     { TERMCLASS,	"gomuks",		NULL,			SPTAG(2),	1,			1,			0,			-1 },
-    { TERMCLASS,	"matui",		NULL,			SPTAG(3),	1,			1,			0,			-1 },
 };
 
 /* layout(s) */
@@ -218,15 +216,15 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_BackSpace,		spawn,			{.v = (const char*[]){ "sysact", NULL } } },
 /*  { MODKEY|ShiftMask,	XK_Escape,			spawn,			SHCMD("") }, (für auswerfen von Tomb vorgemerkt*/
 	{ MODKEY,			XK_F1,				spawn,			SHCMD("preconv -e utf8 /usr/local/share/dwm/sarbs.mom | groff -mom -Tpdf | zathura -") },
-/*	{ MODKEY|ShiftMask,	XK_F1,				togglescratch,	{.ui = 2} },	*/
+	{ MODKEY|ShiftMask,	XK_F1,				togglescratch,	{.ui = 0} },
 	{ MODKEY,			XK_F2,				spawn,			{.v = (const char*[]){ "tutorialvids", NULL } } },
-/*  { MODKEY|ShiftMask,	XK_F2,												*/
+/*  { MODKEY|ShiftMask,	XK_F2,				togglescratch,	{.ui = 2} },	*/
 	{ MODKEY,			XK_F3,              spawn,          {.v = (const char*[]){ "displayselect", NULL } } },
-/*  { MODKEY|ShiftMask,	XK_F3,												*/
+/*  { MODKEY|ShiftMask,	XK_F3,				togglescratch,	{.ui = 3} },	*/
 	{ MODKEY,			XK_F4,              spawn,          SHCMD(TERMINAL " -e pulsemixer; .local/bin/statusbar/sb-volume 55") },
-/*  { MODKEY|ShiftMask,	XK_F4,												*/
+/*  { MODKEY|ShiftMask,	XK_F4,				togglescratch,	{.ui = 4} },	*/
 	{ MODKEY,			XK_F5,              xrdb,           {.v = NULL } },
-/*  { MODKEY|ShiftMask,	XK_F5,												*/
+/*  { MODKEY|ShiftMask,	XK_F5,				togglescratch,	{.ui = 5} },	*/
 	{ MODKEY,			XK_F6,              spawn,			{.v = (const char*[]){ "torwrap", NULL } } },
 /*  { MODKEY|ShiftMask,	XK_F6,												*/
 	{ MODKEY,			XK_F7,              spawn,			{.v = (const char*[]){ "td-toggle", NULL } } },
@@ -284,14 +282,14 @@ static const Key keys[] = {
 	{ MODKEY,           XK_g,				shiftview,		{ .i = -1 } },
 	{ MODKEY|ShiftMask, XK_g,				shifttag,		{ .i = -1 } },
 	{ MODKEY,           XK_h,				setmfact,		{.f = -0.05} },
-/*  { MODKEY|ShiftMask, XK_h, */
+	{ MODKEY|ShiftMask,	XK_h,				spawn,			SHCMD("setbg ~/Bilder/Hintergrundbilder/") },
 /*  === J and K are automatically bound above in STACKEYS === */
 /*  { MODKEY|ShiftMask,	XK_k,				spawn,			SHCMD("$TERMINAL -e calcurse") }, */
-	{ MODKEY|ShiftMask,	XK_k,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "calcurse", NULL } } },
+/*	{ MODKEY|ShiftMask,	XK_k,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "calcurse", NULL } } }, */
 	{ MODKEY,			XK_l,				setmfact,		{.f = +0.05} },
 /*  { MODKEY|ShiftMask, XK_l, */
 /*  { MODKEY,           XK_odiaeresis,		*/
-	{ MODKEY|ShiftMask, XK_odiaeresis,		togglescratch,	{.ui = 3} },
+/*  { MODKEY|ShiftMask, XK_odiaeresis,		*/
 	{ MODKEY|ShiftMask,	XK_adiaeresis,		togglescratch,	{.ui = 2} },
 /*  { MODKEY|ShiftMask, XK_adiaeresis,		*/
 /* === numbersign für Deutsches Tastaturlayout === */
