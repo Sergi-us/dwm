@@ -210,7 +210,6 @@ static void drawbar(Monitor *m);
 static void drawbars(void);
 static void drawtab(Monitor *m);
 static void drawtabs(void);
-static int drawstatusbar(Monitor *m, int bh, char *text);
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static void focus(Client *c);
@@ -643,19 +642,6 @@ buttonpress(XEvent *e)
 					/* Merke Signal für den NÄCHSTEN Block */
 					dwmblockssig = *s;
 					text = s + 1;  /* Nächster Block startet nach Signal */
-				} else if (*s == '^') {
-					/* status2d Tag: Überspringe ^...^ für korrekte Positions-Berechnung */
-					ch = *s;
-					*s = '\0';
-					x += TEXTW(text) - lrpad;
-					*s = ch;
-					if (x >= ev->x)
-						break;
-					if (*(++s) == 'f')
-						x += atoi(++s);
-					while (*(s++) != '^');
-					text = s;
-					s--;  /* Korrektur für s += utf8bytelen(s) im Loop-Header */
 				}
 			}
 			/* Finaler Check: Berechne Breite des letzten Blocks */
@@ -872,24 +858,14 @@ configurerequest(XEvent *e)
 	XSync(dpy, False);
 }
 
-void
+static void
 copyvalidchars(char *text, char *rawtext)
 {
 	int i = -1, j = 0;
-	short isCode = 0;
 
 	while(rawtext[++i]) {
 		if ((unsigned char)rawtext[i] >= ' ') {
-			/* Filtere status2d Farbcodes ^...^ heraus */
-			if (rawtext[i] == '^') {
-				if (!isCode) {
-					isCode = 1;
-				} else {
-					isCode = 0;
-				}
-			} else if (!isCode) {
-				text[j++] = rawtext[i];
-			}
+			text[j++] = rawtext[i];
 		}
 	}
 	text[j] = '\0';
@@ -983,94 +959,6 @@ dirtomon(int dir)
 	return m;
 }
 
-/* status2d - Zeichnet Statusbar mit Farbcodes */
-int
-drawstatusbar(Monitor *m, int bh, char *rawtext)
-{
-	int ret, i, j, w, x, len;
-	short isCode = 0;
-	char *text;
-	char *p;
-
-	len = strlen(rawtext) + 1;
-	if (!(text = (char*) malloc(sizeof(char) * len)))
-		die("malloc");
-	p = text;
-	
-	/* Berechne Gesamtbreite basierend auf stext (ohne Farbcodes) */
-	w = TEXTW(stext) - lrpad + 2; /* 2px rechts padding */
-	ret = w;
-	x = m->ww - 2 * barpadh - w;
-
-	drw_setscheme(drw, scheme[SchemeNorm]);
-	drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
-	drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
-	drw_rect(drw, x, 0, w, bh, 1, 1);
-	
-	/* Zeichne Text mit Farbcodes */
-	p = text;
-	isCode = 0;
-	i = -1;
-	j = 0;
-	while (rawtext[++i]) {
-		/* Überspringe Signal-Bytes (< 0x20) - statuscmd Kompatibilität */
-		if ((unsigned char)rawtext[i] < ' ' && rawtext[i] != '\0') {
-			continue;
-		}
-		
-		if (rawtext[i] == '^' && !isCode) {
-			isCode = 1;
-			/* Zeichne vorherigen Text */
-			text[j] = '\0';
-			w = TEXTW(p) - lrpad;
-			drw_text(drw, x, 0, w, bh, 0, p, 0);
-			x += w;
-			p = text;
-			j = 0;
-		} else if (rawtext[i] == '^' && isCode) {
-			isCode = 0;
-			/* Verarbeite Farbcode */
-			text[j] = '\0';
-			if (text[0] == 'C') {
-				/* Vordergrundfarbe setzen */
-				int c = atoi(text + 1);
-				if (c >= 0 && c < 16)
-					drw_clr_create(drw, &drw->scheme[ColFg], termcolor[c]);
-			} else if (text[0] == 'B') {
-				/* Hintergrundfarbe setzen */
-				int c = atoi(text + 1);
-				if (c >= 0 && c < 16)
-					drw_clr_create(drw, &drw->scheme[ColBg], termcolor[c]);
-			} else if (text[0] == 'd') {
-				/* Standardfarben zurücksetzen */
-				drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
-				drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
-			} else if (text[0] == 'r') {
-				/* Rechteck zeichnen */
-				int rx = atoi(text + 1);
-				int ry = 0, rw = 0, rh = 0;
-				char *ep = NULL;
-				ep = strchr(text + 1, ',');
-				if (ep) { ry = atoi(ep + 1); ep = strchr(ep + 1, ','); }
-				if (ep) { rw = atoi(ep + 1); ep = strchr(ep + 1, ','); }
-				if (ep) { rh = atoi(ep + 1); }
-				drw_rect(drw, x + rx, ry, rw, rh, 1, 0);
-			}
-			p = text;
-			j = 0;
-		} else {
-			text[j++] = rawtext[i];
-		}
-	}
-	/* Zeichne verbleibenden Text */
-	text[j] = '\0';
-	w = TEXTW(p) - lrpad;
-	drw_text(drw, x, 0, w, bh, 0, p, 0);
-	
-	free(text);
-	return ret;
-}
-
 void
 drawbar(Monitor *m)
 {
@@ -1086,7 +974,8 @@ drawbar(Monitor *m)
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon) { /* status is only drawn on selected monitor */
 		drw_setscheme(drw, scheme[SchemeNorm]);
-		tw = drawstatusbar(m, bh, rawstext);
+		tw = TEXTW(stext) - lrpad + 2; /* 2px rechts padding */
+		drw_text(drw, m->ww - 2 * barpadh - tw, 0, tw, bh, 0, stext, 0);
 	}
 
 	for (c = m->clients; c; c = c->next) {
@@ -1324,11 +1213,35 @@ getatomprop(Client *c, Atom prop)
 int
 getdwmblockspid()
 {
-	char buf[16];
-	FILE *fp = popen("pidof -s dwmblocks", "r");
-	fgets(buf, sizeof(buf), fp);
-	pid_t pid = strtoul(buf, NULL, 10);
+	char buf[32] = {0};
+	FILE *fp = popen("pidof dwmblocks", "r");
+	if (!fp) {
+		dwmblockspid = 0;
+		return -1;
+	}
+	if (!fgets(buf, sizeof(buf), fp)) {
+		pclose(fp);
+		dwmblockspid = 0;
+		return -1;
+	}
 	pclose(fp);
+
+	/* dwmblocks-async forkt sich: pidof gibt mehrere PIDs zurück.
+	 * Wir brauchen den Hauptprozess (niedrigste PID = Elternprozess).
+	 * Explizit die kleinste PID aus der Liste ermitteln. */
+	pid_t pid = 0, cur;
+	char *s = buf, *end;
+	while (*s) {
+		while (*s == ' ' || *s == '\n') s++;
+		if (*s >= '0' && *s <= '9') {
+			cur = strtoul(s, &end, 10);
+			s = end;
+			if (pid == 0 || cur < pid)
+				pid = cur;
+		} else {
+			break;
+		}
+	}
 	dwmblockspid = pid;
 	return pid != 0 ? 0 : -1;
 }
@@ -1909,7 +1822,12 @@ run(void)
 
 void
 runAutostart(void) {
-	system("killall -q dwmblocks; dwmblocks &");
+	/* dwmblocks-async forkt Kindprozesse für Block-Skripte.
+	 * SIGTERM allein reicht nicht - Kinder können SIGTERM überleben
+	 * und als Zombie-Instanzen weiterlaufen. Daher SIGKILL nachschieben.
+	 * Alles in Subshell damit DWM nicht blockiert wird. */
+	system("( killall -q dwmblocks; sleep 0.2; killall -q -9 dwmblocks; dwmblocks ) &");
+	dwmblockspid = 0;
 }
 
 void
@@ -2234,10 +2152,8 @@ sigdwmblocks(const Arg *arg)
 			return;
 
 	if (sigqueue(dwmblockspid, SIGUSR1, sv) == -1) {
-		if (errno == ESRCH) {
-			if (!getdwmblockspid())
-				sigqueue(dwmblockspid, SIGUSR1, sv);
-		}
+		if (!getdwmblockspid())
+			sigqueue(dwmblockspid, SIGUSR1, sv);
 	}
 }
 #endif
@@ -2709,12 +2625,6 @@ updatestatus(void)
 	if (!gettextprop(root, XA_WM_NAME, rawstext, sizeof(rawstext)))
 		strcpy(stext, "dwm-"VERSION);
 	else {
-		/* DEBUG: Zeige erste 20 Bytes von rawstext */
-		fprintf(stderr, "DEBUG rawstext bytes: ");
-		for (int i = 0; i < 20 && rawstext[i]; i++) {
-			fprintf(stderr, "%02x ", (unsigned char)rawstext[i]);
-		}
-		fprintf(stderr, "\n");
 		copyvalidchars(stext, rawstext);
 	}
 	drawbar(selmon);
