@@ -193,9 +193,11 @@ static const Key keys[] = {
     { MODKEY,			XK_F8,				spawn,          SHCMD("BLOCK_BUTTON=1 sb-mailbox") },
 /*  { MODKEY|ShiftMask,	XK_F8, */
 	{ MODKEY,			XK_F9,				spawn,			{.v = (const char*[]){ "mounter", NULL } } },
-/*  { MODKEY|ShiftMask,	XK_F9, */
+	{ MODKEY|ShiftMask,	XK_F9,				spawn,			{.v = (const char*[]){ "mountcifs", NULL} } },
+	{ Mod5Mask,			XK_F9,				spawn,			{.v = (const char*[]){ "ssh-mounter", NULL } } },
 	{ MODKEY,			XK_F10,				spawn,			{.v = (const char*[]){ "unmounter", NULL } } },
-	{ MODKEY,			XK_F11,				spawn,          {.v = (const char*[]){ "cam", NULL } } },
+	{ Mod5Mask,			XK_F10,				spawn,			{.v = (const char*[]){ "ssh-unmounter", NULL } } },
+	{ MODKEY,			XK_F11,				spawn,          {.v = (const char*[]){ "menucam", NULL } } },
 	{ MODKEY|ShiftMask,	XK_F11,				spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless") },
 	{ MODKEY,			XK_F12,				spawn,          SHCMD("remaps") },
 	{ MODKEY|ShiftMask,	XK_F12,				spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless --mouse=sdk --new-display=2000x2000") },
@@ -308,9 +310,9 @@ static const Key keys[] = {
 
 	{ 0,				XK_Print,			spawn,			SHCMD("maim ~/Bilder/screenshots/pic-vollbild-$(date '+%y%m%d-%H%M-%S').png") },
 	{ ShiftMask,		XK_Print,			spawn,			{.v = (const char*[]){ "maimpick", NULL } } },
-	{ MODKEY,			XK_Print,			spawn,			{.v = (const char*[]){ "rofirecord", NULL } } },
+	{ MODKEY,			XK_Print,			spawn,			{.v = (const char*[]){ "menurecord", NULL } } },
 	{ MODKEY|ShiftMask,	XK_Print,			togglescratch,	{.ui = 1 } },
-	{ MODKEY,			XK_Delete,			spawn,			{.v = (const char*[]){ "rofirecord", "kill", NULL } } },
+	{ MODKEY,			XK_Delete,			spawn,			{.v = (const char*[]){ "menurecord", "kill", NULL } } },
 	{ MODKEY,			XK_Home,			spawn,			SHCMD("killall screenkey || screenkey &") },
 
 	{ 0,	XF86XK_AudioMute,				spawn,			SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -55 $(pidof dwmblocks)") },
