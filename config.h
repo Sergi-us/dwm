@@ -19,10 +19,10 @@ static int cursorwarp			= 1;	/* 1 bedeutet Mauszeiger wird beim Fokuswechsel ins
 static int smartgaps			= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
 static int showbar				= 1;	/* 0 bedeutet keine Statusleiste */
 static int topbar				= 1;	/* 0 bedeutet Statusleiste unten statt oben */
-static int barpadh				= 25;	/* Horizontaler Abstand links/rechts für schwebende Statusleiste */
-static int barpadv				= 5;	/* Vertikaler Abstand oben/unten für schwebende Statusleiste */
+static int barpadh				= 15;	/* Horizontaler Abstand links/rechts für schwebende Statusleiste */
+static int barpadv				= 4;	/* Vertikaler Abstand oben/unten für schwebende Statusleiste */
 static int user_bh				= 0;	/* Raum um die Schriftart in Pixeln */
-static int tagpadh				= -4;	/* Horizontaler Zusatzabstand der Tag-Nummern (auch negativ moeglich) */
+static int tagpadh				= -5;	/* Horizontaler Zusatzabstand der Tag-Nummern (auch negativ moeglich) */
 /* Anzeigemodi der Tab-Leiste: nie, immer, nur im Monocle-Modus bei mehreren Fenstern */
 /* Modi nach showtab_nmodes sind deaktiviert */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always };
@@ -30,7 +30,7 @@ static const int showtab		= showtab_auto;	/* Standard Tab-Leisten Modus */
 static const int toptab			= 1;		/* 0 bedeutet Tab-Leiste unten */
 static const char *fonts[]		= {
     "JetBrainsMono NF:style=ExtraLight:size=9:antialias=true:autohint=true",
-    "OpenMoji:size=9:antialias=true:autohint=true"
+    "OpenMoji:size=10:antialias=true:autohint=true"
 };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -176,7 +176,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_BackSpace,		spawn,			{.v = (const char*[]){ "sysact", NULL } } },
 /*  { MODKEY|ShiftMask,	XK_Escape,			spawn,			SHCMD("") }, (für auswerfen von Tomb vorgemerkt*/
 	{ MODKEY,			XK_F1,				spawn,			{.v = (const char*[]){ "surf", "https://sarbs.xyz/handbuch/", NULL } } },
-	{ MODKEY|ShiftMask,	XK_F1,				togglescratch,	{.ui = 0} },
+	{ MODKEY|ShiftMask,	XK_F1,				spawn,			SHCMD(TERMINAL " -e sarbs-helper.sh") },
 	{ MODKEY,			XK_F2,				spawn,			{.v = (const char*[]){ "tutorialvids", NULL } } },
 /*  { MODKEY|ShiftMask,	XK_F2,				togglescratch,	{.ui = 2} },	*/
 	{ MODKEY,			XK_F3,              spawn,          {.v = (const char*[]){ "displayselect", NULL } } },
@@ -223,8 +223,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_o,				incnmaster,		{.i = -1 } },
 	{ MODKEY,			XK_p,				spawn,			{.v = (const char*[]){ "mpc", "toggle", NULL } } },
 	{ MODKEY|ShiftMask,	XK_p,				spawn,			SHCMD("mpc pause; pauseallmpv") },
-	{ MODKEY,			XK_udiaeresis,		spawn,          SHCMD("dmenu-translate") },
-	{ MODKEY|ShiftMask,	XK_udiaeresis,		spawn,          SHCMD("dmenu-translate -p 'Quick:'") },
+	{ MODKEY,			XK_udiaeresis,		spawn,          SHCMD("menutranslate") },
+/*	{ MODKEY|ShiftMask,	XK_udiaeresis,		spawn,          SHCMD("menutranslate -p 'Quick:'") }, */
 /*	{ MODKEY,			XK_bracketleft,		spawn,			{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },    */
 /*	{ MODKEY|ShiftMask,	XK_bracketleft,		spawn,			{.v = (const char*[]){ "mpc", "seek", "-60", NULL } } },    */
 /*	{ MODKEY,			XK_bracketright,	spawn,			{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },    */
@@ -245,13 +245,14 @@ static const Key keys[] = {
 	{ MODKEY,			XK_g,				shiftview,		{ .i = -1 } },
 	{ MODKEY|ShiftMask,	XK_g,				shifttag,		{ .i = -1 } },
 	{ MODKEY,			XK_h,				setmfact,		{.f = -0.05} },
-	{ MODKEY|ShiftMask,	XK_h,				spawn,			SHCMD("setbg ~/Bilder/Hintergrundbilder/") },
+	{ Mod5Mask,			XK_h,				spawn,			SHCMD("setbg ~/Bilder/Hintergrundbilder/") },
 /*  === J and K are automatically bound above in STACKEYS === */
 /*  { MODKEY|ShiftMask,	XK_k,				spawn,			SHCMD("$TERMINAL -e calcurse") }, */
 /*	{ MODKEY|ShiftMask,	XK_k,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "calcurse", NULL } } }, */
 	{ Mod5Mask,			XK_k,				spawn,			SHCMD("killer") },
 	{ MODKEY,			XK_l,				setmfact,		{.f = +0.05} },
 /*  { MODKEY|ShiftMask, XK_l, */
+	{ Mod5Mask,			XK_l,				spawn,			SHCMD("linkhandler") },
 /*  { MODKEY,			XK_odiaeresis,		*/
 /*  { MODKEY|ShiftMask,	XK_odiaeresis,		*/
 	{ MODKEY|ShiftMask,	XK_adiaeresis,		togglescratch,	{.ui = 2} },
