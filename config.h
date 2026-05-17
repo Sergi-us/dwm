@@ -313,6 +313,11 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask,	XK_Insert,		spawn,			{.v = (const char*[]){ "bookmarkthis", "-edit", NULL} } },
 	{ MODKEY|Mod1Mask,		XK_Insert,		spawn,			{.v = (const char*[]){ "bookmarkthis", "-open", NULL} } },
 	{ MODKEY|ShiftMask,		XK_Insert,		spawn,          {.v = (const char*[]){ "bookmarkthis", NULL} } },
+/* Einfg */
+	{ MODKEY,				XK_End,			spawn,			{.v = (const char*[]){ "bookmarkthis", "-type", NULL} } },
+	{ MODKEY|ControlMask,	XK_End,			spawn,			{.v = (const char*[]){ "bookmarkthis", "-edit", NULL} } },
+	{ MODKEY|Mod1Mask,		XK_End,			spawn,			{.v = (const char*[]){ "bookmarkthis", "-open", NULL} } },
+	{ MODKEY|ShiftMask,		XK_End,			spawn,          {.v = (const char*[]){ "bookmarkthis", NULL} } },
 /* Lehrtaste */
 	{ MODKEY,			XK_space,			zoom,			{0} },
 	{ MODKEY|ShiftMask,	XK_space,			togglefloating,	{0} },
