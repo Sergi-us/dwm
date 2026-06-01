@@ -248,7 +248,7 @@ static const Key keys[] = {
 	{ MODKEY,				XK_h,				setmfact,		{.f = -0.05} },
 	{ MODKEY|ControlMask,	XK_h,				spawn,			SHCMD("setbg ~/Bilder/Hintergrundbilder/") },
 /*  === J and K are automatically bound above in STACKEYS === */
-/*  { MODKEY|ShiftMask,	XK_k,					spawn,			SHCMD("$TERMINAL -e calcurse") }, */
+	{ MODKEY|ShiftMask,		XK_k,				spawn,			SHCMD("$TERMINAL -e calcurse") },
 /*	{ MODKEY|ShiftMask,	XK_k,					spawn,			{.v = (const char*[]){ TERMINAL, "-e", "calcurse", NULL } } }, */
 	{ MODKEY|ControlMask,	XK_k,				spawn,			SHCMD("killer") },
 	{ MODKEY,				XK_l,				setmfact,		{.f = +0.05} },
