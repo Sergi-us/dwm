@@ -52,11 +52,13 @@ typedef struct {
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x30", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "70x30", "-e", "qalc", "-i", NULL };
 const char *spcmd3[] = {TERMINAL, "-n", "gomuks", "-g", "130x30", "-e", "gomuks", NULL };
+const char *spcmd4[] = {TERMINAL, "-n", "sarbs-hud", "-e", "sarbs-hud-toggle", NULL };
 static Sp scratchpads[] = {
 	/* name			cmd	*/
 	{"spterm",		spcmd1},
 	{"spcalc",		spcmd2},
 	{"gomuks",		spcmd3},
+	{"sarbs-hud",	spcmd4},
 };
 
 /* tagging */
@@ -76,6 +78,7 @@ static const Rule rules[] = {
     { TERMCLASS,	"spterm",		NULL,			SPTAG(0),	1,			1,			0,			-1 },
     { TERMCLASS,	"spcalc",		NULL,			SPTAG(1),	1,			1,			0,			-1 },
     { TERMCLASS,	"gomuks",		NULL,			SPTAG(2),	1,			1,			0,			-1 },
+    { TERMCLASS,	"sarbs-hud",	NULL,			SPTAG(3),	1,			1,			0,			-1 },
 };
 
 /* layout(s) */
@@ -175,8 +178,8 @@ static const Key keys[] = {
 	{ MODKEY,				XK_BackSpace,		spawn,			{.v = (const char*[]){ "sysact", NULL } } },
 	{ MODKEY|ShiftMask,		XK_BackSpace,		spawn,			{.v = (const char*[]){ "sysact", NULL } } },
 /*  { MODKEY|ShiftMask,		XK_Escape,			spawn,			SHCMD("") }, (für auswerfen von Tomb vorgemerkt*/
-	{ MODKEY,				XK_F1,				spawn,			{.v = (const char*[]){ "surf", "https://sarbs.xyz/handbuch/", NULL } } },
-	{ MODKEY|ShiftMask,		XK_F1,				spawn,			SHCMD(TERMINAL " -e sarbs-helper.sh") },
+	{ MODKEY,				XK_F1,				togglescratch,	{.ui = 3} },
+	{ MODKEY|ShiftMask,		XK_F1,				spawn,			{.v = (const char*[]){ "surf", "https://sarbs.xyz/handbuch/", NULL } } },
 	{ MODKEY,				XK_F2,				spawn,			{.v = (const char*[]){ "tutorialvids", NULL } } },
 /*  { MODKEY|ShiftMask,		XK_F2,				togglescratch,	{.ui = 2} },	*/
 	{ MODKEY,				XK_F3,              spawn,          {.v = (const char*[]){ "displayselect", NULL } } },

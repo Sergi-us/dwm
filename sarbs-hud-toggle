@@ -1,0 +1,25 @@
+#!/bin/sh
+# sarbs-hud-toggle - HUD-Fenster für SARBS
+# Startet Qutebrowser in einem Floating-Terminal (Swallow Patch)
+
+# Display-Geometrie ermitteln
+DISPLAY_GEOM=$(xdotool getdisplaygeometry 2>/dev/null || echo "1920 1080")
+SCREEN_WIDTH=$(echo "$DISPLAY_GEOM" | awk '{print $1}')
+SCREEN_HEIGHT=$(echo "$DISPLAY_GEOM" | awk '{print $2}')
+
+# HUD-Größe und Position berechnen (70% Breite, 65% Höhe)
+HUD_WIDTH=$((SCREEN_WIDTH * 70 / 100))
+HUD_HEIGHT=$((SCREEN_HEIGHT * 65 / 100))
+HUD_X=$(( (SCREEN_WIDTH - HUD_WIDTH) / 2 ))
+HUD_Y=$(( (SCREEN_HEIGHT - HUD_HEIGHT) / 2 ))
+
+# Da dieses Skript im Terminal (st) aufgerufen wird, hat st die Variable $WINDOWID gesetzt!
+# Wir ändern exakt die Größe und Position dieses Terminals, bevor wir qutebrowser aufrufen:
+if [ -n "$WINDOWID" ]; then
+    xdotool windowsize "$WINDOWID" $HUD_WIDTH $HUD_HEIGHT
+    xdotool windowmove "$WINDOWID" $HUD_X $HUD_Y
+fi
+
+# Jetzt starten wir qutebrowser im Terminal mit einem eigenen basedir!
+# Durch das "exec" wartet das Terminal, und der DWM Swallow-Patch greift:
+exec qutebrowser --basedir "$HOME/.local/share/qutebrowser-hud" --target window "https://hud.sarbs.xyz/#global"
