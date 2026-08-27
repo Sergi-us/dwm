@@ -1,4 +1,5 @@
 .gitignore
+*.bac
 *.orig
 *.rej
 util.o

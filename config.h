@@ -1,8 +1,9 @@
-/* 2026-03-31	SERGI
+/* SARBS DWM Konfiguration
+## 2026-08-27
  * See LICENSE file for copyright and license details.
 */
 
-/* Constants */
+/* Konstanten */
 #define TERMINAL "st"
 #define TERMCLASS "St"
 #define BROWSER "qutebrowser"
@@ -52,13 +53,11 @@ typedef struct {
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x30", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "70x30", "-e", "qalc", "-i", NULL };
 const char *spcmd3[] = {TERMINAL, "-n", "gomuks", "-g", "130x30", "-e", "gomuks", NULL };
-const char *spcmd4[] = {TERMINAL, "-n", "sarbs-hud", "-e", "sarbs-hud-toggle", NULL };
 static Sp scratchpads[] = {
 	/* name			cmd	*/
 	{"spterm",		spcmd1},
 	{"spcalc",		spcmd2},
 	{"gomuks",		spcmd3},
-	{"sarbs-hud",	spcmd4},
 };
 
 /* tagging */
@@ -78,7 +77,6 @@ static const Rule rules[] = {
     { TERMCLASS,	"spterm",		NULL,			SPTAG(0),	1,			1,			0,			-1 },
     { TERMCLASS,	"spcalc",		NULL,			SPTAG(1),	1,			1,			0,			-1 },
     { TERMCLASS,	"gomuks",		NULL,			SPTAG(2),	1,			1,			0,			-1 },
-    { TERMCLASS,	"sarbs-hud",	NULL,			SPTAG(3),	1,			1,			0,			-1 },
 };
 
 /* layout(s) */
@@ -156,213 +154,229 @@ ResourcePref resources[] = {
 #include "shiftview.c"
 
 static const Key keys[] = {
-/*  modifier				key					function		argument		*/
+/*  modifier			key					function		argument		*/
 	STACKKEYS(MODKEY,						focus)
 	STACKKEYS(MODKEY|ShiftMask,				push)
-	{ MODKEY,				XK_dead_circumflex,	spawn,          {.v = (const char*[]){ "menuunicode", NULL } } },
-/*  { MODKEY|ShiftMask,		XK_grave,			togglescratch,  SHCMD("") },    */
-	TAGKEYS(				XK_1,				0)
-	TAGKEYS(				XK_2,				1)
-	TAGKEYS(				XK_3,				2)
-	TAGKEYS(				XK_4,				3)
-	TAGKEYS(				XK_5,				4)
-	TAGKEYS(				XK_6,				5)
-	TAGKEYS(				XK_7,				6)
-	TAGKEYS(				XK_8,				7)
-	TAGKEYS(				XK_9,				8)
-	{ MODKEY,				XK_0,				view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,		XK_0,				tag,            {.ui = ~0 } },
+	{ MODKEY,			XK_dead_circumflex,	spawn,          {.v = (const char*[]){ "menuunicode", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_grave,			togglescratch,  SHCMD("") },    */
+	TAGKEYS(			XK_1,				0)
+	TAGKEYS(			XK_2,				1)
+	TAGKEYS(			XK_3,				2)
+	TAGKEYS(			XK_4,				3)
+	TAGKEYS(			XK_5,				4)
+	TAGKEYS(			XK_6,				5)
+	TAGKEYS(			XK_7,				6)
+	TAGKEYS(			XK_8,				7)
+	TAGKEYS(			XK_9,				8)
+	{ MODKEY,			XK_0,				view,           {.ui = ~0 } },
+	{ MODKEY|ShiftMask,	XK_0,				tag,            {.ui = ~0 } },
 /* equal ist auf der Deutschen Tastatur nicht ohne Umschaltebene erreichbar TODO neue Taste finden */
-	{ MODKEY,				XK_equal,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask,		XK_equal,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY,				XK_BackSpace,		spawn,			{.v = (const char*[]){ "sysact", NULL } } },
-	{ MODKEY|ShiftMask,		XK_BackSpace,		spawn,			{.v = (const char*[]){ "sysact", NULL } } },
-/*  { MODKEY|ShiftMask,		XK_Escape,			spawn,			SHCMD("") }, (für auswerfen von Tomb vorgemerkt*/
-	{ MODKEY,				XK_F1,				togglescratch,	{.ui = 3} },
-	{ MODKEY|ShiftMask,		XK_F1,				spawn,			{.v = (const char*[]){ "surf", "https://sarbs.xyz/handbuch/", NULL } } },
-	{ MODKEY,				XK_F2,				spawn,			{.v = (const char*[]){ "tutorialvids", NULL } } },
-/*  { MODKEY|ShiftMask,		XK_F2,				togglescratch,	{.ui = 2} },	*/
-	{ MODKEY,				XK_F3,              spawn,          {.v = (const char*[]){ "displayselect", NULL } } },
-/*  { MODKEY|ShiftMask,		XK_F3,				togglescratch,	{.ui = 3} },	*/
-	{ MODKEY,				XK_F4,              spawn,          SHCMD(TERMINAL " -e pulsemixer; .local/bin/statusbar/sb-volume 55") },
-/*  { MODKEY|ShiftMask,		XK_F4,				togglescratch,	{.ui = 4} },	*/
-	{ MODKEY,				XK_F5,              xrdb,           {.v = NULL } },
-/*  { MODKEY|ShiftMask,		XK_F5,				togglescratch,	{.ui = 5} },	*/
-	{ MODKEY,				XK_F6,              spawn,			{.v = (const char*[]){ "torwrap", NULL } } },
-/*  { MODKEY|ShiftMask,		XK_F6,												*/
-	{ MODKEY,				XK_F7,              spawn,			{.v = (const char*[]){ "td-toggle", NULL } } },
-/*  { MODKEY|ShiftMask,		XK_F7,												*/
-    { MODKEY,				XK_F8,				spawn,          SHCMD("BLOCK_BUTTON=1 sb-mailbox") },
-	{ MODKEY|ShiftMask,		XK_F8,				spawn,			SHCMD("smb-post") },
-	{ MODKEY|ControlMask,	XK_F8,				spawn,			SHCMD(TERMINAL " -e smb-post -edit") },
-	{ MODKEY,				XK_F9,				spawn,			{.v = (const char*[]){ "mounter", NULL } } },
-	{ MODKEY|ShiftMask,		XK_F9,				spawn,			{.v = (const char*[]){ "mountcifs", NULL} } },
-	{ MODKEY|ControlMask,	XK_F9,				spawn,			{.v = (const char*[]){ "ssh-mounter", NULL } } },
-	{ MODKEY,				XK_F10,				spawn,			{.v = (const char*[]){ "unmounter", NULL } } },
-	{ MODKEY|ControlMask,	XK_F10,				spawn,			{.v = (const char*[]){ "ssh-unmounter", NULL } } },
-	{ MODKEY,				XK_F11,				spawn,          {.v = (const char*[]){ "menucam", NULL } } },
-	{ MODKEY|ShiftMask,		XK_F11,				spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless") },
-	{ MODKEY,				XK_F12,				spawn,          SHCMD("remaps") },
-	{ MODKEY|ShiftMask,		XK_F12,				spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless --mouse=sdk --new-display=2000x2000") },
-	{ MODKEY,				XK_Tab,				view,			{0} },
-/*  { MODKEY|ShiftMask,		XK_Tab,				spawn,			SHCMD("") },	*/
-	{ MODKEY,				XK_q,				killclient,		{0} },
-	{ MODKEY|ShiftMask,		XK_q,				spawn,			{.v = (const char*[]){ "sysact", NULL } } },
-	{ MODKEY,				XK_w,				spawn,			{.v = (const char*[]){ BROWSER, NULL } } },
-	{ MODKEY|ShiftMask,		XK_w,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "impala", NULL } } },
-	{ MODKEY|ControlMask,	XK_w,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "bluetui", NULL } } },
-	{ MODKEY,				XK_e,				spawn,			SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
-	{ MODKEY|ShiftMask,		XK_e,				spawn,			SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.abook/addressbook") },
-	{ MODKEY,				XK_r,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
-	{ MODKEY|ShiftMask,		XK_r,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
-	{ MODKEY,				XK_t,				setlayout,		{.v = &layouts[0]} }, /* tile */
-	{ MODKEY|ShiftMask,		XK_t,				setlayout,		{.v = &layouts[1]} }, /* bstack */
-	{ MODKEY,				XK_z,				setlayout,		{.v = &layouts[2]} }, /* spiral */
-	{ MODKEY|ShiftMask,		XK_z,				setlayout,		{.v = &layouts[3]} }, /* dwindle */
-	{ MODKEY,				XK_u,				setlayout,		{.v = &layouts[4]} }, /* deck */
-	{ MODKEY|ShiftMask,		XK_u,				setlayout,		{.v = &layouts[5]} }, /* monocle */
-	{ MODKEY,				XK_i,				setlayout,		{.v = &layouts[6]} }, /* centeredmaster */
-	{ MODKEY|ShiftMask,		XK_i,				setlayout,		{.v = &layouts[7]} }, /* centeredfloatingmaster */
-	{ MODKEY,				XK_o,				incnmaster,		{.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_o,				incnmaster,		{.i = -1 } },
-	{ MODKEY,				XK_p,				spawn,			{.v = (const char*[]){ "mpc", "toggle", NULL } } },
-	{ MODKEY|ShiftMask,		XK_p,				spawn,			SHCMD("mpc pause; pauseallmpv") },
-	{ MODKEY,				XK_udiaeresis,		spawn,          SHCMD("menutranslate") },
-/*	{ MODKEY|ShiftMask,		XK_udiaeresis,		spawn,          SHCMD("menutranslate -p 'Quick:'") }, */
-/*	{ MODKEY,				XK_bracketleft,		spawn,			{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },    */
-/*	{ MODKEY|ShiftMask,		XK_bracketleft,		spawn,			{.v = (const char*[]){ "mpc", "seek", "-60", NULL } } },    */
-/*	{ MODKEY,				XK_bracketright,	spawn,			{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },    */
-/*	{ MODKEY|ShiftMask,		XK_bracketright,	spawn,			{.v = (const char*[]){ "mpc", "seek", "+60", NULL } } },    */
+	{ MODKEY,			XK_equal,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,	XK_equal,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_BackSpace,		spawn,			{.v = (const char*[]){ "sysact", NULL } } },
+	{ MODKEY|ShiftMask,	XK_BackSpace,		spawn,			{.v = (const char*[]){ "sysact", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_Escape,			spawn,			SHCMD("") }, (für auswerfen von Tomb vorgemerkt*/
+	{ MODKEY,			XK_F1,				spawn,			{.v = (const char*[]){ "surf", "https://sarbs.xyz/handbuch/", NULL } } },
+	{ MODKEY|ShiftMask,	XK_F1,				spawn,			SHCMD(TERMINAL " -e sarbs-helper.sh") },
+	{ MODKEY,			XK_F2,				spawn,			{.v = (const char*[]){ "tutorialvids", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_F2,				togglescratch,	{.ui = 2} },	*/
+	{ MODKEY,			XK_F3,              spawn,          {.v = (const char*[]){ "displayselect", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_F3,				togglescratch,	{.ui = 3} },	*/
+	{ MODKEY,			XK_F4,              spawn,          SHCMD(TERMINAL " -e pulsemixer; .local/bin/statusbar/sb-volume 55") },
+/*  { MODKEY|ShiftMask,	XK_F4,				togglescratch,	{.ui = 4} },	*/
+	{ MODKEY,			XK_F5,              xrdb,           {.v = NULL } },
+/*  { MODKEY|ShiftMask,	XK_F5,				togglescratch,	{.ui = 5} },	*/
+	{ MODKEY,			XK_F6,              spawn,			{.v = (const char*[]){ "torwrap", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_F6,												*/
+	{ MODKEY,			XK_F7,              spawn,			{.v = (const char*[]){ "td-toggle", NULL } } },
+/*  { MODKEY|ShiftMask,	XK_F7,												*/
+/*	{ MODKEY,			XK_F8,				spawn,			{.v = (const char*[]){ "mailsync", NULL } } },  */
+    { MODKEY,			XK_F8,				spawn,          SHCMD("BLOCK_BUTTON=1 sb-mailbox") },
+/*  { MODKEY|ShiftMask,	XK_F8, */
+	{ MODKEY,			XK_F9,				spawn,			{.v = (const char*[]){ "mounter", NULL } } },
+	{ MODKEY|ShiftMask,	XK_F9,				spawn,			{.v = (const char*[]){ "mountcifs", NULL} } },
+	{ MODKEY|ControlMask,	XK_F9,			spawn,			{.v = (const char*[]){ "ssh-mounter", NULL } } },
+	{ MODKEY,			XK_F10,				spawn,			{.v = (const char*[]){ "unmounter", NULL } } },
+	{ MODKEY|ControlMask,	XK_F10,			spawn,			{.v = (const char*[]){ "ssh-unmounter", NULL } } },
+	{ MODKEY,			XK_F11,				spawn,          {.v = (const char*[]){ "menucam", NULL } } },
+	{ MODKEY|ShiftMask,	XK_F11,				spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless") },
+	{ MODKEY,			XK_F12,				spawn,          SHCMD("remaps") },
+	{ MODKEY|ShiftMask,	XK_F12,				spawn,          SHCMD("scrcpy --no-audio --keyboard=sdk --disable-screensaver --window-borderless --mouse=sdk --new-display=2000x2000") },
+	{ MODKEY,			XK_Tab,				view,			{0} },
+/*  { MODKEY|ShiftMask,	XK_Tab,				spawn,			SHCMD("") },	*/
+	{ MODKEY,			XK_q,				killclient,		{0} },
+	{ MODKEY|ShiftMask,	XK_q,				spawn,			{.v = (const char*[]){ "sysact", NULL } } },
+	{ MODKEY,			XK_w,				spawn,			{.v = (const char*[]){ BROWSER, NULL } } },
+	{ MODKEY|ShiftMask,	XK_w,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "impala", NULL } } },
+/*	{ MODKEY|ControlMask,	XK_w,			spawn,			{.v = (const char*[]){ TERMINAL, "-e", "impala", NULL } } },	*/
+	{ MODKEY,			XK_e,				spawn,			SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+	{ MODKEY|ShiftMask,	XK_e,				spawn,			SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.abook/addressbook") },
+	{ MODKEY,			XK_r,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
+	{ MODKEY|ShiftMask,	XK_r,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
+	{ MODKEY,			XK_t,				setlayout,		{.v = &layouts[0]} }, /* tile */
+	{ MODKEY|ShiftMask,	XK_t,				setlayout,		{.v = &layouts[1]} }, /* bstack */
+	{ MODKEY,			XK_z,				setlayout,		{.v = &layouts[2]} }, /* spiral */
+	{ MODKEY|ShiftMask,	XK_z,				setlayout,		{.v = &layouts[3]} }, /* dwindle */
+	{ MODKEY,			XK_u,				setlayout,		{.v = &layouts[4]} }, /* deck */
+	{ MODKEY|ShiftMask,	XK_u,				setlayout,		{.v = &layouts[5]} }, /* monocle */
+	{ MODKEY,			XK_i,				setlayout,		{.v = &layouts[6]} }, /* centeredmaster */
+	{ MODKEY|ShiftMask,	XK_i,				setlayout,		{.v = &layouts[7]} }, /* centeredfloatingmaster */
+	{ MODKEY,			XK_o,				incnmaster,		{.i = +1 } },
+	{ MODKEY|ShiftMask,	XK_o,				incnmaster,		{.i = -1 } },
+	{ MODKEY,			XK_p,				spawn,			{.v = (const char*[]){ "mpc", "toggle", NULL } } },
+	{ MODKEY|ShiftMask,	XK_p,				spawn,			SHCMD("mpc pause; pauseallmpv") },
+	{ MODKEY,			XK_udiaeresis,		spawn,          SHCMD("menutranslate") },
+/*	{ MODKEY|ShiftMask,	XK_udiaeresis,		spawn,          SHCMD("menutranslate -p 'Quick:'") }, */
+/*	{ MODKEY,			XK_bracketleft,		spawn,			{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },    */
+/*	{ MODKEY|ShiftMask,	XK_bracketleft,		spawn,			{.v = (const char*[]){ "mpc", "seek", "-60", NULL } } },    */
+/*	{ MODKEY,			XK_bracketright,	spawn,			{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },    */
+/*	{ MODKEY|ShiftMask,	XK_bracketright,	spawn,			{.v = (const char*[]){ "mpc", "seek", "+60", NULL } } },    */
 /*		=== Der Backslash / ist unereichbar auf der Deutschen Tastatur ===	*/
-/*	{ MODKEY,				XK_backslash,		view,			{0} },			*/
-/*	{ MODKEY|ShiftMask,		XK_backslash,		spawn,			SHCMD("") },	*/
-	{ MODKEY,				XK_a,				togglegaps,		{0} },
-	{ MODKEY|ShiftMask,		XK_a,				defaultgaps,	{0} },
-	{ MODKEY,				XK_s,				togglesticky,	{0} },
+/*	{ MODKEY,			XK_backslash,		view,			{0} },			*/
+/*	{ MODKEY|ShiftMask,	XK_backslash,		spawn,			SHCMD("") },	*/
+	{ MODKEY,			XK_a,				togglegaps,		{0} },
+	{ MODKEY|ShiftMask,	XK_a,				defaultgaps,	{0} },
+	{ MODKEY,			XK_s,				togglesticky,	{0} },
 /*		=== Super+Shift+S vorgemerkt für SARBS Taste ===					*/
-/*	{ MODKEY,ShiftMask		XK_s,				spawn,			SHCMD("") },	*/
-	{ MODKEY,				XK_d,				spawn,			SHCMD("rofi -show drun") },
-	{ MODKEY|ShiftMask,		XK_d,				spawn,			SHCMD("rofi-pass") },
-	{ MODKEY|ControlMask,	XK_d,				spawn,			SHCMD("otp") },
-	{ MODKEY,				XK_f,				togglefullscr,	{0} },
-	{ MODKEY|ShiftMask,		XK_f,				setlayout,		{.v = &layouts[8]} },
-	{ MODKEY,				XK_g,				shiftview,		{ .i = -1 } },
-	{ MODKEY|ShiftMask,		XK_g,				shifttag,		{ .i = -1 } },
-	{ MODKEY,				XK_h,				setmfact,		{.f = -0.05} },
-	{ MODKEY|ControlMask,	XK_h,				spawn,			SHCMD("setbg ~/Bilder/Hintergrundbilder/") },
+/*	{ MODKEY,ShiftMask	XK_s,				spawn,			SHCMD("") },	*/
+	{ MODKEY,			XK_d,				spawn,			SHCMD("rofi -show drun") },
+	{ MODKEY|ShiftMask,	XK_d,				spawn,			SHCMD("rofi-pass") },
+	{ MODKEY|ControlMask,	XK_d,			spawn,			SHCMD("otp") },
+	{ MODKEY,			XK_f,				togglefullscr,	{0} },
+	{ MODKEY|ShiftMask,	XK_f,				setlayout,		{.v = &layouts[8]} },
+	{ MODKEY,			XK_g,				shiftview,		{ .i = -1 } },
+	{ MODKEY|ShiftMask,	XK_g,				shifttag,		{ .i = -1 } },
+	{ MODKEY,				XK_h,			setmfact,		{.f = -0.05} },
+	{ MODKEY|ControlMask,	XK_h,			spawn,			SHCMD("setbg ~/Bilder/Hintergrundbilder/") },
 /*  === J and K are automatically bound above in STACKEYS === */
-	{ MODKEY|ShiftMask,		XK_k,				spawn,			SHCMD("$TERMINAL -e calcurse") },
-/*	{ MODKEY|ShiftMask,	XK_k,					spawn,			{.v = (const char*[]){ TERMINAL, "-e", "calcurse", NULL } } }, */
-	{ MODKEY|ControlMask,	XK_k,				spawn,			SHCMD("killer") },
-	{ MODKEY,				XK_l,				setmfact,		{.f = +0.05} },
-/*  { MODKEY|ShiftMask,		XK_l, */
-	{ MODKEY|ControlMask,	XK_l,				spawn,			SHCMD("linkhandler") },
-/*  { MODKEY,				XK_odiaeresis,		*/
-/*  { MODKEY|ShiftMask,		XK_odiaeresis,		*/
-	{ MODKEY|ShiftMask,		XK_adiaeresis,		togglescratch,	{.ui = 2} },
-/*  { MODKEY|ShiftMask,		XK_adiaeresis,		*/
+/*  { MODKEY|ShiftMask,	XK_k,				spawn,			SHCMD("$TERMINAL -e calcurse") }, */
+/*	{ MODKEY|ShiftMask,	XK_k,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "calcurse", NULL } } }, */
+	{ MODKEY|ControlMask,	XK_k,			spawn,			SHCMD("killer") },
+	{ MODKEY,			XK_l,				setmfact,		{.f = +0.05} },
+/*  { MODKEY|ShiftMask, XK_l, */
+	{ MODKEY|ControlMask,	XK_l,			spawn,			SHCMD("linkhandler") },
+/*  { MODKEY,			XK_odiaeresis,		*/
+/*  { MODKEY|ShiftMask,	XK_odiaeresis,		*/
+	{ MODKEY|ShiftMask,	XK_adiaeresis,		togglescratch,	{.ui = 2} },
+/*  { MODKEY|ShiftMask,	XK_adiaeresis,		*/
 /* === numbersign für Deutsches Tastaturlayout === */
-	{ MODKEY,				XK_numbersign,		shiftview,		{ .i = 1 } },
-	{ MODKEY|ShiftMask,		XK_numbersign,		shifttag,		{ .i = 1 } },
+	{ MODKEY,			XK_numbersign,		shiftview,		{ .i = 1 } },
+	{ MODKEY|ShiftMask,	XK_numbersign,		shifttag,		{ .i = 1 } },
 /* === semicolon für Englisches Tastaturlayout === */
-	{ MODKEY,				XK_semicolon,		shiftview,		{ .i = 1 } },
-	{ MODKEY|ShiftMask,		XK_semicolon,		shifttag,		{ .i = 1 } },
+	{ MODKEY,			XK_semicolon,		shiftview,		{ .i = 1 } },
+	{ MODKEY|ShiftMask,	XK_semicolon,		shifttag,		{ .i = 1 } },
 /* === apostrophe für Englisches Tastaturlayout === */
-	{ MODKEY,				XK_apostrophe,		togglescratch,	{.ui = 1} },
-	{ MODKEY|ShiftMask,		XK_apostrophe,		togglesmartgaps,	{0} },
-	{ MODKEY,				XK_Return,			spawn,			{.v = termcmd } },
-	{ MODKEY|ShiftMask,		XK_Return,			togglescratch,	{.ui = 0} },
-	{ MODKEY|ControlMask,	XK_Return,			spawn,			{.v = (const char*[]){ "kitty", NULL } } },
-	{ MODKEY,				XK_y,				incrgaps,		{.i = +3 } },
-    { MODKEY|ShiftMask,		XK_y,				incrgaps,       {.i = -3 } },
+	{ MODKEY,			XK_apostrophe,		togglescratch,	{.ui = 1} },
+	{ MODKEY|ShiftMask,	XK_apostrophe,		togglesmartgaps,	{0} },
+	{ MODKEY,			XK_Return,			spawn,			{.v = termcmd } },
+	{ MODKEY|ShiftMask,	XK_Return,			togglescratch,	{.ui = 0} },
+	{ MODKEY,			XK_y,				incrgaps,		{.i = +3 } },
+    { MODKEY|ShiftMask,	XK_y,				incrgaps,       {.i = -3 } },
 /*  Zwischenablage-Steuerung via clipctl                                    */
-	{ MODKEY,				XK_x,				spawn,			{.v = (const char*[]){ "clipctl", "manage", NULL } } },
-/*	{ MODKEY|ShiftMask,		XK_x,				spawn,			{.v = (const char*[]){ "clipctl", "manage", NULL } } },	*/
-	{ MODKEY,				XK_c,				spawn,			{.v = (const char*[]){ "clipctl", "copy", NULL } } },
-/*	{ MODKEY|ShiftMask,		XK_c,				spawn,			{.v = (const char*[]){ "clipctl", "copy", NULL } } },	*/
-	{ MODKEY,				XK_v,				spawn,			{.v = (const char*[]){ "clipctl", "paste", NULL } } },
-/*	{ MODKEY|ShiftMask,		XK_v,				spawn,			{.v = (const char*[]){ "clipctl", "paste", NULL } } },	*/
+	{ MODKEY,			XK_x,				spawn,			{.v = (const char*[]){ "clipctl", "manage", NULL } } },
+/*	{ MODKEY|ShiftMask,	XK_x,				spawn,			{.v = (const char*[]){ "clipctl", "manage", NULL } } },	*/
+	{ MODKEY,			XK_c,				spawn,			{.v = (const char*[]){ "clipctl", "copy", NULL } } },
+/*	{ MODKEY|ShiftMask,	XK_c,				spawn,			{.v = (const char*[]){ "clipctl", "copy", NULL } } },	*/
+	{ MODKEY,			XK_v,				spawn,			{.v = (const char*[]){ "clipctl", "paste", NULL } } },
+/*	{ MODKEY|ShiftMask,	XK_v,				spawn,			{.v = (const char*[]){ "clipctl", "paste", NULL } } },	*/
 /* Profanity umbelegen oder entfernen TODO */
-/*	{ MODKEY|ShiftMask,		XK_c,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "profanity", NULL } } }, */
+/*	{ MODKEY|ShiftMask,	XK_c,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "profanity", NULL } } }, */
 /* === V is automatically bound above in STACKKEYS === */
-	{ MODKEY,				XK_b,				togglebar,		{0} },
-	{ MODKEY|ShiftMask,		XK_b,				tabmode,		{-1} },			/* Tab-Leiste umschalten: nie/auto/immer */
-	{ MODKEY|ControlMask,	XK_b,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "bluetui", NULL } } },
-	{ MODKEY,				XK_n,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "nvim", "-c", "VimwikiIndex", NULL } } },
-	{ MODKEY|ShiftMask,		XK_n,				spawn,			SHCMD(TERMINAL " -e newsraft ; pkill -RTMIN+6 dwmblocks") },
-	{ MODKEY,				XK_m,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "rmpc", NULL } } },
-    { MODKEY|ShiftMask,		XK_m,				spawn,			SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; .local/bin/statusbar/sb-volume 55") },
-	{ MODKEY,				XK_comma,			spawn,			{.v = (const char*[]){ "mpc", "prev", NULL } } },
-	{ MODKEY|ShiftMask,		XK_comma,			spawn,			{.v = (const char*[]){ "mpc", "seek", "0%", NULL } } },
-	{ MODKEY,				XK_period,			spawn,			{.v = (const char*[]){ "mpc", "next", NULL } } },
-	{ MODKEY|ShiftMask,		XK_period,			spawn,			{.v = (const char*[]){ "mpc", "repeat", NULL } } },
-	{ MODKEY,				XK_minus,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask,		XK_minus,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY,				XK_plus,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask,		XK_plus,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_b,				togglebar,		{0} },
+	{ MODKEY|ShiftMask,	XK_b,				tabmode,		{-1} },			/* Tab-Leiste umschalten: nie/auto/immer */
+	{ MODKEY|ControlMask,	XK_b,			spawn,			{.v = (const char*[]){ TERMINAL, "-e", "bluetui", NULL } } },
+	{ MODKEY,			XK_n,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "nvim", "-c", "VimwikiIndex", NULL } } },
+	{ MODKEY|ShiftMask,	XK_n,				spawn,			SHCMD(TERMINAL " -e newsraft ; pkill -RTMIN+6 dwmblocks") },
+	{ MODKEY,			XK_m,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "rmpc", NULL } } },
+    { MODKEY|ShiftMask,	XK_m,				spawn,			SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; .local/bin/statusbar/sb-volume 55") },
+	{ MODKEY,			XK_comma,			spawn,			{.v = (const char*[]){ "mpc", "prev", NULL } } },
+	{ MODKEY|ShiftMask,	XK_comma,			spawn,			{.v = (const char*[]){ "mpc", "seek", "0%", NULL } } },
+	{ MODKEY,			XK_period,			spawn,			{.v = (const char*[]){ "mpc", "next", NULL } } },
+	{ MODKEY|ShiftMask,	XK_period,			spawn,			{.v = (const char*[]){ "mpc", "repeat", NULL } } },
+	{ MODKEY,			XK_minus,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,	XK_minus,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_plus,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,	XK_plus,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
 /*  */
-	{ MODKEY,				XK_Left,			focusmon,		{.i = -1 } },
-	{ MODKEY|ShiftMask,		XK_Left,			tagmon,			{.i = -1 } },
+	{ MODKEY,			XK_Left,			focusmon,		{.i = -1 } },
+	{ MODKEY|ShiftMask,	XK_Left,			tagmon,			{.i = -1 } },
 /*  */
-	{ MODKEY,				XK_Right,			focusmon,		{.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_Right,			tagmon,			{.i = +1 } },
+	{ MODKEY,			XK_Right,			focusmon,		{.i = +1 } },
+	{ MODKEY|ShiftMask,	XK_Right,			tagmon,			{.i = +1 } },
 /* Bild */
-	{ MODKEY,				XK_Page_Up,			shiftview,		{ .i = -1 } },
-	{ MODKEY|ShiftMask,		XK_Page_Up,			shifttag,		{ .i = -1 } },
+	{ MODKEY,			XK_Page_Up,			shiftview,		{ .i = -1 } },
+	{ MODKEY|ShiftMask,	XK_Page_Up,			shifttag,		{ .i = -1 } },
 /* Bild */
-	{ MODKEY,				XK_Page_Down,		shiftview,		{ .i = +1 } },
-	{ MODKEY|ShiftMask,		XK_Page_Down,		shifttag,		{ .i = +1 } },
+	{ MODKEY,			XK_Page_Down,		shiftview,		{ .i = +1 } },
+	{ MODKEY|ShiftMask,	XK_Page_Down,		shifttag,		{ .i = +1 } },
 /* Einfg */
-	{ MODKEY,				XK_Insert,			spawn,			{.v = (const char*[]){ "bookmarkthis", "-type", NULL} } },
-	{ MODKEY|ControlMask,	XK_Insert,			spawn,			{.v = (const char*[]){ "bookmarkthis", "-edit", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_Insert,			spawn,			{.v = (const char*[]){ "bookmarkthis", "-open", NULL} } },
-	{ MODKEY|ShiftMask,		XK_Insert,			spawn,          {.v = (const char*[]){ "bookmarkthis", NULL} } },
-/* Einfg */
-	{ MODKEY,				XK_End,				spawn,			{.v = (const char*[]){ "bookmarkthis", "-type", NULL} } },
-	{ MODKEY|ControlMask,	XK_End,				spawn,			{.v = (const char*[]){ "bookmarkthis", "-edit", NULL} } },
-	{ MODKEY|Mod1Mask,		XK_End,				spawn,			{.v = (const char*[]){ "bookmarkthis", "-open", NULL} } },
-	{ MODKEY|ShiftMask,		XK_End,				spawn,          {.v = (const char*[]){ "bookmarkthis", NULL} } },
+	{ MODKEY,				XK_Insert,		spawn,			{.v = (const char*[]){ "bookmarkthis", "-type", NULL} } },
+	{ MODKEY|ControlMask,	XK_Insert,		spawn,			{.v = (const char*[]){ "bookmarkthis", "-edit", NULL} } },
+	{ MODKEY|Mod1Mask,		XK_Insert,		spawn,			{.v = (const char*[]){ "bookmarkthis", "-open", NULL} } },
+	{ MODKEY|ShiftMask,		XK_Insert,		spawn,          {.v = (const char*[]){ "bookmarkthis", NULL} } },
+/* Ende */
+	{ MODKEY,				XK_End,			spawn,			{.v = (const char*[]){ "bookmarkthis", "-type", NULL} } },
+	{ MODKEY|ControlMask,	XK_End,			spawn,			{.v = (const char*[]){ "bookmarkthis", "-edit", NULL} } },
+	{ MODKEY|Mod1Mask,		XK_End,			spawn,			{.v = (const char*[]){ "bookmarkthis", "-open", NULL} } },
+	{ MODKEY|ShiftMask,		XK_End,			spawn,          {.v = (const char*[]){ "bookmarkthis", NULL} } },
 /* Lehrtaste */
-	{ MODKEY,				XK_space,			zoom,			{0} },
-	{ MODKEY|ShiftMask,		XK_space,			togglefloating,	{0} },
+	{ MODKEY,			XK_space,			zoom,			{0} },
+	{ MODKEY|ShiftMask,	XK_space,			togglefloating,	{0} },
 /* Druck */
-	{ 0,					XK_Print,			spawn,			SHCMD("maim ~/Bilder/screenshots/pic-vollbild-$(date '+%y%m%d-%H%M-%S').png") },
-	{ ShiftMask,			XK_Print,			spawn,			{.v = (const char*[]){ "maimpick", NULL } } },
-	{ MODKEY,				XK_Print,			spawn,			{.v = (const char*[]){ "menurecord", NULL } } },
-	{ MODKEY|ShiftMask,		XK_Print,			togglescratch,	{.ui = 1 } },
+	{ 0,				XK_Print,			spawn,			SHCMD("maim ~/Bilder/screenshots/pic-vollbild-$(date '+%y%m%d-%H%M-%S').png") },
+	{ ShiftMask,		XK_Print,			spawn,			{.v = (const char*[]){ "maimpick", NULL } } },
+	{ MODKEY,			XK_Print,			spawn,			{.v = (const char*[]){ "menurecord", NULL } } },
+	{ MODKEY|ShiftMask,	XK_Print,			togglescratch,	{.ui = 1 } },
 /*   */
-	{ MODKEY,				XK_Delete,			spawn,			{.v = (const char*[]){ "menurecord", "kill", NULL } } },
+	{ MODKEY,			XK_Delete,			spawn,			{.v = (const char*[]){ "menurecord", "kill", NULL } } },
 /* Pos1 */
-	{ MODKEY,				XK_Home,			spawn,			SHCMD("killall screenkey || screenkey &") },
+	{ MODKEY,			XK_Home,			spawn,			SHCMD("killall screenkey || screenkey &") },
 
-	{ 0,	XF86XK_AudioMute,					spawn,			SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -55 $(pidof dwmblocks)") },
-	{ 0,	XF86XK_AudioRaiseVolume,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%- && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ 0,	XF86XK_AudioLowerVolume,			spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%+ && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
-	{ 0,	XF86XK_AudioPrev,					spawn,			{.v = (const char*[]){ "mpc", "prev", NULL } } },
-	{ 0,	XF86XK_AudioNext,					spawn,			{.v = (const char*[]){ "mpc", "next", NULL } } },
-	{ 0,	XF86XK_AudioPause,					spawn,			{.v = (const char*[]){ "mpc", "pause", NULL } } },
-	{ 0,	XF86XK_AudioPlay,					spawn,			{.v = (const char*[]){ "mpc", "play", NULL } } },
-	{ 0,	XF86XK_AudioStop,					spawn,			{.v = (const char*[]){ "mpc", "stop", NULL } } },
-	{ 0,	XF86XK_AudioRewind,					spawn,			{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
-	{ 0,	XF86XK_AudioForward,				spawn,			{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },
-	{ 0,	XF86XK_AudioMedia,					spawn,			{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
-	{ 0,	XF86XK_AudioMicMute,				spawn,			SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
-	{ 0,	XF86XK_PowerOff,					spawn,			{.v = (const char*[]){ "shutdown", "-h", "now", NULL } } },
-	{ 0,	XF86XK_Calculator,					spawn,			{.v = (const char*[]){ TERMINAL, "-e", "bc", "-l", NULL } } },
-	{ 0,	XF86XK_Sleep,						spawn,			{.v = (const char*[]){ "sudo", "-A", "zzz", NULL } } },
-	{ 0,	XF86XK_WWW,							spawn,			{.v = (const char*[]){ BROWSER, NULL } } },
-	{ 0,	XF86XK_DOS,							spawn,			{.v = termcmd } },
-	{ 0,	XF86XK_ScreenSaver,					spawn,			SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
-	{ 0,	XF86XK_TaskPane,					spawn,			{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
-	{ 0,	XF86XK_Mail,						spawn,			SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
-	{ 0,	XF86XK_MyComputer,					spawn,			{.v = (const char*[]){ TERMINAL, "-e",  "lfub",  "/", NULL } } },
-/*  { 0,	XF86XK_Battery,						spawn,			SHCMD("") }, */
-	{ 0,	XF86XK_Launch1,						spawn,			{.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } },
-	{ 0,	XF86XK_TouchpadToggle,				spawn,			SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
-	{ 0,	XF86XK_TouchpadOff,					spawn,			{.v = (const char*[]){ "synclient", "TouchpadOff=1", NULL } } },
-	{ 0,	XF86XK_TouchpadOn,					spawn,			{.v = (const char*[]){ "synclient", "TouchpadOff=0", NULL } } },
-	{ 0,	XF86XK_MonBrightnessUp,				spawn,			{.v = (const char*[]){ "xbacklight", "-inc", "15", NULL } } },
-	{ 0,	XF86XK_MonBrightnessDown,			spawn,			{.v = (const char*[]){ "xbacklight", "-dec", "15", NULL } } },
+	{ 0,	XF86XK_AudioMute,				spawn,			SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -55 $(pidof dwmblocks)") },
+	{ 0,	XF86XK_AudioRaiseVolume,		spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%- && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ 0,	XF86XK_AudioLowerVolume,		spawn,			SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%+ && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; .local/bin/statusbar/sb-volume 55; kill -55 $(pidof dwmblocks)") },
+	{ 0,	XF86XK_AudioPrev,				spawn,			{.v = (const char*[]){ "mpc", "prev", NULL } } },
+	{ 0,	XF86XK_AudioNext,				spawn,			{.v = (const char*[]){ "mpc", "next", NULL } } },
+	{ 0,	XF86XK_AudioPause,				spawn,			{.v = (const char*[]){ "mpc", "pause", NULL } } },
+	{ 0,	XF86XK_AudioPlay,				spawn,			{.v = (const char*[]){ "mpc", "play", NULL } } },
+	{ 0,	XF86XK_AudioStop,				spawn,			{.v = (const char*[]){ "mpc", "stop", NULL } } },
+	{ 0,	XF86XK_AudioRewind,				spawn,			{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
+	{ 0,	XF86XK_AudioForward,			spawn,			{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },
+	{ 0,	XF86XK_AudioMedia,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
+	{ 0,	XF86XK_AudioMicMute,			spawn,			SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
+	{ 0,	XF86XK_PowerOff,				spawn,			{.v = (const char*[]){ "shutdown", "-h", "now", NULL } } },
+	{ 0,	XF86XK_Calculator,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "bc", "-l", NULL } } },
+	{ 0,	XF86XK_Sleep,					spawn,			{.v = (const char*[]){ "sudo", "-A", "zzz", NULL } } },
+	{ 0,	XF86XK_WWW,						spawn,			{.v = (const char*[]){ BROWSER, NULL } } },
+	{ 0,	XF86XK_DOS,						spawn,			{.v = termcmd } },
+	{ 0,	XF86XK_ScreenSaver,				spawn,			SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
+	{ 0,	XF86XK_TaskPane,				spawn,			{.v = (const char*[]){ TERMINAL, "-e", "btop", NULL } } },
+	{ 0,	XF86XK_Mail,					spawn,			SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+	{ 0,	XF86XK_MyComputer,				spawn,			{.v = (const char*[]){ TERMINAL, "-e",  "lfub",  "/", NULL } } },
+/*  { 0,	XF86XK_Battery,					spawn,			SHCMD("") }, */
+	{ 0,	XF86XK_Launch1,					spawn,			{.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } },
+	{ 0,	XF86XK_TouchpadToggle,			spawn,			SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
+	{ 0,	XF86XK_TouchpadOff,				spawn,			{.v = (const char*[]){ "synclient", "TouchpadOff=1", NULL } } },
+	{ 0,	XF86XK_TouchpadOn,				spawn,			{.v = (const char*[]){ "synclient", "TouchpadOff=0", NULL } } },
+	{ 0,	XF86XK_MonBrightnessUp,			spawn,			{.v = (const char*[]){ "xbacklight", "-inc", "15", NULL } } },
+	{ 0,	XF86XK_MonBrightnessDown,		spawn,			{.v = (const char*[]){ "xbacklight", "-dec", "15", NULL } } },
+
+/* { MODKEY|Mod4Mask,              XK_h,	incrgaps,		{.i = +1 } }, */
+/* { MODKEY|Mod4Mask,              XK_l,	incrgaps,		{.i = -1 } }, */
+/* { MODKEY|Mod4Mask|ShiftMask,    XK_h,	incrogaps,		{.i = +1 } }, */
+/* { MODKEY|Mod4Mask|ShiftMask,    XK_l,	incrogaps,		{.i = -1 } }, */
+/* { MODKEY|Mod4Mask|ControlMask,  XK_h,	incrigaps,		{.i = +1 } }, */
+/* { MODKEY|Mod4Mask|ControlMask,  XK_l,	incrigaps,		{.i = -1 } }, */
+/* { MODKEY|Mod4Mask|ShiftMask,    XK_0,	defaultgaps,	{0} }, */
+/* { MODKEY,                       XK_y,	incrihgaps,		{.i = +1 } }, */
+/* { MODKEY,                       XK_o,	incrihgaps,		{.i = -1 } }, */
+/* { MODKEY|ControlMask,           XK_y,	incrivgaps,		{.i = +1 } }, */
+/* { MODKEY|ControlMask,           XK_o,	incrivgaps,		{.i = -1 } }, */
+/* { MODKEY|Mod4Mask,              XK_y,	incrohgaps,		{.i = +1 } }, */
+/* { MODKEY|Mod4Mask,              XK_o,	incrohgaps,		{.i = -1 } }, */
+/* { MODKEY|ShiftMask,             XK_y,	incrovgaps,		{.i = +1 } }, */
+/* { MODKEY|ShiftMask,             XK_o,	incrovgaps,		{.i = -1 } }, */
+
 };
 
 /* button definitions */
@@ -393,3 +407,4 @@ static const Button buttons[] = {
 	{ ClkTabBar,			0,				Button1,		focuswin,		{0} },
 	{ ClkRootWin,			0,				Button2,		togglebar,		{0} },
 };
+
