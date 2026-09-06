@@ -1826,7 +1826,8 @@ runAutostart(void) {
 	 * SIGTERM allein reicht nicht - Kinder können SIGTERM überleben
 	 * und als Zombie-Instanzen weiterlaufen. Daher SIGKILL nachschieben.
 	 * Alles in Subshell damit DWM nicht blockiert wird. */
-	system("( killall -q dwmblocks; sleep 0.2; killall -q -9 dwmblocks; dwmblocks ) &");
+	if (system("( killall -q dwmblocks; sleep 0.2; killall -q -9 dwmblocks; dwmblocks ) &") == -1)
+		die("runAutostart: system fehlgeschlagen");
 	dwmblockspid = 0;
 }
 
