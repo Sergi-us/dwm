@@ -11,19 +11,19 @@
 /* Erscheinungsbild */
 static unsigned int borderpx	= 3;	/* Rahmenbreite der Fenster in Pixeln */
 static unsigned int snap		= 22;	/* Einrastabstand in Pixeln */
-static unsigned int gappih		= 14;	/* Horizontaler innerer Abstand zwischen Fenstern */
+static unsigned int gappih		= 12;	/* Horizontaler innerer Abstand zwischen Fenstern */
 static unsigned int gappiv		= 7;	/* Vertikaler innerer Abstand zwischen Fenstern */
 static unsigned int gappoh		= 7;	/* Horizontaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
-static unsigned int gappov		= 20;	/* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
+static unsigned int gappov		= 15;	/* Vertikaler äußerer Abstand zwischen Fenstern und Bildschirmrand */
 static int swallowfloating		= 1;	/* 1 bedeutet schwebende Fenster standardmäßig "verschlucken" */
 static int cursorwarp			= 1;	/* 1 bedeutet Mauszeiger wird beim Fokuswechsel ins Fenster zentriert */
 static int smartgaps			= 0;	/* 1 bedeutet kein äußerer Abstand wenn nur ein Fenster existiert */
 static int showbar				= 1;	/* 0 bedeutet keine Statusleiste */
 static int topbar				= 1;	/* 0 bedeutet Statusleiste unten statt oben */
 static int barpadh				= 15;	/* Horizontaler Abstand links/rechts für schwebende Statusleiste */
-static int barpadv				= 4;	/* Vertikaler Abstand oben/unten für schwebende Statusleiste */
+static int barpadv				= 8;	/* Vertikaler Abstand oben/unten für schwebende Statusleiste */
 static int user_bh				= 0;	/* Raum um die Schriftart in Pixeln */
-static int tagpadh				= -5;	/* Horizontaler Zusatzabstand der Tag-Nummern (auch negativ moeglich) */
+static int tagpadh				= -20;	/* Horizontaler Zusatzabstand der Tag-Nummern (auch negativ moeglich) */
 /* Anzeigemodi der Tab-Leiste: nie, immer, nur im Monocle-Modus bei mehreren Fenstern */
 /* Modi nach showtab_nmodes sind deaktiviert */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always };
@@ -31,7 +31,7 @@ static const int showtab		= showtab_auto;	/* Standard Tab-Leisten Modus */
 static const int toptab			= 1;		/* 0 bedeutet Tab-Leiste unten */
 static const char *fonts[]		= {
     "JetBrainsMono NF:style=ExtraLight:size=9:antialias=true:autohint=true",
-    "OpenMoji:size=10:antialias=true:autohint=true"
+    "OpenMoji:size=9:antialias=true:autohint=true"
 };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
